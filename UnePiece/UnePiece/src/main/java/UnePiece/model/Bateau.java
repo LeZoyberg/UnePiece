@@ -1,30 +1,22 @@
 package UnePiece.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Bateau {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nom;
 	private int capacite;
 	private int robustesse;
 	private int prix;
 	private boolean debut;
-	
-	public Bateau(Integer id, String nom, int capacite, int robustesse, int prix, boolean debut) {
-		this.id = id;
-		this.nom = nom;
-		this.capacite = capacite;
-		this.robustesse = robustesse;
-		this.prix = prix;
-		this.debut = debut;
-	}
-	public Bateau(String nom, int capacite, int robustesse, int prix, boolean debut) {
-		this.nom = nom;
-		this.capacite = capacite;
-		this.robustesse = robustesse;
-		this.prix = prix;
-		this.debut = debut;
-	}
-	public Bateau() {}
+	private Navire navire;
 	
 	public Integer getId() {
 		return id;
@@ -62,6 +54,13 @@ public class Bateau {
 	public void setDebut(boolean debut) {
 		this.debut = debut;
 	}
+	public Navire getNavire() {
+		return navire;
+	}
+	public void setNavire(Navire navire) {
+		this.navire = navire;
+	}
+	
 	
 	
 }

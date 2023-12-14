@@ -1,30 +1,27 @@
 package UnePiece.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Action {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private boolean choix;
+	@Column(name="degat_navire")
 	private int degatNavire;
+	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresors;
 	private Event event;
-	
-	public Action(Integer id, boolean choix, int degatNavire, int degatMembre, int tresors, Event event) {
-		this.id = id;
-		this.choix = choix;
-		this.degatNavire = degatNavire;
-		this.degatMembre = degatMembre;
-		this.tresors = tresors;
-		this.event = event;
-	}
-	public Action(boolean choix, int degatNavire, int degatMembre, int tresors, Event event) {
-		this.choix = choix;
-		this.degatNavire = degatNavire;
-		this.degatMembre = degatMembre;
-		this.tresors = tresors;
-		this.event = event;
-	}
-	public Action() {}
+	@ManyToOne
+	private Partie partie;
 	
 	public Integer getId() {
 		return id;
@@ -61,6 +58,12 @@ public class Action {
 	}
 	public void setEvent(Event event) {
 		this.event = event;
+	}
+	public Partie getPartie() {
+		return partie;
+	}
+	public void setPartie(Partie partie) {
+		this.partie = partie;
 	}
 	
 	
