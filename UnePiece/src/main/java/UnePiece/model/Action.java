@@ -19,7 +19,7 @@ public class Action {
 	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresors;
-//	private Evenement event;
+	private Evenement event;
 	@ManyToOne
 	private Partie partie;
 	
@@ -53,12 +53,12 @@ public class Action {
 	public void setTresors(int tresors) {
 		this.tresors = tresors;
 	}
-//	public Evenement getEvent() {
-//		return event;
-//	}
-//	public void setEvent(Evenement event) {
-//		this.event = event;
-//	}
+	public Evenement getEvent() {
+		return event;
+	}
+	public void setEvent(Evenement event) {
+		this.event = event;
+	}
 	public Partie getPartie() {
 		return partie;
 	}
