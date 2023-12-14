@@ -1,14 +1,16 @@
 package UnePiece.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Partie {
@@ -20,16 +22,19 @@ public class Partie {
 	private boolean termine;
 	private int tresor;
 	private int duree;
-	@OneToMany
-	private List<Membre> membres;
-	@Embedded
+	@OneToMany(mappedBy = "partie")
+	private List<Membre> membres = new ArrayList();
+	@OneToOne
+	@JoinColumn(name = "id_ile")
 	private Ile ile;
-	@Embedded
+	@OneToOne
+	@JoinColumn(name = "id_navire")
 	private Navire navire;
-	@Embedded
+	@OneToOne
+	@JoinColumn(name = "id_joueur")
 	private Joueur joueur;
-	@OneToMany
-	private List<Action> actions;
+	@OneToMany(mappedBy = "partie")
+	private List<Action> actions = new ArrayList();
 	
 	public Integer getId() {
 		return id;

@@ -11,7 +11,7 @@ public class Pirate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private int force;
+	private int power;
 	private int pv;
 	private int prime;
 	private boolean fruit;
@@ -26,11 +26,11 @@ public class Pirate {
 	}
 
 	public int getForce() {
-		return force;
+		return power;
 	}
 
-	public void setForce(int force) {
-		this.force = force;
+	public void setForce(int power) {
+		this.power = power;
 	}
 
 	public int getPv() {

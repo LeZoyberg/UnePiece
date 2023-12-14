@@ -1,12 +1,13 @@
 package UnePiece.model;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Action {
@@ -20,9 +21,11 @@ public class Action {
 	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresors;
-	@Embedded
+	@OneToOne
+	@JoinColumn(name = "id_event",nullable=false)
 	private Evenement event;
 	@ManyToOne
+	@JoinColumn(name="partie",nullable=false)
 	private Partie partie;
 	
 	public Integer getId() {
