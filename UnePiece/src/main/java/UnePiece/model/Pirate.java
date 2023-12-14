@@ -16,20 +16,31 @@ public class Pirate {
 	private int prime;
 	private boolean fruit;
 	private boolean capitaine;
+	private String nom;
+	
+	
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getForce() {
+	public int getPower() {
 		return power;
 	}
 
-	public void setForce(int power) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 
