@@ -18,7 +18,7 @@ public class Evenement {
 	private int degatNavire;
 	@Column(name="degat_membre")
 	private int degatMembre;
-	private int tresors;
+	private int tresor;
 	@Enumerated(EnumType.STRING)
 	private Odyssee odyssee;
 	
@@ -33,8 +33,8 @@ public class Evenement {
 	public int getDegatMembre() {
 		return degatMembre;
 	}
-	public int getTresors() {
-		return tresors;
+	public int getTresor() {
+		return tresor;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -45,8 +45,8 @@ public class Evenement {
 	public void setDegatMembre(int degatMembre) {
 		this.degatMembre = degatMembre;
 	}
-	public void setTresors(int tresors) {
-		this.tresors = tresors;
+	public void setTresor(int tresor) {
+		this.tresor = tresor;
 	}
 	public Odyssee getOdyssee() {
 		return odyssee;

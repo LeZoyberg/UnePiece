@@ -27,7 +27,7 @@ public class Ile {
 	}
 
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

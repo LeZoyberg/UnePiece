@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import UnePiece.dao.IDAOBateau;
 import UnePiece.dao.IDAONavire;
+import UnePiece.model.Bateau;
 import UnePiece.model.Navire;
 import UnePiece.view.Views;
 
@@ -26,6 +28,8 @@ public class NavireRestController {
 	
 	@Autowired
 	private IDAONavire daoNavire;
+	@Autowired
+	private IDAOBateau daoBateau;
 
 	@GetMapping("/{id}")
 	@JsonView(Views.Navire.class)
@@ -46,14 +50,17 @@ public class NavireRestController {
 		return daoNavire.findAll();
 	}
 	
-	@PostMapping
+	@PostMapping("/{idBateau}")
 	@JsonView(Views.Navire.class)
-	public Navire insert(@RequestBody Navire navire, BindingResult result) 
+	public Navire insert(@PathVariable Integer idBateau, @RequestBody Navire navire, BindingResult result) 
 	{
+		
+		Bateau bateau = daoBateau.findById(idBateau).get();
 		/*if(result.hasErrors()) 
 		{
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La navire n'est pas valide...");
 		}*/
+		navire.setBateau(bateau);
 		return daoNavire.save(navire);
 	}
 	

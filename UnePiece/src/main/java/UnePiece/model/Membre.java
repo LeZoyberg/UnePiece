@@ -37,10 +37,10 @@ public class Membre {
 	public void setPv(int pv) {
 		this.pv = pv;
 	}
-	public int getForce() {
+	public int getPower() {
 		return power;
 	}
-	public void setForce(int power) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 	public Pirate getPirate() {
@@ -48,6 +48,14 @@ public class Membre {
 	}
 	public void setPirate(Pirate pirate) {
 		this.pirate = pirate;
+	}
+
+	public Partie getPartie() {
+		return partie;
+	}
+
+	public void setPartie(Partie partie) {
+		this.partie = partie;
 	}
 	
 	
