@@ -1,7 +1,16 @@
 package UnePiece.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Ile {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nom;
 	private boolean taverne;
@@ -9,32 +18,8 @@ public class Ile {
 	private boolean chantier;
 	private int attente;
 	private int ordre;
+	@Enumerated
 	private Mer mer;
-	
-	public Ile() {}
-	
-	public Ile(int id, String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre,
-			Mer mer) {
-		this.id = id;
-		this.nom = nom;
-		this.taverne = taverne;
-		this.auberge = auberge;
-		this.chantier = chantier;
-		this.attente = attente;
-		this.ordre = ordre;
-		this.mer = mer;
-	}
-	
-	public Ile(String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre,
-			Mer mer) {
-		this.nom = nom;
-		this.taverne = taverne;
-		this.auberge = auberge;
-		this.chantier = chantier;
-		this.attente = attente;
-		this.ordre = ordre;
-		this.mer = mer;
-	}
 
 	public int getId() {
 		return id;

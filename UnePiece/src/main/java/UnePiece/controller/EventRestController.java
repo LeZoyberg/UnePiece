@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import UnePiece.dao.IDAOEvent;
-import UnePiece.model.Event;
+import UnePiece.dao.IDAOEvenement;
+import UnePiece.model.Evenement;
 import UnePiece.view.Views;
 
 @RestController
@@ -25,13 +25,13 @@ import UnePiece.view.Views;
 public class EventRestController {
 	
 	@Autowired
-	private IDAOEvent daoEvent;
+	private IDAOEvenement daoEvent;
 
 	@GetMapping("/{id}")
 	@JsonView(Views.Event.class)
-	public Event findById(@PathVariable Integer id) 
+	public Evenement findById(@PathVariable Integer id) 
 	{
-		Optional<Event> opt = daoEvent.findById(id);
+		Optional<Evenement> opt = daoEvent.findById(id);
 		if(opt.isEmpty()) 
 		{
 			return null;
@@ -41,14 +41,14 @@ public class EventRestController {
 	
 	@GetMapping
 	@JsonView(Views.Common.class)
-	public List<Event> findAll() 
+	public List<Evenement> findAll() 
 	{
 		return daoEvent.findAll();
 	}
 	
 	@PostMapping
 	@JsonView(Views.Event.class)
-	public Event insert(@RequestBody Event event, BindingResult result) 
+	public Evenement insert(@RequestBody Evenement event, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{
@@ -59,7 +59,7 @@ public class EventRestController {
 	
 	@PutMapping("/{id}")
 	@JsonView(Views.Event.class)
-	public Event update(@RequestBody Event event, BindingResult result) 
+	public Evenement update(@RequestBody Evenement event, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

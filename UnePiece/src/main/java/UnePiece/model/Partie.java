@@ -3,42 +3,29 @@ package UnePiece.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Partie {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDate dateDebut;
 	private boolean termine;
 	private int tresor;
 	private int duree;
+	@OneToMany
 	private List<Membre> membres;
 	private Ile ile;
 	private Navire navire;
 	private Joueur joueur;
-	
-	public Partie(Integer id, LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres,
-			Ile ile, Navire navire, Joueur joueur) {
-		this.id = id;
-		this.dateDebut = dateDebut;
-		this.termine = termine;
-		this.tresor = tresor;
-		this.duree = duree;
-		this.membres = membres;
-		this.ile = ile;
-		this.navire = navire;
-		this.joueur = joueur;
-	}
-	public Partie(LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres,
-			Ile ile, Navire navire, Joueur joueur) {
-		this.dateDebut = dateDebut;
-		this.termine = termine;
-		this.tresor = tresor;
-		this.duree = duree;
-		this.membres = membres;
-		this.ile = ile;
-		this.navire = navire;
-		this.joueur = joueur;
-	}
-	public Partie() {}
+	@OneToMany
+	private List<Action> actions;
 	
 	public Integer getId() {
 		return id;
@@ -93,6 +80,12 @@ public class Partie {
 	}
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
+	}
+	public List<Action> getActions() {
+		return actions;
+	}
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
 	}
 	
 }

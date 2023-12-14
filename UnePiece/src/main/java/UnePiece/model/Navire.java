@@ -1,22 +1,18 @@
 package UnePiece.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Navire {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private int robustesse;
 	private Bateau bateau;
-	
-
-	public Navire(Integer id, int robustesse, Bateau bateau) {
-		this.id = id;
-		this.robustesse = robustesse;
-		this.bateau=bateau;
-	}
-	public Navire(int robustesse, Bateau bateau) {
-		this.robustesse = robustesse;
-		this.bateau=bateau;
-	}
-	public Navire() {}
 	
 	public Integer getId() {
 		return id;
