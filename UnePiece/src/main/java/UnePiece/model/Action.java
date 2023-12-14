@@ -1,6 +1,7 @@
 package UnePiece.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class Action {
 	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresors;
+	@Embedded
 	private Evenement event;
 	@ManyToOne
 	private Partie partie;

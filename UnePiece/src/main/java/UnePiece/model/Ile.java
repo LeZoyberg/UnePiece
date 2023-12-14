@@ -11,7 +11,7 @@ public class Ile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String nom;
 	private boolean taverne;
 	private boolean auberge;
@@ -21,7 +21,7 @@ public class Ile {
 	@Enumerated
 	private Mer mer;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

@@ -3,6 +3,7 @@ package UnePiece.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,11 @@ public class Partie {
 	private int duree;
 	@OneToMany
 	private List<Membre> membres;
+	@Embedded
 	private Ile ile;
+	@Embedded
 	private Navire navire;
+	@Embedded
 	private Joueur joueur;
 	@OneToMany
 	private List<Action> actions;

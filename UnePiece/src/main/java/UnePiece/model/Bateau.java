@@ -16,7 +16,6 @@ public class Bateau {
 	private int robustesse;
 	private int prix;
 	private boolean debut;
-	private Navire navire;
 	
 	public Integer getId() {
 		return id;
@@ -53,12 +52,6 @@ public class Bateau {
 	}
 	public void setDebut(boolean debut) {
 		this.debut = debut;
-	}
-	public Navire getNavire() {
-		return navire;
-	}
-	public void setNavire(Navire navire) {
-		this.navire = navire;
 	}
 	
 	

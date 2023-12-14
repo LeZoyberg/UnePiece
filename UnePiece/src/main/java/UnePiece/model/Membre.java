@@ -1,5 +1,6 @@
 package UnePiece.model;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,9 +11,10 @@ public class Membre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private int pv;
 	private int force;
+	@Embedded
 	private Pirate pirate;
 	
 	public Membre() {}
@@ -27,7 +29,7 @@ public class Membre {
 		this.force = force;
 		this.pirate = pirate;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {

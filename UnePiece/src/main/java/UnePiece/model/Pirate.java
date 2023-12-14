@@ -10,14 +10,14 @@ public class Pirate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private int force;
 	private int pv;
 	private int prime;
 	private boolean fruit;
 	private boolean capitaine;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

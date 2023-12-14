@@ -2,6 +2,8 @@ package UnePiece.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,8 +19,11 @@ public class Evenement {
 	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresors;
-//	@Enumerated
-//	private Odyssee odyssee;
+	@Enumerated(EnumType.STRING)
+	private Odyssee odyssee;
+	
+	public Evenement() {}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +47,12 @@ public class Evenement {
 	}
 	public void setTresors(int tresors) {
 		this.tresors = tresors;
+	}
+	public Odyssee getOdyssee() {
+		return odyssee;
+	}
+	public void setOdyssee(Odyssee odyssee) {
+		this.odyssee = odyssee;
 	}
 	
 	
