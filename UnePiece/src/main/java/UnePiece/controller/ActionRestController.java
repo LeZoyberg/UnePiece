@@ -28,7 +28,6 @@ public class ActionRestController {
 	private IDAOAction daoAction;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Action.class)
 	public Action findById(@PathVariable Integer id) 
 	{
 		Optional<Action> opt = daoAction.findById(id);
@@ -40,14 +39,12 @@ public class ActionRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Action> findAll() 
 	{
 		return daoAction.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Action.class)
 	public Action insert(@RequestBody Action action, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -58,7 +55,6 @@ public class ActionRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Action.class)
 	public Action update(@RequestBody Action action, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

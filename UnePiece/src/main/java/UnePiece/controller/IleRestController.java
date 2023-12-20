@@ -28,7 +28,6 @@ public class IleRestController {
 	private IDAOIle daoIle;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Ile.class)
 	public Ile findById(@PathVariable Integer id) 
 	{
 		Optional<Ile> opt = daoIle.findById(id);
@@ -40,14 +39,12 @@ public class IleRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Ile> findAll() 
 	{
 		return daoIle.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Ile.class)
 	public Ile insert(@RequestBody Ile ile, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -58,7 +55,6 @@ public class IleRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Ile.class)
 	public Ile update(@RequestBody Ile ile, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

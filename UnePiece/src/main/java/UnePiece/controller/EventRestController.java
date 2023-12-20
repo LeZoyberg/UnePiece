@@ -28,7 +28,6 @@ public class EventRestController {
 	private IDAOEvenement daoEvent;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Event.class)
 	public Evenement findById(@PathVariable Integer id) 
 	{
 		Optional<Evenement> opt = daoEvent.findById(id);
@@ -40,14 +39,12 @@ public class EventRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Evenement> findAll() 
 	{
 		return daoEvent.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Event.class)
 	public Evenement insert(@RequestBody Evenement event, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -58,7 +55,6 @@ public class EventRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Event.class)
 	public Evenement update(@RequestBody Evenement event, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

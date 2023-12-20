@@ -28,7 +28,6 @@ public class BateauRestController {
 	private IDAOBateau daoBateau;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Bateau.class)
 	public Bateau findById(@PathVariable Integer id) 
 	{
 		Optional<Bateau> opt = daoBateau.findById(id);
@@ -40,14 +39,12 @@ public class BateauRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Bateau> findAll() 
 	{
 		return daoBateau.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Bateau.class)
 	public Bateau insert(@RequestBody Bateau bateau, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -58,7 +55,6 @@ public class BateauRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Bateau.class)
 	public Bateau update(@RequestBody Bateau bateau, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

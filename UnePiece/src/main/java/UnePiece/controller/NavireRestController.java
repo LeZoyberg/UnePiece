@@ -32,7 +32,6 @@ public class NavireRestController {
 	private IDAOBateau daoBateau;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Navire.class)
 	public Navire findById(@PathVariable Integer id) 
 	{
 		Optional<Navire> opt = daoNavire.findById(id);
@@ -44,14 +43,12 @@ public class NavireRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Navire> findAll() 
 	{
 		return daoNavire.findAll();
 	}
 	
 	@PostMapping("/{idBateau}")
-	@JsonView(Views.Navire.class)
 	public Navire insert(@PathVariable Integer idBateau, @RequestBody Navire navire, BindingResult result) 
 	{
 		
@@ -65,7 +62,6 @@ public class NavireRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Navire.class)
 	public Navire update(@RequestBody Navire navire, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

@@ -87,6 +87,7 @@ class UnePieceApplicationTests {
 	
 	Partie partie1 = new Partie(LocalDate.now(), false, 100, 10, membres, ile1, navire1, joueur1, actions);
 	
+	
 	daoPirate.save(pirate1);
 	daoPirate.save(pirate2);
 	daoPirate.save(pirate3);

@@ -36,7 +36,6 @@ public class MembreRestController {
 	private IDAOPirate daoPirate;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Membre.class)
 	public Membre findById(@PathVariable Integer id) 
 	{
 		Optional<Membre> opt = daoMembre.findById(id);
@@ -48,14 +47,12 @@ public class MembreRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Membre> findAll() 
 	{
 		return daoMembre.findAll();
 	}
 	
 	@PostMapping("/{idPirate}")
-	@JsonView(Views.Membre.class)
 	public Membre insert(@PathVariable Integer idPirate, @RequestBody Membre membre, BindingResult result) 
 	{
 		Pirate pirate = daoPirate.findById(idPirate).get();
@@ -72,7 +69,6 @@ public class MembreRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Membre.class)
 	public Membre update(@RequestBody Membre membre, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

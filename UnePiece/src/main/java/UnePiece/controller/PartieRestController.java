@@ -28,10 +28,11 @@ public class PartieRestController {
 	private IDAOPartie daoPartie;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Partie.class)
 	public Partie findById(@PathVariable Integer id) 
 	{
+		System.out.println("findById Partie");
 		Optional<Partie> opt = daoPartie.findById(id);
+		System.out.println(opt.get().toString());
 		if(opt.isEmpty()) 
 		{
 			return null;
@@ -40,14 +41,12 @@ public class PartieRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Partie> findAll() 
 	{
 		return daoPartie.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Partie.class)
 	public Partie insert(@RequestBody Partie partie, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -58,7 +57,6 @@ public class PartieRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Partie.class)
 	public Partie update(@RequestBody Partie partie, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -73,5 +71,8 @@ public class PartieRestController {
 	{
 		daoPartie.deleteById(id);
 	}
+
+	
+	
 	
 }

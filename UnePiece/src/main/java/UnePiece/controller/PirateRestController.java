@@ -30,7 +30,6 @@ public class PirateRestController {
 	private IDAOPirate daoPirate;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Pirate.class)
 	public Pirate findById(@PathVariable Integer id) 
 	{
 		Optional<Pirate> opt = daoPirate.findById(id);
@@ -42,14 +41,12 @@ public class PirateRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Pirate> findAll() 
 	{
 		return daoPirate.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Pirate.class)
 	public Pirate insert(@RequestBody Pirate pirate, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -60,7 +57,6 @@ public class PirateRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Pirate.class)
 	public Pirate update(@RequestBody Pirate pirate, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

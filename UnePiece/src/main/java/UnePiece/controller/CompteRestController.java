@@ -29,7 +29,6 @@ public class CompteRestController {
 	private IDAOCompte daoCompte;
 
 	@GetMapping("/{id}")
-	@JsonView(Views.Compte.class)
 	public Compte findById(@PathVariable Integer id) 
 	{
 		Optional<Compte> opt = daoCompte.findById(id);
@@ -41,14 +40,12 @@ public class CompteRestController {
 	}
 	
 	@GetMapping
-	@JsonView(Views.Common.class)
 	public List<Compte> findAll() 
 	{
 		return daoCompte.findAll();
 	}
 	
 	@PostMapping
-	@JsonView(Views.Compte.class)
 	public Compte insert(@RequestBody Compte compte, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
@@ -59,7 +56,6 @@ public class CompteRestController {
 	}
 	
 	@PutMapping("/{id}")
-	@JsonView(Views.Compte.class)
 	public Compte update(@RequestBody Compte compte, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 

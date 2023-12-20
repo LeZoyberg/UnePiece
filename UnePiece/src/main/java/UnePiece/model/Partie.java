@@ -110,5 +110,11 @@ public class Partie {
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
+
+	@Override
+	public String toString() {
+		return "Partie [id=" + id + ", dateDebut=" + dateDebut + ", termine=" + termine + ", tresor=" + tresor
+				+ ", duree=" + duree + ", ile=" + ile + ", navire=" + navire + "]";
+	}
 	
 }
