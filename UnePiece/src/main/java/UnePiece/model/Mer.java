@@ -2,7 +2,7 @@ package UnePiece.model;
 
 public enum Mer {
 
-	Eastblue(1),Westblue(2),NorthBlue(3),SouthBlue(4),GrandLine(5),NewWorld(7);
+	EastBlue(1),WestBlue(2),NorthBlue(3),SouthBlue(4),GrandLine(5),NewWorld(7);
 
 	private int dangerosite;
 

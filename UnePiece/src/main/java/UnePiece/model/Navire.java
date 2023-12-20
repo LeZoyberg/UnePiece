@@ -18,6 +18,12 @@ public class Navire {
 	@JoinColumn(name = "id_bateau")
 	private Bateau bateau;
 	
+	public Navire() {}
+	
+	public Navire(int robustesse, Bateau bateau) {
+		this.robustesse = robustesse;
+		this.bateau = bateau;
+	}
 	public Integer getId() {
 		return id;
 	}

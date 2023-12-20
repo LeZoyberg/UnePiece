@@ -22,6 +22,19 @@ public class Ile {
 	private Mer mer;
 	
 
+	public Ile() {}
+	
+	public Ile(String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre, Mer mer) {
+		this.nom = nom;
+		this.taverne = taverne;
+		this.auberge = auberge;
+		this.chantier = chantier;
+		this.attente = attente;
+		this.ordre = ordre;
+		this.mer = mer;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

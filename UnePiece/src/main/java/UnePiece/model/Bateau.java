@@ -17,6 +17,15 @@ public class Bateau {
 	private int prix;
 	private boolean debut;
 	
+	public Bateau() {}
+	
+	public Bateau(String nom, int capacite, int robustesse, int prix, boolean debut) {
+		this.nom = nom;
+		this.capacite = capacite;
+		this.robustesse = robustesse;
+		this.prix = prix;
+		this.debut = debut;
+	}
 	public Integer getId() {
 		return id;
 	}

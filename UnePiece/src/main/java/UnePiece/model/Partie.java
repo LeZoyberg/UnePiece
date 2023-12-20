@@ -36,6 +36,20 @@ public class Partie {
 	@OneToMany(mappedBy = "partie")
 	private List<Action> actions = new ArrayList();
 	
+	public Partie() {}
+	
+	public Partie(LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
+			Navire navire, Joueur joueur, List<Action> actions) {
+		this.dateDebut = dateDebut;
+		this.termine = termine;
+		this.tresor = tresor;
+		this.duree = duree;
+		this.membres = membres;
+		this.ile = ile;
+		this.navire = navire;
+		this.joueur = joueur;
+		this.actions = actions;
+	}
 	public Integer getId() {
 		return id;
 	}

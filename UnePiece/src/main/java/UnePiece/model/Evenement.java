@@ -24,6 +24,13 @@ public class Evenement {
 	
 	public Evenement() {}
 	
+	public Evenement(int degatNavire, int degatMembre, int tresor, Odyssee odyssee) {
+		this.degatNavire = degatNavire;
+		this.degatMembre = degatMembre;
+		this.tresor = tresor;
+		this.odyssee = odyssee;
+	}
+
 	public Integer getId() {
 		return id;
 	}

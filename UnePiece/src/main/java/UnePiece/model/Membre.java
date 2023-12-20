@@ -17,14 +17,23 @@ public class Membre {
 	private int pv;
 	private int power;
 	@OneToOne
-	@JoinColumn(name = "id_pirate", nullable=false)
+	@JoinColumn(name = "id_pirate")
 	private Pirate pirate;
 	@ManyToOne
-	@JoinColumn(name="partie", nullable=false)
+	@JoinColumn(name="partie")
 	private Partie partie;
 	
 	public Membre() {}
 	
+	
+	
+	public Membre(int pv, int power, Pirate pirate) {
+		this.pv = pv;
+		this.power = power;
+		this.pirate = pirate;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

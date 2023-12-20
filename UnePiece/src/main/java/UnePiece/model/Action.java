@@ -22,12 +22,21 @@ public class Action {
 	private int degatMembre;
 	private int tresors;
 	@OneToOne
-	@JoinColumn(name = "id_event",nullable=false)
+	@JoinColumn(name = "id_event")
 	private Evenement event;
 	@ManyToOne
-	@JoinColumn(name="partie",nullable=false)
+	@JoinColumn(name="partie")
 	private Partie partie;
 	
+	public Action() {}
+	
+	public Action(boolean choix, int degatNavire, int degatMembre, int tresors, Evenement event) {
+		this.choix = choix;
+		this.degatNavire = degatNavire;
+		this.degatMembre = degatMembre;
+		this.tresors = tresors;
+		this.event = event;
+	}
 	public Integer getId() {
 		return id;
 	}

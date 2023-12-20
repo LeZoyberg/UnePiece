@@ -18,7 +18,16 @@ public class Pirate {
 	private boolean capitaine;
 	private String nom;
 	
+	public Pirate() {}
 	
+	public Pirate(int power, int pv, int prime, boolean fruit, boolean capitaine, String nom) {
+		this.power = power;
+		this.pv = pv;
+		this.prime = prime;
+		this.fruit = fruit;
+		this.capitaine = capitaine;
+		this.nom = nom;
+	}
 
 	public String getNom() {
 		return nom;
