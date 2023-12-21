@@ -14,7 +14,7 @@ export class LoginComponent {
   passwordCtrl!: FormControl;
 
   
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+  /*constructor(private authService: AuthService, private formBuilder: FormBuilder) {
 
   }
 
@@ -27,6 +27,6 @@ export class LoginComponent {
       password: this.passwordCtrl
     });
   }
-  
+  */
 
 }

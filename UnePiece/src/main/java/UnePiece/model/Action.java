@@ -20,7 +20,7 @@ public class Action {
 	private int degatNavire;
 	@Column(name="degat_membre")
 	private int degatMembre;
-	private int tresors;
+	private int tresor;
 	@OneToOne
 	@JoinColumn(name = "id_event")
 	private Evenement event;
@@ -30,11 +30,11 @@ public class Action {
 	
 	public Action() {}
 	
-	public Action(boolean choix, int degatNavire, int degatMembre, int tresors, Evenement event) {
+	public Action(boolean choix, int degatNavire, int degatMembre, int tresor, Evenement event) {
 		this.choix = choix;
 		this.degatNavire = degatNavire;
 		this.degatMembre = degatMembre;
-		this.tresors = tresors;
+		this.tresor = tresor;
 		this.event = event;
 	}
 	public Integer getId() {
@@ -61,11 +61,11 @@ public class Action {
 	public void setDegatMembre(int degatMembre) {
 		this.degatMembre = degatMembre;
 	}
-	public int getTresors() {
-		return tresors;
+	public int getTresor() {
+		return tresor;
 	}
-	public void setTresors(int tresors) {
-		this.tresors = tresors;
+	public void setTresor(int tresor) {
+		this.tresor = tresor;
 	}
 	public Evenement getEvent() {
 		return event;
