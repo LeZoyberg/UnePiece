@@ -32,7 +32,6 @@ public class Membre {
 		this.pirate = pirate;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
