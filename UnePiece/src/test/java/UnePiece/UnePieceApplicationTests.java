@@ -62,14 +62,19 @@ class UnePieceApplicationTests {
 	Membre membre1 = new Membre(pirate1.getPv(), pirate1.getPower(), pirate1);
 	Membre membre2 = new Membre(pirate2.getPv(), pirate2.getPower(), pirate2);
 	Membre membre3 = new Membre(pirate3.getPv(), pirate3.getPower(), pirate3);
-	List<Membre> membres = new ArrayList<Membre>();
-	Collections.addAll(membres, membre1, membre2, membre3);
+	List<Membre> equipage1 = new ArrayList<Membre>();
+	Collections.addAll(equipage1, membre1, membre2, membre3);
+	
+	Membre membre4 = new Membre(pirate1.getPv(), pirate1.getPower(), pirate4);
+	Membre membre5 = new Membre(pirate2.getPv(), pirate2.getPower(), pirate2);
+	List<Membre> equipage2 = new ArrayList<Membre>();
+	Collections.addAll(equipage2, membre4, membre5);
 	
 	Bateau bateau1 = new Bateau("Vogue Merry",10,10,10,true);
 	Bateau bateau2 = new Bateau("Thousand Sunny",15,15,15,false);
 	
 	Navire navire1 = new Navire(bateau1.getRobustesse(), bateau1);
-	Navire navire2 = new Navire(bateau2.getRobustesse(), bateau2);
+	Navire navire2 = new Navire(bateau2.getRobustesse(), bateau1);
 	
 	Ile ile1 = new Ile("Fuschia Village", true, true, true, 10, 1, Mer.EastBlue);
 	Ile ile2 = new Ile("Shells Town", false, false, true, 8, 2, Mer.EastBlue);
@@ -90,8 +95,8 @@ class UnePieceApplicationTests {
 	List<Action> actionsPartie2 = new ArrayList<Action>();
 	Collections.addAll(actionsPartie2, action3);
 	
-	Partie partie1 = new Partie(LocalDate.now(), false, 100, 10, membres, ile1, navire1, joueur1, actionsPartie1);
-	Partie partie2 = new Partie(LocalDate.now(), false, 100, 10, membres, ile2, navire2, joueur2, actionsPartie2);
+	Partie partie1 = new Partie(LocalDate.now(), false, 100, 10, equipage1, ile1, navire1, joueur1, actionsPartie1);
+	Partie partie2 = new Partie(LocalDate.now(), false, 100, 10, equipage2, ile2, navire2, joueur2, actionsPartie2);
 	
 	
 	daoPirate.save(pirate1);
@@ -102,6 +107,8 @@ class UnePieceApplicationTests {
 	daoMembre.save(membre1);
 	daoMembre.save(membre2);
 	daoMembre.save(membre3);
+	daoMembre.save(membre4);
+	daoMembre.save(membre5);
 	
 	daoBateau.save(bateau1);
 	daoBateau.save(bateau2);
