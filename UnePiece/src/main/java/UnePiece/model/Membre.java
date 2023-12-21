@@ -6,7 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 public class Membre {
@@ -16,7 +17,7 @@ public class Membre {
 	private Integer id;
 	private int pv;
 	private int power;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_pirate")
 	private Pirate pirate;
 	@ManyToOne
@@ -24,8 +25,6 @@ public class Membre {
 	private Partie partie;
 	
 	public Membre() {}
-	
-	
 	
 	public Membre(int pv, int power, Pirate pirate) {
 		this.pv = pv;

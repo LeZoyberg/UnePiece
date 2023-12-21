@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Navire {
@@ -14,7 +14,7 @@ public class Navire {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private int robustesse;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_bateau")
 	private Bateau bateau;
 	
