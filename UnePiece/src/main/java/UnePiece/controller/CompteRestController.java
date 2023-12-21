@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOCompte;
 import UnePiece.model.Compte;
+import UnePiece.model.Joueur;
 import UnePiece.view.Views;
 
 @RestController
@@ -29,7 +32,18 @@ public class CompteRestController {
 	
 	@Autowired
 	private IDAOCompte daoCompte;
+	
+	@PostMapping("/connexion")
+	public Compte connexion(@RequestBody Joueur joueur) {
+		Optional<Compte> opt = daoCompte.findByUsernameAndPassword(joueur.getLogin(), joueur.getPassword());
 
+		if (opt.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+
+		return opt.get();
+	}
+	
 	@GetMapping("/{id}")
 	public Compte findById(@PathVariable Integer id) 
 	{

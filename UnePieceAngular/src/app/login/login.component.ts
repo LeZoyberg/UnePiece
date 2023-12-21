@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
 
@@ -14,7 +15,7 @@ export class LoginComponent {
   passwordCtrl!: FormControl;
 
   
-  /*constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
 
   }
 
@@ -27,6 +28,9 @@ export class LoginComponent {
       password: this.passwordCtrl
     });
   }
-  */
+  
+  connexion() {
+    this.authService.login(this.usernameCtrl.value, this.passwordCtrl.value);
+  }
 
 }
