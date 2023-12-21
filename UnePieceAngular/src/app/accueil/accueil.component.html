@@ -1,13 +1,39 @@
-<br>
-<br>
-<button class="btn btn-success" (click)="newGame()">Nouvelle partie <i class="bi bi-plus-circle"></i></button>
+<br />
+<br />
+<button class="btn btn-success" (click)="newGame()">
+  Nouvelle partie <i class="bi bi-plus-circle"></i>
+</button>
 
-<table>Partie en cours
+<div id="container">
+  <div>
+    <table>  Partie en cours
+     <tr>
+        <th>Début</th>
+        <th>Score</th>
+     </tr>
+     <tr>
+        <td>2023-10-10</td>
+        <td>29</td>
+     </tr>
     
-</table>
-<table>Leaderboard
-    
-</table>
-<table>Historique
-    
-</table>
+    </table>
+  </div>
+  <div>
+    <table>
+      Leaderboard
+      <tr>
+        <th>Joueur</th>
+        <th>Score</th>
+     </tr>
+     <tr>
+        <td>Jordan</td>
+        <td>29</td>
+     </tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      Historique
+    </table>
+  </div>
+</div>

@@ -1,1 +1,25 @@
 <p>start works!</p>
+<div class="card-body"> 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>PV</th>
+                <th>Force</th>
+                <th>Or</th>
+                <th>Fruit du démon</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of listCapitaines()">
+                <td>{{c.nom}}</td>
+                <td>{{c.pv}}</td>
+                <td>{{c.power}}</td>
+                <td>{{c.prime}}</td>
+                <td>{{c.fruit}}</td>
+        </tbody>
+
+    </table>
+</div>
+<div class="card-footer">
+</div>
