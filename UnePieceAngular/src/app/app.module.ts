@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StartComponent } from './start/start.component';
 import { IleComponent } from './ile/ile.component';
+import { TrajetComponent } from './trajet/trajet.component';
+import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { IleComponent } from './ile/ile.component';
     NavBarComponent,
     StartComponent,
     IleComponent
+    TrajetComponent,
+    StatEquipageComponent
   ],
   imports: [
     BrowserModule,

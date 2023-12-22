@@ -11,6 +11,9 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/start']" routerLinkActive="active">Start</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/trajet']" routerLinkActive="active">Trajet</a>
+    </li>
     <li class="nav-item" *ngIf="isLogged()">
       <a class="nav-link" (click)="logout()" routerLinkActive="active">Logout</a>
     </li>
