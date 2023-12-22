@@ -11,16 +11,16 @@ export class StartComponent {
 
   capitaines:Pirate[] = [];
 
-constructor(private pirateService:PirateService) {}
-
-listCapitaines():Pirate[] {
-this.pirateService.findAll().subscribe(resp => {
-  this.capitaines = resp;
-  this.capitaines = this.capitaines.filter(pirate => pirate.capitaine == true);
-  console.log('this.capitaines :>> ', this.capitaines);
+constructor(private pirateService:PirateService) {
+  this.listCapitaines();
 }
-);
-  return this.capitaines;
+
+listCapitaines() {
+  this.pirateService.findAll().subscribe(resp => {
+    this.capitaines = resp;
+    this.capitaines = this.capitaines.filter(pirate => pirate.capitaine == true);
+  }
+  );
 }
 
 }
