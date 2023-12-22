@@ -1,6 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function confirmEqualValidator(main: string, confirm: string): ValidatorFn {
+export function confirmEqualValidator(main: string, confirm: string) {
+    /*
     return (ctrl: AbstractControl): null | ValidationErrors => {
         if (!ctrl.get(main) || !ctrl.get(confirm)) {
             return {
@@ -17,4 +18,21 @@ export function confirmEqualValidator(main: string, confirm: string): ValidatorF
             }
         };
     };
+    */
+
+    return (formGroup: FormGroup) => {
+        console.log('validator');
+        const control = formGroup.controls[main];
+        const matchingControl = formGroup.controls[confirm];
+        if (matchingControl.errors && !matchingControl.errors['confirmEqual']) {
+            return;
+        }
+        if (control.value !== matchingControl.value) {
+            matchingControl.setErrors({ confirmEqual: true });
+        } else {
+            matchingControl.setErrors(null);
+        }
+    };
+
+
 }

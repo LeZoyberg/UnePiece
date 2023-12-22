@@ -17,20 +17,13 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http.post<Joueur>(environment.apiUrl + `/compte/connexion`, { "login": username, "password": password }).subscribe(resp => {
       this.utilisateur = resp;
-      this.stockUser();
+      localStorage.setItem("user", JSON.stringify(this.utilisateur));
+      this.router.navigate(["/accueil"]);
     });
   }
 
   inscription(username: string, password: string) {
-    return this.http.post<Joueur>(environment.apiUrl + "/compte/inscription", { "login": username, "password": password }).subscribe(resp => {
-      this.utilisateur = resp;
-      this.stockUser();
-    });
- }
-
-  stockUser() {
-    localStorage.setItem("user", JSON.stringify(this.utilisateur));
-    this.router.navigate(["/accueil"]);
+    return this.http.post<Joueur>(environment.apiUrl + '/compte/inscription', { "login": username, "password": password }).subscribe();
   }
 
   logout() {

@@ -15,7 +15,7 @@ export class InscriptionComponent implements OnInit {
 
   usernameCtrl!: FormControl;
   passwordCtrl!: FormControl;
-  //validatePasswordCtrl!: FormControl;
+  validatePasswordCtrl!: FormControl;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
 
@@ -24,22 +24,23 @@ export class InscriptionComponent implements OnInit {
   ngOnInit(): void {
     this.usernameCtrl = this.formBuilder.control("", Validators.required);
     this.passwordCtrl = this.formBuilder.control("", [Validators.required, Validators.minLength(5)]);
-    //this.validatePasswordCtrl = this.formBuilder.control("", [Validators.required]);
+    this.validatePasswordCtrl = this.formBuilder.control("", [Validators.required]);
 
     this.inscriptionForm = this.formBuilder.group({
       username: this.usernameCtrl,
       password: this.passwordCtrl,
-      //validatePassword: this.validatePasswordCtrl
+      validatePassword: this.validatePasswordCtrl
       }
-      /*,
+      ,
       {
         validator: [confirmEqualValidator('password', 'validatePassword')]
-      }*/
+      }
     );
   }
 
   inscription() {
     this.authService.inscription(this.usernameCtrl.value, this.passwordCtrl.value);
+    this.authService.login(this.usernameCtrl.value, this.passwordCtrl.value);    
   }
 
 }
