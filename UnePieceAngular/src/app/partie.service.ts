@@ -8,8 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class PartieService {
 
+  partie: Partie = new Partie();
+
   constructor(private http: HttpClient) {
    }
+
+   getPartie() : Partie {
+    return this.partie
+  }
+
+  setPartie(partie:Partie) {
+    this.partie = partie;
+  }
 
   findAll(): Observable<Partie[]> {
     return this.http.get<Partie[]>(environment.apiUrl + "/partie");

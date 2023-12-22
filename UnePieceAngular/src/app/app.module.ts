@@ -10,6 +10,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StartComponent } from './start/start.component';
+import { IleComponent } from './ile/ile.component';
 import { TrajetComponent } from './trajet/trajet.component';
 import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
 
@@ -22,6 +23,7 @@ import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
     LoginComponent,
     NavBarComponent,
     StartComponent,
+    IleComponent
     TrajetComponent,
     StatEquipageComponent
   ],
