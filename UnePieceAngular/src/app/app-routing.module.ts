@@ -13,12 +13,12 @@ const routes: Routes = [
   {path: "inscription", component: InscriptionComponent},
   {path: "login", component: LoginComponent},
   {path: "start", component: StartComponent},
-  {path: "ile", component: IleComponent}
+  {path: "ile", component: IleComponent},
   {path: "trajet", component: TrajetComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }
