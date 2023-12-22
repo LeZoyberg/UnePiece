@@ -42,6 +42,19 @@ public class PartieRestController {
 		return opt.get();
 	}
 	
+	@GetMapping("/joueur/{idJoueur}")
+	public Partie findByIdJoueur(@PathVariable Integer idJoueur) 
+	{
+		System.out.println("findByIdJoueur Partie");
+		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
+		System.out.println(opt.get().toString());
+		if(opt.isEmpty()) 
+		{
+			return null;
+		}
+		return opt.get();
+	}
+	
 	@GetMapping
 	public List<Partie> findAll() 
 	{
