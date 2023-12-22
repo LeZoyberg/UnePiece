@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import UnePiece.dao.IDAOPartie;
 import UnePiece.dto.PartieResponse;
 import UnePiece.model.Partie;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/partie")
@@ -70,14 +67,19 @@ public class PartieRestController {
 		return daoPartie.save(partie);
 	}
 	
+	
+	
 	@PutMapping("/{id}")
-	public Partie update(@PathVariable Integer id, @RequestBody Partie partie, BindingResult result) 
+	public PartieResponse update(@PathVariable Integer id, @RequestBody Partie partie, BindingResult result) 
 	{
+		daoPartie.save(partie);
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
 		/*if(result.hasErrors()) 
 		{
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La partie n'est pas valide...");
 		}*/
-		return daoPartie.save(partie);
+		return partieDTO;
 	}
 	
 	@DeleteMapping("/{id}")
