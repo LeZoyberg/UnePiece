@@ -18,9 +18,10 @@ constructor(private partieService:PartieService, private router: Router, private
 
 newGame() {
   this.partie = new Partie();
+  this.partie.termine = false;
   this.partie!.joueur = this.authService.getUtilisateur();
   this.partie.duree = 0;
-
+  this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0,10);
   this.partieService.create(this.partie).subscribe(resp => {
     this.router.navigate(['/start']);
     console.log('this.partie :>> ', this.partie);

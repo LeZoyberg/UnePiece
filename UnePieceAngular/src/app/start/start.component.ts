@@ -35,27 +35,24 @@ export class StartComponent {
     });
   }
   chooseCapitaine(capitaine:Pirate) {
+    this.partie.joueur = this.authService.getUtilisateur();
     this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
       
       this.partie.id = resp.id;
       this.partie.duree = resp.duree; 
-      console.log("ICIIIIIIIIIIIIIIIIIIII3");
+      this.partie.dateDebut = resp.dateDebut;
+      this.partie.termine = resp.termine;
+      this.partie.tresor = capitaine.prime;
+
       this.membre.partie=resp;
       this.membre.pv=capitaine.pv;
       this.membre.pirate=capitaine;
       this.membre.power=capitaine.power;
-      this.partie.tresor = capitaine.prime;
       this.membreService.create(this.membre).subscribe(resp =>{
-        this.partie.membres?.push(resp)
-        console.log('this.partie.membres :>> ', this.partie.membres);
-        console.log(resp)
+        this.partie.membres?.push(resp);
       });
+
       this.partieService.update(this.partie).subscribe();
-      console.log('capitaine :>> ', capitaine);
-      console.log('capitaine :>> ', this.membre);
-     
-      console.log('resp :>> ', resp);
-      console.log('this.partie :>> ', this.partie);
     });
 
   }
