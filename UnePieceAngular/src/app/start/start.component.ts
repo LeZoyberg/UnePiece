@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PirateService } from '../pirate.service';
-import { Joueur, Partie, Pirate } from '../model';
+import { Joueur, Membre, Partie, Pirate } from '../model';
 import { PartieService } from '../partie.service';
 import { AuthService } from '../auth.service';
 
@@ -12,7 +12,7 @@ import { AuthService } from '../auth.service';
 export class StartComponent {
   capitaines: Pirate[] = [];
   joueur: Joueur = {};
-  partie: Partie = {};
+  partie: Partie = new Partie();
   constructor(
     private pirateService: PirateService,
     private partieService: PartieService,
@@ -20,6 +20,7 @@ export class StartComponent {
   ) {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
+    console.log('this.partie CONTROLLER :>> ', this.partie);
   }
 
   listCapitaines() {
@@ -32,10 +33,16 @@ export class StartComponent {
   }
   chooseCapitaine(capitaine:Pirate) {
     this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
-      this.partie = resp;
-      this.partie.membres?.push(capitaine);
+      
+      this.partie.id = resp.id;
+      this.partie.duree = resp.duree;
+
+      this.partie.membres?.push(capitaine as Membre);
       this.partie.tresor = capitaine.prime;
+      this.partieService.update(this.partie);
       console.log('capitaine :>> ', capitaine);
+      console.log('this.partie.membres :>> ', this.partie.membres);
+      console.log('resp :>> ', resp);
       console.log('this.partie :>> ', this.partie);
     });
 

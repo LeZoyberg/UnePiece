@@ -17,12 +17,13 @@ constructor(private partieService:PartieService, private router: Router, private
 }
 
 newGame() {
-  this.partieService.create(new Partie()).subscribe(resp => {
-    this.partie = resp;
-    this.partie.duree = 0;
-    this.partie!.joueur = this.authService.getUtilisateur();
-    this.partieService.update(this.partie);
+  this.partie = new Partie();
+  this.partie!.joueur = this.authService.getUtilisateur();
+  this.partie.duree = 0;
+
+  this.partieService.create(this.partie).subscribe(resp => {
     this.router.navigate(['/start']);
+    console.log('this.partie :>> ', this.partie);
   });
 }
 
