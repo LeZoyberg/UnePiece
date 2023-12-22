@@ -3,6 +3,7 @@ package UnePiece.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import UnePiece.controller.dto.PartieResponse;
 import UnePiece.dao.IDAOPartie;
 import UnePiece.model.Partie;
 import UnePiece.view.Views;
@@ -43,16 +45,13 @@ public class PartieRestController {
 	}
 	
 	@GetMapping("/joueur/{idJoueur}")
-	public Partie findByIdJoueur(@PathVariable Integer idJoueur) 
+	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) 
 	{
-		System.out.println("findByIdJoueur Partie");
-		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
-		System.out.println(opt.get().toString());
-		if(opt.isEmpty()) 
-		{
-			return null;
-		}
-		return opt.get();
+		Partie partie = daoPartie.findByIdJoueur(idJoueur).get();
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		
+		return partieDTO;
 	}
 	
 	@GetMapping
