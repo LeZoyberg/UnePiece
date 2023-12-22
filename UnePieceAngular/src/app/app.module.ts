@@ -10,6 +10,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StartComponent } from './start/start.component';
+import { IleComponent } from './ile/ile.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { StartComponent } from './start/start.component';
     InscriptionComponent,
     LoginComponent,
     NavBarComponent,
-    StartComponent
+    StartComponent,
+    IleComponent
   ],
   imports: [
     BrowserModule,
