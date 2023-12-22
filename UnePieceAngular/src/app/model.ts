@@ -10,7 +10,11 @@ export class Partie {
     public navire?: Navire,
     public joueur?: Joueur,
     public actions?: Action[]
-  ) {}
+  ) {
+
+    
+
+  }
 }
 
 export class Membre {

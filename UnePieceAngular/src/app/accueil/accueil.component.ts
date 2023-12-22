@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Partie } from '../model';
 import { PartieService } from '../partie.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'accueil',
   templateUrl: './accueil.component.html',
@@ -9,11 +10,21 @@ import { Router } from '@angular/router';
 })
 export class AccueilComponent {
 
-constructor(private partieService:PartieService, private router: Router) {}
+partie?:Partie;
+
+constructor(private partieService:PartieService, private router: Router, private authService:AuthService) {
+
+}
 
 newGame() {
-  this.partieService.create(new Partie()).subscribe();
-  this.router.navigate(['/start']);
+  this.partie = new Partie();
+  this.partie!.joueur = this.authService.getUtilisateur();
+  this.partie.duree = 0;
+
+  this.partieService.create(this.partie).subscribe(resp => {
+    this.router.navigate(['/start']);
+    console.log('this.partie :>> ', this.partie);
+  });
 }
 
 }
