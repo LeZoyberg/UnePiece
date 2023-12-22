@@ -71,7 +71,7 @@ public class MembreRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Membre update(@RequestBody Membre membre, BindingResult result) 
+	public Membre update(@PathVariable Integer id, @RequestBody Membre membre, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

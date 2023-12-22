@@ -78,7 +78,7 @@ public class CompteRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Compte update(@RequestBody Compte compte, BindingResult result) 
+	public Compte update(@PathVariable Integer id, @RequestBody Compte compte, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

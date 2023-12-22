@@ -64,7 +64,7 @@ public class NavireRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Navire update(@RequestBody Navire navire, BindingResult result) 
+	public Navire update(@PathVariable Integer id, @RequestBody Navire navire, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

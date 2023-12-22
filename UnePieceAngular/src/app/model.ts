@@ -5,11 +5,11 @@ export class Partie {
     public termine?: boolean,
     public tresor?: number,
     public duree?: number,
-    public membres?: Membre[],
+    public membres: Membre[]=[],
     public ile?: Ile,
     public navire?: Navire,
     public joueur?: Joueur,
-    public actions?: Action[]
+    public actions: Action[]=[]
   ) {
 
     
