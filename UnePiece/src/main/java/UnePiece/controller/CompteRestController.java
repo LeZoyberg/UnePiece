@@ -44,6 +44,12 @@ public class CompteRestController {
 		return opt.get();
 	}
 	
+	@PostMapping("/inscription")
+	public void inscription(@RequestBody Joueur joueur) {
+		Compte compte = new Joueur(joueur.getLogin(), joueur.getPassword());
+		daoCompte.save(compte);
+	}
+	
 	@GetMapping("/{id}")
 	public Compte findById(@PathVariable Integer id) 
 	{
