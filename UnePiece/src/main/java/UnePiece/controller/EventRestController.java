@@ -57,7 +57,7 @@ public class EventRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Evenement update(@RequestBody Evenement event, BindingResult result) 
+	public Evenement update(@PathVariable Integer id, @RequestBody Evenement event, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

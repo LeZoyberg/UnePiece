@@ -57,7 +57,7 @@ public class IleRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Ile update(@RequestBody Ile ile, BindingResult result) 
+	public Ile update(@PathVariable Integer id, @RequestBody Ile ile, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

@@ -57,7 +57,7 @@ public class BateauRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Bateau update(@RequestBody Bateau bateau, BindingResult result) 
+	public Bateau update(@PathVariable Integer id, @RequestBody Bateau bateau, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

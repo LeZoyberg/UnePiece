@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -30,7 +31,7 @@ public class Partie {
 	@OneToOne
 	@JoinColumn(name = "id_navire")
 	private Navire navire;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_joueur")
 	private Joueur joueur;
 	@OneToMany(mappedBy = "partie")

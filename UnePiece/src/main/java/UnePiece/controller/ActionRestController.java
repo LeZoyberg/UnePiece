@@ -54,7 +54,7 @@ public class ActionRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Action update(@RequestBody Action action, BindingResult result) 
+	public Action update(@PathVariable Integer id, @RequestBody Action action, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{
