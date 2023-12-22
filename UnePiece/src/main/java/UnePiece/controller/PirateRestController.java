@@ -59,7 +59,7 @@ public class PirateRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Pirate update(@RequestBody Pirate pirate, BindingResult result) 
+	public Pirate update(@PathVariable Integer id, @RequestBody Pirate pirate, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{

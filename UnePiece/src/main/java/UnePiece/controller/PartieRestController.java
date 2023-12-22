@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import UnePiece.controller.dto.PartieResponse;
 import UnePiece.dao.IDAOPartie;
+import UnePiece.dto.PartieResponse;
 import UnePiece.model.Partie;
 import UnePiece.view.Views;
 
@@ -71,7 +71,7 @@ public class PartieRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Partie update(@RequestBody Partie partie, BindingResult result) 
+	public Partie update(@PathVariable Integer id, @RequestBody Partie partie, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{
