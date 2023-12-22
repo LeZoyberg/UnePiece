@@ -8,6 +8,7 @@
                 <th>Force</th>
                 <th>Or</th>
                 <th>Fruit du démon</th>
+                <th>Choisir ce capitaine</th>
             </tr>
         </thead>
         <tbody>
@@ -17,9 +18,10 @@
                 <td>{{c.power}}</td>
                 <td>{{c.prime}}</td>
                 <td>{{c.fruit}}</td>
+                <td><a (click)="chooseCapitaine(c)" class="btn btn-primary"><i class="bi bi-person-raised-hand"></i></a></td>
+
         </tbody>
 
     </table>
 </div>
 <div class="card-footer">
-</div>
