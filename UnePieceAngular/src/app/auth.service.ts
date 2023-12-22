@@ -3,6 +3,7 @@ import { Joueur } from './model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +14,22 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(username: string, password: string) {    
+  login(username: string, password: string) {
     return this.http.post<Joueur>(environment.apiUrl + `/compte/connexion`, { "login": username, "password": password }).subscribe(resp => {
       this.utilisateur = resp;
       localStorage.setItem("user", JSON.stringify(this.utilisateur));
-
       this.router.navigate(["/accueil"]);
     });
+  }
+
+  inscription(username: string, password: string) {
+    return this.http.post<Joueur>(environment.apiUrl + '/compte/inscription', { "login": username, "password": password }).subscribe();
   }
 
   logout() {
     this.utilisateur = undefined;
     localStorage.removeItem("user");
+    this.router.navigate(["/login"]);
   }
 
   isLogged(): boolean {
