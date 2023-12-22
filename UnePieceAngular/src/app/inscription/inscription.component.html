@@ -1,5 +1,5 @@
 <div class="card mt-3">
-    <form [formGroup]="inscriptionForm">
+    <form [formGroup]="inscriptionForm" (ngSubmit)="inscription()">
         <div class="card-header text-white bg-primary">
             Inscription
         </div>
@@ -18,11 +18,14 @@
                 <span class="text-danger" *ngIf="passwordCtrl.dirty && passwordCtrl.hasError('minlength')">Le mot passe doit avoir au moins 5 caractères</span>
             </div>
 
-            <!-- Non functionnel at the moment, just there to differentiate inscription.html from login.html
+            <!--
             <div class="mb-3">
                 <label for="validatePassword" class="form-label">Confirmation Password : </label>
-                <input type="validatePassword" class="form-control" id="validatePassword" name="validatePassword" formControlName="validatePassword">            
-            </div>-->
+                <input type="password" class="form-control" id="validatePassword" name="validatePassword" formControlName="validatePassword">            
+                <span class="text-danger" *ngIf="validatePasswordCtrl.dirty && validatePasswordCtrl.hasError('required')">La confirmation du mot passe est obligatoire</span>
+                <span class="text-danger" *ngIf="validatePassword.errors.confirmEqualValidator">Attention ! Les 2 mots de passe doivent être identiques</span>
+            </div>
+            -->
         </div>
 
         <div class="card-footer">

@@ -2,13 +2,16 @@
     <li class="nav-item" >
       <a class="nav-link" [routerLink]="['/accueil']" routerLinkActive="active">Accueil</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="!isLogged()">
         <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Connexion</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="!isLogged()">
       <a class="nav-link" [routerLink]="['/inscription']" routerLinkActive="active">Inscription</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/start']" routerLinkActive="active">Start</a>
+    </li>
+    <li class="nav-item" *ngIf="isLogged()">
+      <a class="nav-link" (click)="logout()" routerLinkActive="active">Logout</a>
     </li>
   </ul>
