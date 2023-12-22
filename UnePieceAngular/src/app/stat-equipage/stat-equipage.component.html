@@ -1,1 +1,37 @@
-<p>stat-equipage works!</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Vie</th>
+            <th (click)="afficheMembre()" [style.color]="color">Membre</th>
+            <th>Robustesse</th>
+            <th>Force</th>
+            <th>Tresor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{vie}}</td>
+            <td>{{nbMembre}}</td>
+            <td>{{robustesse}}</td>
+            <td>{{force}}</td>
+            <td>{{tresor}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table *ngIf="visible"  class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Vie</th>
+            <th>Force</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let membre of list() | async">
+            <td>{{membre.pirate?.nom}}</td>
+            <td>{{membre.pv}}</td>
+            <td>{{membre.power}}</td>
+        </tr>
+    </tbody>
+</table>
