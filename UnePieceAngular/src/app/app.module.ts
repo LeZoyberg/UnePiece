@@ -23,9 +23,9 @@ import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
     LoginComponent,
     NavBarComponent,
     StartComponent,
-    IleComponent
+    IleComponent,
     TrajetComponent,
-    StatEquipageComponent
+    StatEquipageComponent,
   ],
   imports: [
     BrowserModule,
