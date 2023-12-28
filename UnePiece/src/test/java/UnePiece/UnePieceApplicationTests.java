@@ -58,6 +58,8 @@ class UnePieceApplicationTests {
 	Pirate pirate2 = new Pirate(15,15,10,false,false,"Zorro");
 	Pirate pirate3 = new Pirate(2,2,2,false,false,"Ussop");
 	Pirate pirate4 = new Pirate(18,18,20,true,false,"Robin");
+	Pirate pirate5 = new Pirate(12,12,12,false,true,"Capitaine2");
+	Pirate pirate6 = new Pirate(13,13,13,false,true,"Capitaine3");
 	
 	Membre membre1 = new Membre(pirate1.getPv(), pirate1.getPower(), pirate1);
 	Membre membre2 = new Membre(pirate2.getPv(), pirate2.getPower(), pirate2);
@@ -103,6 +105,8 @@ class UnePieceApplicationTests {
 	daoPirate.save(pirate2);
 	daoPirate.save(pirate3);
 	daoPirate.save(pirate4);
+	daoPirate.save(pirate5);
+	daoPirate.save(pirate6);
 	
 	daoMembre.save(membre1);
 	daoMembre.save(membre2);

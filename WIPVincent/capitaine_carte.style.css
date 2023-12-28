@@ -170,7 +170,7 @@ p, h1, div {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: url(../../../assets/backgrounds/background_tile.jpg);
+  background: url(tile_background.jpg);
 }
 
 .frame-header,
@@ -189,7 +189,7 @@ p, h1, div {
 .frame-art {
   top: 26%;
   height: 50%;
-  background: url(../../../assets/pirates/luffy.png) center / calc(40%), url(../../../assets/backgrounds/background_wave.png);
+  background: url(pirate_1.png) center / calc(40%), url(background_wave.png);
   background-repeat: no-repeat;
 }
 .frame-header {
@@ -216,10 +216,3 @@ th, tr, td {
   border: 1px solid black;
 }
 
-.flex-container {
-  display:flex;
-}
-
-.flex-container td {
-  width:100%;
-}
