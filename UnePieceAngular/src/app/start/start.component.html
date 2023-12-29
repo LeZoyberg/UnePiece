@@ -1,3 +1,4 @@
+
 <table class="card flex-container">
   <tr>
     <td *ngFor="let c of capitaines" (click)="chooseCapitaine(c)" class="card-cell">
@@ -13,22 +14,22 @@
               <table>
                 <tbody>
                   <tr>
-                    <td>ICONE</td>
+                    <td id="icon_power"></td>
                     <th>Force</th>
                     <td>{{ c.power }}</td>
                   </tr>
                   <tr>
-                    <td>ICONE</td>
+                    <td id="icon_pv"></td>
                     <th>Points de vie</th>
                     <td>{{ c.pv }}</td>
                   </tr>
                   <tr *ngIf="c.fruit">
-                    <td>ICONE</td>
+                    <td id="icon_fruit"></td>
                     <th>Fruit</th>
                     <td>{{ c.fruit }}</td>
                   </tr>
                   <tr>
-                    <td>ICONE</td>
+                    <td id="icon_prime"></td>
                     <th>Prime</th>
                     <td>{{ c.prime }}</td>
                   </tr>

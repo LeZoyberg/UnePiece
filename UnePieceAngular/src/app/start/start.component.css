@@ -134,6 +134,24 @@ p, h1, div {
   font-family:Impact;
 }
 
+#icon_pv {
+  background-image: url(../../../assets/icons/heart.png);
+  background-size:70%;
+  background-repeat:no-repeat;
+}
+
+#icon_power {
+  background-image: url(../../../assets/icons/attack.png);
+  background-size:70%;
+  background-repeat:no-repeat;
+}
+
+#icon_fruit {
+  background-image: url(../../../assets/icons/fruit.png);
+  background-size:70%;
+  background-repeat:no-repeat;
+}
+
 .card-container {
   background: rgb(17, 17, 17);
   border: 1px solid black;
