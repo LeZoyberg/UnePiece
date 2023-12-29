@@ -13,6 +13,7 @@ import { IleService } from '../ile.service';
 export class IleComponent {
   joueur: Joueur = this.authService.getUtilisateur() as Joueur;
   partie: Partie = this.partieService.getPartie();
+  ile:Ile = new Ile();
   idIle!: number;
 
   constructor(
@@ -39,5 +40,10 @@ export class IleComponent {
       this.partie.ile = resp;
     });
     this.partieService.setPartie(this.partie);
+    this.ile = this.partie.ile as Ile;
+  }
+
+  showIle() {
+    return `Nom : ${this.ile.nom} Taverne : ${this.ile.taverne} Chantier : ${this.ile.chantier} Auberge :  ${this.ile.auberge} Attente : ${this.ile.attente} Ordre : ${this.ile.ordre} Mer : ${this.ile.mer}`
   }
 }
