@@ -260,6 +260,10 @@ h1, div {
   text-align: center;
 }
 
+.card {
+  width:50%;
+}
+
 table {
   height:90%;
   width:90%;
