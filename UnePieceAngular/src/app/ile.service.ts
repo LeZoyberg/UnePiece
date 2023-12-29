@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Ile } from './model';
+import { Ile, Partie } from './model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PartieService } from './partie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,11 @@ import { environment } from 'src/environments/environment';
 export class IleService {
 
   ile: Ile = new Ile();
+  partie: Partie = new Partie();
+  idIle!:number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, 
+    private partieService: PartieService) {
 
   }
 
@@ -33,5 +37,23 @@ export class IleService {
 
   delete(id?:number): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/partie/${id}`);
+  }
+
+  determineIle() : Ile {
+    // si pas d'ile associée à la partie, set l'ile sur l'ile de départ
+    console.log("determineIle");
+    this.partie = this.partieService.getPartie();
+    if (this.partie.ile == undefined) {
+      this.idIle = 1;
+    } else {
+      this.idIle = this.partie.ile.id as number;
+    }
+    this.findById(this.idIle).subscribe((resp) => {
+      this.partie.ile = resp;
+    });
+    this.partieService.setPartie(this.partie);
+    this.partieService.update(this.partie);
+    this.ile = this.partie.ile as Ile;
+    return this.ile;
   }
 }
