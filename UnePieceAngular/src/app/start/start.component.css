@@ -152,6 +152,12 @@ p, h1, div {
   background-repeat:no-repeat;
 }
 
+#icon_prime {
+  background-image: url(../../../assets/icons/coin.png);
+  background-size:10%;
+  background-repeat:no-repeat;
+}
+
 .card-container {
   background: rgb(17, 17, 17);
   border: 1px solid black;
