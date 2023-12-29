@@ -130,7 +130,13 @@ table {
 
 /* -------[ ^ The above style harmonizes style no matter which browser is used]------- */
 
-p, h1, div {
+p {
+  font-family:Impact;
+  font-size:40px;
+  text-align:center;
+}
+
+h1, div {
   font-family:Impact;
 }
 
@@ -262,7 +268,10 @@ table {
 
 th, tr, td {
   vertical-align: middle;
-  border: 1px solid black;
+}
+
+#td-message {
+  text-align:center;
 }
 
 .flex-container {
