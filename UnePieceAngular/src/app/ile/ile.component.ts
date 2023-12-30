@@ -27,6 +27,7 @@ export class IleComponent {
       console.log('this.ile :>> ', this.ile);
       this.partie = resp;
       this.partie.dateDebut = this.partieService.getPartie().dateDebut;
+      // manque calcul durée partie (Date.now - dateDebut)
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
