@@ -25,7 +25,7 @@ public class Partie {
 	private int duree;
 	@OneToMany(mappedBy = "partie")
 	private List<Membre> membres = new ArrayList();
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_ile")
 	private Ile ile;
 	@OneToOne

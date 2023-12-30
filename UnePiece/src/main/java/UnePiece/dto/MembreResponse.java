@@ -1,11 +1,31 @@
 package UnePiece.dto;
 
+import UnePiece.model.Pirate;
+
 public class MembreResponse {
 	
+	private Integer id;
 	private String nom;
 	private int pv;
 	private int power;
+	private Pirate pirate;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Pirate getPirate() {
+		return pirate;
+	}
+
+	public void setPirate(Pirate pirate) {
+		this.pirate = pirate;
+	}
+
 	public String getNom() {
 		return nom;
 	}

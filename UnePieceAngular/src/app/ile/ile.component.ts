@@ -22,10 +22,21 @@ export class IleComponent {
     private ileService: IleService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie();
-    this.ile = this.ileService.determineIle();
-    console.log('this.joueur :>> ', this.joueur);
-    console.log('this.partie :>> ', this.partie);
+    this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
+      this.ile = this.ileService.determineIle();
+      console.log('this.ile :>> ', this.ile);
+      this.partie = resp;
+      this.partie.dateDebut = this.partieService.getPartie().dateDebut;
+      this.partie.termine = false;
+      this.partie.tresor = this.partieService.getPartie().tresor;
+      this.partie.ile = this.ile;
+      this.partie.joueur = this.joueur;
+      this.partie.membres = this.partieService.getPartie().membres;
+      this.partieService.setPartie(this.partie);
+      this.partieService.update(this.partie).subscribe();
+      console.log('this.joueur :>> ', this.joueur);
+      console.log('this.partie :>> ', this.partie);
+    });
   }
   showIle() {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`

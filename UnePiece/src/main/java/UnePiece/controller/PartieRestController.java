@@ -75,10 +75,6 @@ public class PartieRestController {
 		daoPartie.save(partie);
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La partie n'est pas valide...");
-		}*/
 		return partieDTO;
 	}
 	
