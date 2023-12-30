@@ -22,7 +22,7 @@ export class AccueilComponent {
     this.partieService
       .findByIdJoueur(this.authService.getUtilisateur()?.id)
       .subscribe((resp) => {
-        if (resp != undefined) {
+        if (resp != undefined && resp.termine == false) {
 console.log("Une partie a été trouvée pour ce joueur");
           this.partie = resp;
           this.router.navigate(['/start']);
