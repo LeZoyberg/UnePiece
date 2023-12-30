@@ -17,23 +17,24 @@ export class AccueilComponent {
     private authService: AuthService
   ) {}
 
+  /* WIP : comment checker si this.partieService.findByIdJoueur(this.authService.getUtilisateur()?.id) 
+  renvoie quelque chose (i.e. qu'une partie existe pour ce joueur dans la bdd) sans que ça crash ? */
   continueGame() {
-    console.log("continueGame()");
+    console.log('continueGame()');
     this.partieService
       .findByIdJoueur(this.authService.getUtilisateur()?.id)
-      .subscribe((resp) => {
-        if (resp != undefined && resp.termine == false) {
-console.log("Une partie a été trouvée pour ce joueur");
+      ?.subscribe((resp) => {
+        if (!!resp && resp.termine == false) {
+          console.log('Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
           this.router.navigate(['/start']);
-      console.log('this.partie :>> ', this.partie);
-        }
-        else this.newGame();
+          console.log('this.partie :>> ', this.partie);
+        } else this.newGame();
       });
   }
 
   newGame() {
-    console.log("newGame()");
+    console.log('newGame()');
     this.partie = new Partie();
     this.partie.termine = false;
     this.partie!.joueur = this.authService.getUtilisateur();
