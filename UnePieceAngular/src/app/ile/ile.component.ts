@@ -13,8 +13,9 @@ import { MembreService } from '../membre.service';
 })
 export class IleComponent {
   joueur: Joueur = this.authService.getUtilisateur() as Joueur;
-  partie: Partie = this.partieService.getPartie();
-  ile:Ile = new Ile();
+  //partie: Partie = this.partieService.getPartie();
+  //ile:Ile = new Ile();
+  ile?:Ile;
   idIle!: number;
   joursRestants!:number;
 
@@ -24,7 +25,7 @@ export class IleComponent {
     private ileService: IleService,
     private membreService: MembreService,
   ) {
-    this.joueur = this.authService.getUtilisateur() as Joueur;
+    /*this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
       this.ile = this.ileService.determineIle();
       console.log('this.ile :>> ', this.ile);
@@ -41,10 +42,44 @@ export class IleComponent {
       this.partieService.update(this.partie).subscribe();
       console.log('this.joueur :>> ', this.joueur);
       console.log('this.partie :>> ', this.partie);
+    });*/
+
+    this.joueur = this.authService.getUtilisateur() as Joueur;
+
+    this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
+      if(resp.ile?.id){
+        console.log('resp.ile?.id :>> ', resp.ile?.id);
+        this.ileService.findById(resp.ile?.id).subscribe(resp2 => {
+          console.log('resp2 :>> ', JSON.stringify(resp2));
+          this.ile = resp2;
+        });
+      }
+      else{
+        this.ile = this.ileService.determineIle();
+        console.log('this.ile :>> ', this.ile);
+        resp.dateDebut = this.partieService.getPartie().dateDebut;
+        // manque calcul durée partie (Date.now - dateDebut)
+        resp.termine = false;
+        resp.tresor = this.partieService.getPartie().tresor;
+        resp.ile = this.ile;
+        resp.joueur = this.joueur;
+        resp.membres = this.partieService.getPartie().membres;
+        this.partieService.setPartie(resp);
+        this.partieService.update(resp).subscribe();
+        console.log('this.joueur :>> ', this.joueur);
+        console.log('this.partie :>> ', resp);
+      }
     });
+
   }
+
   showIle() {
-    return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`
+    if(this.ile){
+      return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`
+    }
+    else{
+      return null;
+    }  
   }
 
   rest(membre : Membre) {
