@@ -45,10 +45,11 @@ public class PartieRestController {
 	@GetMapping("/joueur/{idJoueur}")
 	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) {
 		System.out.println("findByIdJoueurDTO");
-		Partie partie = daoPartie.findByIdJoueur(idJoueur).get(); // pas faire get direct
-
-
-
+		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get(); 
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Membre } from '../model';
 import { MembreService } from '../membre.service';
+import { NavireService } from '../navire.service';
 
 @Component({
   selector: 'stat-equipage',
@@ -9,17 +10,17 @@ import { MembreService } from '../membre.service';
   styleUrls: ['./stat-equipage.component.css']
 })
 export class StatEquipageComponent {
-vie: number = 1;
+vie?: number;
 nbMembre: number = 0;
-robustesse: number = 3;
-force: number = 4;
-tresor: number = 5;
+robustesse?: number;
+force: number = 0;
+tresor?: number;
 nom!: string;
 color: string = "#2C75FF";
 visible: boolean = false;
 membres!: Membre[]; 
 
-  constructor(private membreService: MembreService) {
+  constructor(private membreService: MembreService, private navireService: NavireService) {
     this.load();
   }
 
@@ -28,13 +29,19 @@ membres!: Membre[];
     this.membreService.findAll().subscribe(resp => {
       this.membres = resp;
       this.nbMembre=this.membres.length;
+      this.vie=this.membres[0].pv;
+      this.tresor=this.membres[0].partie?.tresor;
+      for (let membre of this.membres){
+        if (membre.power){this.force+=membre.power;};
+      }
     });
-    console.log('this.membres :>> ', this.membres);
+    this.navireService.findById().subscribe(resp => {
+      this.robustesse = resp.robustesse;
+    });
   }
 
   list(): Membre[] {
     if(!this.membres) {
-      console.log("pas de membres trouvés, -> this.load()");
       this.load();
     }
     return this.membres;
