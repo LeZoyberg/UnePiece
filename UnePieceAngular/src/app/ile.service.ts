@@ -51,8 +51,6 @@ export class IleService {
     // si pas d'ile associée à la partie, set l'ile sur l'ile de départ
     console.log("determineIle");
 
-
-
     this.partie = this.partieService.getPartie();
     if (this.partie.ile == undefined) {
       this.idIle = 1;
@@ -61,6 +59,8 @@ export class IleService {
     }
     this.findById(this.idIle).subscribe((resp) => {
       this.partie.ile = resp;
+      (this.partie.ile.id as number) = this.idIle;
+      console.log('Dans subscribe de determineIle : this.partie.ile :>> ', this.partie.ile);
       this.partieService.setPartie(this.partie);
       this.partieService.update(this.partie);
       this.ile = this.partie.ile as Ile;

@@ -221,11 +221,10 @@ export class IleComponent {
   }
 
   nextDay() {
-      (this.partie.duree as number) += 1;
-      this.partieService.update(this.partie).subscribe(resp => {
+    this.partieService.update(this.partie).subscribe((resp) => {
       this.joursRestants--;
-      });
-    
+      (this.partie.duree as number) += 1;
+    });
   }
 
   leave(destination: Ile) {
