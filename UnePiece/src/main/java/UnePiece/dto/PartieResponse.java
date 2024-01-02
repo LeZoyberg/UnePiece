@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import UnePiece.model.Ile;
 import UnePiece.model.Navire;
 
 public class PartieResponse {
@@ -15,6 +16,7 @@ public class PartieResponse {
 	private Integer duree;
 	private List<MembreResponse> membres = new ArrayList();
 	private Navire navire;
+	private Ile ile;
 
 	public Integer getId() {
 		return id;
@@ -58,7 +60,12 @@ public class PartieResponse {
 	public void setNavire(Navire navire) {
 		this.navire = navire;
 	}
-
+	public Ile getIle() {
+		return ile;
+	}
+	public void setIle(Ile ile) {
+		this.ile = ile;
+	}
 	
 	
 	
