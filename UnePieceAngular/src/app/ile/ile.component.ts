@@ -30,7 +30,7 @@ export class IleComponent {
       console.log('this.ile :>> ', this.ile);
       this.partie = resp;
       this.partie.dateDebut = this.partieService.getPartie().dateDebut;
-      // manque calcul durée partie (Date.now - dateDebut)
+      // TODO : manque calcul durée partie (Date.now - dateDebut)
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
@@ -48,11 +48,12 @@ export class IleComponent {
   }
 
   rest(membre : Membre) {
-    //check si pv max
-    if(membre.pv) membre.pv += 1;
+    if(membre.pv && membre.pirate && membre.pirate.pv && membre.pv < membre.pirate.pv) {
+    membre.pv += 1;
     this.membreService.update(membre).subscribe();
     this.joursRestants--;
     console.log(membre," a été reposé");
+    } 
   }
 
   recruit() {}
