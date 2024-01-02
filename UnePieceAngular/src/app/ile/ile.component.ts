@@ -52,6 +52,7 @@ export class IleComponent {
       this.partieService.update(this.partie).subscribe();
       this.listRecruits();
       this.listBateaux();
+      this.listDestinations();
       console.log('this.joueur :>> ', this.joueur);
       console.log('this.partie :>> ', this.partie);
     });
@@ -85,29 +86,33 @@ export class IleComponent {
   }
 
   listDestinations() {
-    if (this.partie.ile && this.partie.ile.ileFinale) {
-      console.log(
-        'Ile finale, affichage des premières îles de la mer suivante'
-      );
-      this.ileService
-        .findAllFirstIlesNextMer(
-          this.convertName(this.partie.ile.mer as string)
-        )
-        .subscribe((resp) => {
-          console.log('findAllFirstIlesNextMer');
-          console.log('resp :>> ', resp);
-        });
-    } else if (this.partie.ile) {
-      console.log('Affichage des prochaines îles de la même mer');
-      this.ileService
-        .findAllNextIlesSameMer(
-          this.convertName(this.partie.ile.mer as string),
-          (this.partie.ile.ordre as number) + 1
-        )
-        .subscribe((resp) => {
-          console.log('findAllFirstIlesNextMer');
-          console.log('resp :>> ', resp);
-        });
+    if (this.partie.ile) {
+      if (this.partie.ile.ileFinale) {
+        console.log(
+          'Ile finale, affichage des premières îles de la mer suivante'
+        );
+        this.ileService
+          .findAllFirstIlesNextMer(
+            this.convertName(this.partie.ile.mer as string)
+          )
+          .subscribe((resp) => {
+            console.log('findAllFirstIlesNextMer');
+            console.log('resp :>> ', resp);
+            this.destinations = resp;
+          });
+      } else {
+        console.log('Affichage des prochaines îles de la même mer');
+        this.ileService
+          .findAllNextIlesSameMer(
+            this.convertName(this.partie.ile.mer as string),
+            (this.partie.ile.ordre as number) + 1
+          )
+          .subscribe((resp) => {
+            console.log('findAllFirstIlesNextMer');
+            console.log('resp :>> ', resp);
+            this.destinations = resp;
+          });
+      }
     }
   }
 
