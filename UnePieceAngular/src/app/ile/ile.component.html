@@ -50,7 +50,12 @@
 
     <td><button (click)="buyShip(b)">Acheter un bateau pour {{b.prix}}฿</button></td>
     </tr>
-    <tr><button (click)="repair()">Réparer son bateau</button></tr>
+    <tr>
+        <td>Mon navire : {{partie.navire?.bateau?.nom}}</td>
+        <td>Robustesse : {{partie.navire?.robustesse}}</td>
+        <td>Capacité : {{partie.navire?.bateau?.capacite}}</td>
+        <td><button (click)="repair()">Réparer son bateau (+2 robustesse) pour 5฿</button></td>
+    </tr>
     </table>
   </div>
 

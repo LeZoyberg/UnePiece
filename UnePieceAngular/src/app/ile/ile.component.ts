@@ -22,7 +22,7 @@ export class IleComponent {
   joursRestants!: number;
   pirates!: Pirate[];
   bateaux!: Bateau[];
-
+  navire!:Navire;
   constructor(
     private authService: AuthService,
     private partieService: PartieService,
@@ -106,17 +106,17 @@ export class IleComponent {
       // TODO : retirer bateau déjà possédé
     });
   }
- 
+
   buyShip(bateau : Bateau) {
-    
     if(this.partie.tresor && bateau.prix && this.partie.tresor >= bateau.prix) {
       this.partie.tresor -= bateau.prix;
-      
+
       let newNavire: Navire = new Navire();
       newNavire.bateau = bateau;
       newNavire.robustesse = bateau.robustesse;
       this.navireService.create(newNavire).subscribe(resp => {
-        this.partie.navire = resp;
+        this.navire = resp;
+        this.partie.navire = this.navire;
         this.partieService.update(this.partie).subscribe();
         this.joursRestants--;
         console.log(bateau, ' a été acheté');
@@ -125,6 +125,25 @@ export class IleComponent {
       })
     }
   }
-  repair() {}
+  repair() {
+    if(this.partie.navire && this.partie.tresor && this.partie.tresor >= 5) {
+      if(this.navire.bateau && this.navire.bateau.robustesse && this.navire.robustesse 
+        && this.navire.robustesse < this.navire.bateau?.robustesse) {
+          this.navire.robustesse += 2;
+          this.partie.tresor -= 5;
+          if(this.navire.robustesse > this.navire.bateau.robustesse) {
+            this.navire.robustesse = this.navire.bateau.robustesse;
+          }
+          console.log(this.navire, " a été réparé");
+        }
+        else {
+          console.log("Le navire a déjà sa robustesse au maximum");
+        }
+        this.navireService.update(this.navire).subscribe(resp => {
+          this.partieService.update(this.partie).subscribe();
+          console.log('this.partie :>> ', this.partie);
+        })
+    }
+  }
   leave() {}
 }
