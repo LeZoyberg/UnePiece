@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Ile, Joueur, Partie } from '../model';
+import { Ile, Joueur, Membre, Partie } from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
+import { MembreService } from '../membre.service';
 
 @Component({
   selector: 'ile',
@@ -15,11 +16,13 @@ export class IleComponent {
   partie: Partie = this.partieService.getPartie();
   ile:Ile = new Ile();
   idIle!: number;
+  joursRestants!:number;
 
   constructor(
     private authService: AuthService,
     private partieService: PartieService,
-    private ileService: IleService
+    private ileService: IleService,
+    private membreService: MembreService,
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
@@ -31,6 +34,7 @@ export class IleComponent {
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
+      this.joursRestants=this.ile.attente as number;
       this.partie.joueur = this.joueur;
       this.partie.membres = this.partieService.getPartie().membres;
       this.partieService.setPartie(this.partie);
@@ -42,4 +46,20 @@ export class IleComponent {
   showIle() {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`
   }
+
+  rest(membre : Membre) {
+    //check si pv max
+    if(membre.pv) membre.pv += 1;
+    this.membreService.update(membre).subscribe();
+    this.joursRestants--;
+    console.log(membre," a été reposé");
+  }
+
+  recruit() {}
+
+  repair() {}
+
+  buyShip() {}
+
+  leave() {}
 }
