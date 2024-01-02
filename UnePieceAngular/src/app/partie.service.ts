@@ -46,4 +46,8 @@ export class PartieService {
     return this.http.get<Partie>(environment.apiUrl + "/partie/joueur/"+id);
   }
 
+  findByIdJoueurWithMembres(id?: number) : Observable<Partie> {
+    return this.http.get<Partie>(environment.apiUrl + "/partie/joueur/"+id+"/membres");
+  }
+
 }
