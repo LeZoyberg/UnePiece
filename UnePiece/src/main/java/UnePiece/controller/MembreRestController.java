@@ -3,6 +3,7 @@ package UnePiece.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import UnePiece.dao.IDAOMembre;
 import UnePiece.dao.IDAOPartie;
 import UnePiece.dao.IDAOPirate;
+import UnePiece.dto.MembreResponse;
 import UnePiece.model.Membre;
 import UnePiece.model.Partie;
 import UnePiece.model.Pirate;
@@ -71,13 +73,17 @@ public class MembreRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public Membre update(@PathVariable Integer id, @RequestBody Membre membre, BindingResult result) 
+	public MembreResponse update(@PathVariable Integer id, @RequestBody Membre membre, BindingResult result) 
 	{
 		/*if(result.hasErrors()) 
 		{
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La membre n'est pas valide...");
 		}*/
-		return daoMembre.save(membre);
+		daoMembre.save(membre);
+
+		MembreResponse membreDTO = new MembreResponse();
+		BeanUtils.copyProperties(membre, membreDTO);
+		return membreDTO;
 	}
 	
 	@DeleteMapping("/{id}")
