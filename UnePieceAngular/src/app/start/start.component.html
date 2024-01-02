@@ -1,26 +1,40 @@
-<div class="card-body"> 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>PV</th>
-                <th>Force</th>
-                <th>Or</th>
-                <th>Fruit du démon</th>
-                <th>Choisir ce capitaine</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let c of capitaines">
-                <td>{{c.nom}}</td>
-                <td>{{c.pv}}</td>
-                <td>{{c.power}}</td>
-                <td>{{c.prime}}</td>
-                <td>{{c.fruit}}</td>
-                <td><a (click)="chooseCapitaine(c)" class="btn btn-primary"><i class="bi bi-person-raised-hand"></i></a></td>
 
-        </tbody>
+<table class="card flex-container">
+  <tr id="td-message"><p>Choisissez un capitaine</p></tr>
+  <tr>
+    <td *ngFor="let c of capitaines" (click)="chooseCapitaine(c)" class="card-cell">
+      <div class="card-container">
+        <div class="card-background">
+          <div class="card-frame">
+            <div class="frame-art"></div>
 
-    </table>
-</div>
-<div class="card-footer">
+            <div class="frame-header">
+              <h1>{{ c.nom }}</h1>
+            </div>
+            <div class="frame-textbox">
+              <table>
+                <tbody>
+                  <tr>
+                    <td id="icon_power"></td>
+                    <th>Force</th>
+                    <td>{{ c.power }}</td>
+                  </tr>
+                  <tr>
+                    <td id="icon_pv"></td>
+                    <th>Points de vie</th>
+                    <td>{{ c.pv }}</td>
+                  </tr>
+                  <tr *ngIf="c.fruit">
+                    <td id="icon_fruit"></td>
+                    <th>Fruit du démon</th>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="frame-prime" id="icon_prime">{{c.prime}}</div>
+          </div>
+        </div>
+      </div>
+    </td>
+</table>

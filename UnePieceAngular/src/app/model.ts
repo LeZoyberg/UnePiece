@@ -12,8 +12,6 @@ export class Partie {
     public actions: Action[]=[]
   ) {
 
-    
-
   }
 }
 

@@ -5,6 +5,7 @@ import { PartieService } from '../partie.service';
 import { AuthService } from '../auth.service';
 import { MembreService } from '../membre.service';
 import { Router } from '@angular/router';
+import { IleService } from '../ile.service';
 
 @Component({
   selector: 'app-start',
@@ -21,7 +22,8 @@ export class StartComponent {
     private partieService: PartieService,
     private authService: AuthService,
     private membreService: MembreService,
-    private router : Router
+    private ileService: IleService,
+    private router : Router,
   ) {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
@@ -57,9 +59,10 @@ export class StartComponent {
       this.partieService.update(this.partie).subscribe();
       console.log('this.partie :>> ', this.partie);
       this.partieService.setPartie(this.partie);
+      this.ileService.determineIle();
       this.router.navigate(['/ile']);
     });
-
+console.log("chooseCapitaine", capitaine);
 
   }
 }

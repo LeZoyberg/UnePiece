@@ -58,6 +58,8 @@ class UnePieceApplicationTests {
 	Pirate pirate2 = new Pirate(15,15,10,false,false,"Zorro");
 	Pirate pirate3 = new Pirate(2,2,2,false,false,"Ussop");
 	Pirate pirate4 = new Pirate(18,18,20,true,false,"Robin");
+	Pirate pirate5 = new Pirate(12,12,12,false,true,"Capitaine2");
+	Pirate pirate6 = new Pirate(13,13,13,false,true,"Capitaine3");
 	
 	Membre membre1 = new Membre(pirate1.getPv(), pirate1.getPower(), pirate1);
 	Membre membre2 = new Membre(pirate2.getPv(), pirate2.getPower(), pirate2);
@@ -86,6 +88,7 @@ class UnePieceApplicationTests {
 	
 	Joueur joueur1 = new Joueur("player1", "password");
 	Joueur joueur2 = new Joueur("player2", "password");
+	Joueur joueur3 = new Joueur("player3", "password");
 	
 	Action action1 = new Action(true, event1.getDegatNavire(), event1.getDegatMembre(), event1.getTresor(), event1);
 	Action action2 = new Action(false, event2.getDegatNavire(), event2.getDegatMembre(), event2.getTresor(), event2);
@@ -103,6 +106,8 @@ class UnePieceApplicationTests {
 	daoPirate.save(pirate2);
 	daoPirate.save(pirate3);
 	daoPirate.save(pirate4);
+	daoPirate.save(pirate5);
+	daoPirate.save(pirate6);
 	
 	daoMembre.save(membre1);
 	daoMembre.save(membre2);
@@ -126,6 +131,7 @@ class UnePieceApplicationTests {
 	
 	daoCompte.save(joueur1);
 	daoCompte.save(joueur2);
+	daoCompte.save(joueur3);
 	
 	partie1 = daoPartie.save(partie1);
 	partie2 = daoPartie.save(partie2);

@@ -10,15 +10,14 @@ import { MembreService } from '../membre.service';
 })
 export class StatEquipageComponent {
 vie: number = 1;
-nbMembre: number = 2;
+nbMembre!: number;
 robustesse: number = 3;
 force: number = 4;
 tresor: number = 5;
 nom!: string;
 color: string = "#2C75FF";
 visible: boolean = false;
-
-membres!: Observable<Membre[]> 
+membres!: Observable<Membre[]>; 
 
   constructor(private membreService: MembreService) {
     this.load();
@@ -26,6 +25,7 @@ membres!: Observable<Membre[]>
 
   load() {
     this.membres = this.membreService.findAll();
+    for (let m of [this.membres]){this.nbMembre++;}
   }
 
   list(): Observable<Membre[]> {
