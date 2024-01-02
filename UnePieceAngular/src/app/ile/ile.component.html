@@ -27,7 +27,13 @@
         <th>Taverne</th>
     </tr>
     <tr><img src="assets/buildings/taverne.png" alt="imageTaverne"/></tr>
-    <tr><button (click)="recruit()">Recruter un pirate</button></tr>
+    <tr *ngFor="let p of pirates">
+        <td>[Nom : {{p.nom}}]</td>
+        <td>[PV max : {{p.pv}}]</td>
+        <td>[Force : {{p.power}}]</td>
+        <td>[Fruit : {{p.fruit}}]</td>
+        <td><button (click)="recruit(p)">Recruter pour {{p.prime}}฿</button></td>
+    </tr>
     </table>
   </div>
 
