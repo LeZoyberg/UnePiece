@@ -43,8 +43,14 @@
         <th>Chantier naval</th>
     </tr>
     <tr><img src="assets/buildings/chantier.png" alt="imageChantier"/></tr>
+    <tr *ngFor="let b of bateaux">
+        <td>[Nom : {{b.nom}}]</td>
+        <td>[Capacité : {{b.capacite}}]</td>
+        <td>[Robustesse : {{b.robustesse}}]</td>
+
+    <td><button (click)="buyShip(b)">Acheter un bateau pour {{b.prix}}฿</button></td>
+    </tr>
     <tr><button (click)="repair()">Réparer son bateau</button></tr>
-    <tr><button (click)="buyShip()">Acheter un bateau</button></tr>
     </table>
   </div>
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Bateau, Ile, Joueur, Membre, Partie, Pirate } from '../model';
+import { Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
@@ -48,6 +48,7 @@ export class IleComponent {
       this.partieService.setPartie(this.partie);
       this.partieService.update(this.partie).subscribe();
       this.listRecruits();
+      this.listBateaux();
       console.log('this.joueur :>> ', this.joueur);
       console.log('this.partie :>> ', this.partie);
     });
@@ -88,20 +89,42 @@ export class IleComponent {
     this.membreService.create(newMembre).subscribe((resp) => {
       this.partie.membres.push(resp);
       this.partieService.update(this.partie).subscribe();
+      this.joursRestants--;
       console.log(pirate, ' a été recruté');
       console.log('this.partie :>> ', this.partie);
       this.listRecruits();
     });
   }
 
-  listShips() {
+  listBateaux() {
     this.bateauService.findAll().subscribe((resp) => {
       this.bateaux = resp;
+      // si ile de départ, n'affiche que les bateaux de départ
+      if(this.ile.id == 1) {
+        this.bateaux.filter(bateau => bateau.debut == true);
+      }
+      // TODO : retirer bateau déjà possédé
     });
   }
+ 
+  buyShip(bateau : Bateau) {
+    
+    if(this.partie.tresor && bateau.prix && this.partie.tresor >= bateau.prix) {
+      this.partie.tresor -= bateau.prix;
+      
+      let newNavire: Navire = new Navire();
+      newNavire.bateau = bateau;
+      newNavire.robustesse = bateau.robustesse;
+      this.navireService.create(newNavire).subscribe(resp => {
+        this.partie.navire = resp;
+        this.partieService.update(this.partie).subscribe();
+        this.joursRestants--;
+        console.log(bateau, ' a été acheté');
+        console.log('this.partie :>> ', this.partie);
+        this.listBateaux();
+      })
+    }
+  }
   repair() {}
-
-  buyShip() {}
-
   leave() {}
 }
