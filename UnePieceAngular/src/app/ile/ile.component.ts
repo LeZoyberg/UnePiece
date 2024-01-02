@@ -18,11 +18,10 @@ export class IleComponent {
   joueur: Joueur = this.authService.getUtilisateur() as Joueur;
   partie: Partie = this.partieService.getPartie();
   ile: Ile = new Ile();
-  idIle!: number;
   joursRestants!: number;
   pirates!: Pirate[];
   bateaux!: Bateau[];
-  navire!:Navire;
+  navire!: Navire;
   constructor(
     private authService: AuthService,
     private partieService: PartieService,
@@ -30,7 +29,7 @@ export class IleComponent {
     private membreService: MembreService,
     private pirateService: PirateService,
     private navireService: NavireService,
-    private bateauService: BateauService,
+    private bateauService: BateauService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partieService.findByIdJoueur(this.joueur.id).subscribe((resp) => {
@@ -42,6 +41,7 @@ export class IleComponent {
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
+      // TODO : jours d'attente doivent être égaux à attente de l'ile destination
       this.joursRestants = this.ile.attente as number;
       this.partie.joueur = this.joueur;
       this.partie.membres = this.partieService.getPartie().membres;
@@ -68,6 +68,8 @@ export class IleComponent {
       this.membreService.update(membre).subscribe();
       this.joursRestants--;
       console.log(membre, ' a été reposé');
+    } else {
+      console.log('Le pirate a déjà ses PV au max');
     }
   }
 
@@ -81,40 +83,56 @@ export class IleComponent {
   }
 
   recruit(pirate: Pirate) {
-    let newMembre: Membre = new Membre();
-    newMembre.pirate = pirate;
-    newMembre.pv = pirate.pv;
-    newMembre.power = pirate.power;
-    newMembre.partie = this.partie;
-    this.membreService.create(newMembre).subscribe((resp) => {
-      this.partie.membres.push(resp);
-      this.partieService.update(this.partie).subscribe();
-      this.joursRestants--;
-      console.log(pirate, ' a été recruté');
-      console.log('this.partie :>> ', this.partie);
-      this.listRecruits();
-    });
+    if (
+      this.partie.tresor &&
+      pirate.prime &&
+      this.partie.tresor >= pirate.prime
+    ) {
+      this.partie.tresor -= pirate.prime;
+      let newMembre: Membre = new Membre();
+      newMembre.pirate = pirate;
+      newMembre.pv = pirate.pv;
+      newMembre.power = pirate.power;
+      newMembre.partie = this.partie;
+      this.membreService.create(newMembre).subscribe((resp) => {
+        this.partie.membres.push(resp);
+
+        this.partieService.update(this.partie).subscribe();
+
+        this.joursRestants--;
+        console.log(pirate, ' a été recruté');
+        console.log('this.partie :>> ', this.partie);
+        this.listRecruits();
+      });
+    } else {
+      console.log("Pas assez d'argent pour recruter ce pirate");
+    }
   }
 
   listBateaux() {
     this.bateauService.findAll().subscribe((resp) => {
       this.bateaux = resp;
       // si ile de départ, n'affiche que les bateaux de départ
-      if(this.ile.id == 1) {
-        this.bateaux.filter(bateau => bateau.debut == true);
+      if (this.ile.id == 1) {
+        this.bateaux.filter((bateau) => bateau.debut == true);
       }
       // TODO : retirer bateau déjà possédé
     });
   }
 
-  buyShip(bateau : Bateau) {
-    if(this.partie.tresor && bateau.prix && this.partie.tresor >= bateau.prix) {
+  
+  buyShip(bateau: Bateau) {
+    if (
+      this.partie.tresor &&
+      bateau.prix &&
+      this.partie.tresor >= bateau.prix
+    ) {
       this.partie.tresor -= bateau.prix;
 
       let newNavire: Navire = new Navire();
       newNavire.bateau = bateau;
       newNavire.robustesse = bateau.robustesse;
-      this.navireService.create(newNavire).subscribe(resp => {
+      this.navireService.create(newNavire).subscribe((resp) => {
         this.navire = resp;
         this.partie.navire = this.navire;
         this.partieService.update(this.partie).subscribe();
@@ -122,28 +140,40 @@ export class IleComponent {
         console.log(bateau, ' a été acheté');
         console.log('this.partie :>> ', this.partie);
         this.listBateaux();
-      })
+      });
     }
   }
   repair() {
-    if(this.partie.navire && this.partie.tresor && this.partie.tresor >= 5) {
-      if(this.navire.bateau && this.navire.bateau.robustesse && this.navire.robustesse 
-        && this.navire.robustesse < this.navire.bateau?.robustesse) {
-          this.navire.robustesse += 2;
-          this.partie.tresor -= 5;
-          if(this.navire.robustesse > this.navire.bateau.robustesse) {
-            this.navire.robustesse = this.navire.bateau.robustesse;
-          }
-          console.log(this.navire, " a été réparé");
+    if (this.partie.navire && this.partie.tresor && this.partie.tresor >= 5) {
+      if (
+        this.navire.bateau &&
+        this.navire.bateau.robustesse &&
+        this.navire.robustesse &&
+        this.navire.robustesse < this.navire.bateau?.robustesse
+      ) {
+        this.navire.robustesse += 2;
+        this.partie.tresor -= 5;
+        if (this.navire.robustesse > this.navire.bateau.robustesse) {
+          this.navire.robustesse = this.navire.bateau.robustesse;
         }
-        else {
-          console.log("Le navire a déjà sa robustesse au maximum");
-        }
-        this.navireService.update(this.navire).subscribe(resp => {
-          this.partieService.update(this.partie).subscribe();
-          console.log('this.partie :>> ', this.partie);
-        })
+        console.log(this.navire, ' a été réparé');
+      } else {
+        console.log('Le navire a déjà sa robustesse au maximum');
+      }
+      this.navireService.update(this.navire).subscribe((resp) => {
+        this.partieService.update(this.partie).subscribe();
+        console.log('this.partie :>> ', this.partie);
+      });
     }
   }
-  leave() {}
+
+  nextDay() {
+    this.joursRestants--;
+  }
+
+  leave() {
+    if(this.joursRestants == 0) {
+
+    }
+  }
 }

@@ -1,9 +1,7 @@
-<p>ile works!</p>
-
 <p *ngIf="ile">Ile actuelle : {{ showIle() }}</p>
 <p>Durée restante : {{joursRestants}}</p>
 
-<div *ngIf="ile.auberge">
+<div *ngIf="ile.auberge && joursRestants > 0">
   <table>
     <tr>
       <th>Auberge</th>
@@ -21,7 +19,7 @@
 </div>
 
 
-<div *ngIf="ile.taverne">
+<div *ngIf="ile.taverne && joursRestants > 0">
     <table>
       <tr>
         <th>Taverne</th>
@@ -37,7 +35,7 @@
     </table>
   </div>
 
-  <div *ngIf="ile.chantier">
+  <div *ngIf="ile.chantier && joursRestants > 0">
     <table>
       <tr>
         <th>Chantier naval</th>
@@ -59,4 +57,5 @@
     </table>
   </div>
 
-  <button (click)="leave()">Partir en mer</button>
+  <button (click)="nextDay()" *ngIf="joursRestants > 0">Passer au jour suivant</button>
+  <button (click)="leave()" *ngIf="joursRestants == 0">Partir en mer</button>
