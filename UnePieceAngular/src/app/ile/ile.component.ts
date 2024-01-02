@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Ile, Joueur, Membre, Partie, Pirate } from '../model';
+import { Bateau, Ile, Joueur, Membre, Partie, Pirate } from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
 import { MembreService } from '../membre.service';
 import { PirateService } from '../pirate.service';
+import { NavireService } from '../navire.service';
+import { BateauService } from '../bateau.service';
 
 @Component({
   selector: 'ile',
@@ -15,10 +17,11 @@ import { PirateService } from '../pirate.service';
 export class IleComponent {
   joueur: Joueur = this.authService.getUtilisateur() as Joueur;
   partie: Partie = this.partieService.getPartie();
-  ile:Ile = new Ile();
+  ile: Ile = new Ile();
   idIle!: number;
-  joursRestants!:number;
+  joursRestants!: number;
   pirates!: Pirate[];
+  bateaux!: Bateau[];
 
   constructor(
     private authService: AuthService,
@@ -26,9 +29,11 @@ export class IleComponent {
     private ileService: IleService,
     private membreService: MembreService,
     private pirateService: PirateService,
+    private navireService: NavireService,
+    private bateauService: BateauService,
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
+    this.partieService.findByIdJoueur(this.joueur.id).subscribe((resp) => {
       this.ile = this.ileService.determineIle();
       console.log('this.ile :>> ', this.ile);
       this.partie = resp;
@@ -37,7 +42,7 @@ export class IleComponent {
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
-      this.joursRestants=this.ile.attente as number;
+      this.joursRestants = this.ile.attente as number;
       this.partie.joueur = this.joueur;
       this.partie.membres = this.partieService.getPartie().membres;
       this.partieService.setPartie(this.partie);
@@ -46,47 +51,54 @@ export class IleComponent {
       console.log('this.joueur :>> ', this.joueur);
       console.log('this.partie :>> ', this.partie);
     });
-    
   }
   showIle() {
-    return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`
+    return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`;
   }
 
-  rest(membre : Membre) {
-    if(membre.pv && membre.pirate && membre.pirate.pv && membre.pv < membre.pirate.pv) {
-    membre.pv += 1;
-    this.membreService.update(membre).subscribe();
-    this.joursRestants--;
-    console.log(membre," a été reposé");
-    } 
+  rest(membre: Membre) {
+    if (
+      membre.pv &&
+      membre.pirate &&
+      membre.pirate.pv &&
+      membre.pv < membre.pirate.pv
+    ) {
+      membre.pv += 1;
+      this.membreService.update(membre).subscribe();
+      this.joursRestants--;
+      console.log(membre, ' a été reposé');
+    }
   }
 
   listRecruits() {
     this.pirateService.findAll().subscribe((resp) => {
       this.pirates = resp;
       // retire capitaines
-      this.pirates = this.pirates.filter(
-        (pirate) => (pirate.capitaine == false)
-      );
-        // TODO : retirer pirates déjà membres de l'équipage
+      this.pirates = this.pirates.filter((pirate) => pirate.capitaine == false);
+      // TODO : retirer pirates déjà membres de l'équipage
     });
   }
 
-  recruit(pirate : Pirate) {
-    let newMembre : Membre = new Membre();
+  recruit(pirate: Pirate) {
+    let newMembre: Membre = new Membre();
     newMembre.pirate = pirate;
     newMembre.pv = pirate.pv;
     newMembre.power = pirate.power;
     newMembre.partie = this.partie;
-    this.membreService.create(newMembre).subscribe(resp => {
+    this.membreService.create(newMembre).subscribe((resp) => {
       this.partie.membres.push(resp);
       this.partieService.update(this.partie).subscribe();
-      console.log(pirate, " a été recruté");
+      console.log(pirate, ' a été recruté');
       console.log('this.partie :>> ', this.partie);
       this.listRecruits();
     });
   }
 
+  listShips() {
+    this.bateauService.findAll().subscribe((resp) => {
+      this.bateaux = resp;
+    });
+  }
   repair() {}
 
   buyShip() {}
