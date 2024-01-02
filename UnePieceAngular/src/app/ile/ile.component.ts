@@ -18,10 +18,12 @@ export class IleComponent {
   joueur: Joueur = this.authService.getUtilisateur() as Joueur;
   partie: Partie = this.partieService.getPartie();
   ile: Ile = new Ile();
+  ileDestination: Ile = new Ile();
   joursRestants!: number;
   pirates!: Pirate[];
   bateaux!: Bateau[];
   navire!: Navire;
+  destinations!: Ile[];
   constructor(
     private authService: AuthService,
     private partieService: PartieService,
@@ -55,6 +57,23 @@ export class IleComponent {
   }
   showIle() {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`;
+  }
+
+  listDestinations() {
+    this.ileService.findAll().subscribe((resp) => {
+      this.destinations = resp;
+      // montre que iles sur la même mer
+      this.destinations = this.destinations.filter((ile) => {
+        ile.mer = this.partie.ile?.mer;
+      })
+      // montre que iles ordre suivant
+      this.destinations = this.destinations.filter((ile) => {
+          ile.ordre = (this.partie?.ile?.ordre as number) + 1;
+      });
+      // si destinations est vide (càd plus d'iles suivante sur la même mer)
+      // -> montre première ile de la mer suivante
+      this.destinations = resp;
+    });
   }
 
   rest(membre: Membre) {
@@ -120,7 +139,6 @@ export class IleComponent {
     });
   }
 
-  
   buyShip(bateau: Bateau) {
     if (
       this.partie.tresor &&
@@ -172,8 +190,8 @@ export class IleComponent {
   }
 
   leave() {
-    if(this.joursRestants == 0) {
-
-    }
+    this.chooseDestination();
   }
+
+  chooseDestination() {}
 }
