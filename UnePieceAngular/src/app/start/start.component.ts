@@ -31,6 +31,7 @@ export class StartComponent {
   }
 
   listCapitaines() {
+    // TODO : plutôt faire une requête HTTP dédiée qui ramène directement les bons pirates
     this.pirateService.findAll().subscribe((resp) => {
       this.capitaines = resp;
       this.capitaines = this.capitaines.filter(

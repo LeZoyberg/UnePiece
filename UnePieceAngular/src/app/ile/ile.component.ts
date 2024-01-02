@@ -16,8 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./ile.component.css'],
 })
 export class IleComponent {
-  joueur: Joueur = this.authService.getUtilisateur() as Joueur;
-  partie: Partie = this.partieService.getPartie();
+  joueur!: Joueur;
+  partie!: Partie;
   ile: Ile = new Ile();
   ileDestination: Ile = new Ile();
   joursRestants!: number;
@@ -133,6 +133,7 @@ export class IleComponent {
   }
 
   listRecruits() {
+    // TODO : plutôt faire une requête HTTP dédiée qui ramène direct les bons pirates
     this.pirateService.findAll().subscribe((resp) => {
       this.pirates = resp;
       // retire capitaines

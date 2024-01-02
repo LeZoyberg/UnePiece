@@ -42,7 +42,7 @@ export class PartieService {
   }
 
   findByIdJoueur(id?: number) : Observable<Partie> {
-    console.log("id:", id);
+    console.log("[findByIdJoueur / partie.service.ts:45] id joueur:", id);
     return this.http.get<Partie>(environment.apiUrl + "/partie/joueur/"+id);
   }
 

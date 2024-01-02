@@ -20,21 +20,21 @@ export class AccueilComponent {
   /* WIP : comment checker si this.partieService.findByIdJoueur(this.authService.getUtilisateur()?.id) 
   renvoie quelque chose (i.e. qu'une partie existe pour ce joueur dans la bdd) sans que ça crash ? */
   continueGame() {
-    console.log('continueGame()');
     this.partieService
       .findByIdJoueur(this.authService.getUtilisateur()?.id)
       ?.subscribe((resp) => {
         if (!!resp && resp.termine == false) {
-          console.log('Une partie en cours a été trouvée pour ce joueur');
+          console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
+          // TODO : set les autres attributs de la partie (ile, membres, actions, ...)
           this.router.navigate(['/ile']);
-          console.log('this.partie :>> ', this.partie);
+          console.log('[continueGame() in accueil.component.ts] this.partie :>> ', this.partie);
         } else this.newGame();
       });
   }
 
   newGame() {
-    console.log('newGame()');
+    
     this.partie = new Partie();
     this.partie.termine = false;
     this.partie!.joueur = this.authService.getUtilisateur();
@@ -42,7 +42,7 @@ export class AccueilComponent {
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partieService.create(this.partie).subscribe((resp) => {
       this.router.navigate(['/start']);
-      console.log('this.partie :>> ', this.partie);
+      console.log('[newGame() in accueil.component.ts] this.partie :>> ', this.partie);
     });
   }
 }
