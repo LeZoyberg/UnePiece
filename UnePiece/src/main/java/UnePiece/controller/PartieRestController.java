@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import UnePiece.dao.IDAOPartie;
+import UnePiece.dto.MembreResponse;
 import UnePiece.dto.PartieResponse;
+import UnePiece.model.Membre;
 import UnePiece.model.Partie;
 
 @RestController
@@ -52,6 +54,24 @@ public class PartieRestController {
 		Partie partie = opt.get(); 
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
+
+		return partieDTO;
+	}
+	
+	@GetMapping("/joueur/{idJoueur}/membres")
+	public PartieResponse findByIdJoueurWithMembres(@PathVariable Integer idJoueur) {
+		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembres(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get(); 
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		for(Membre m : partie.getMembres()) {
+			MembreResponse membreDTO = new MembreResponse();
+			BeanUtils.copyProperties(m, membreDTO);
+			partieDTO.getMembres().add(membreDTO);
+		}
 
 		return partieDTO;
 	}

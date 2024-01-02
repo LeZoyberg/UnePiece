@@ -23,7 +23,10 @@ export class AuthService {
   }
 
   inscription(username: string, password: string) {
-    return this.http.post<Joueur>(environment.apiUrl + '/compte/inscription', { "login": username, "password": password }).subscribe();
+    this.http.post<Joueur>(environment.apiUrl + '/compte/inscription', { "login": username, "password": password }).subscribe(resp => {
+      this.login(username, password);
+      return resp;
+    });
   }
 
   logout() {
