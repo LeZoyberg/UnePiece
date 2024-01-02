@@ -56,6 +56,7 @@ export class Navire {
   ) {}
 }
 
+
 export class Ile {
   constructor(
     public id?: number,
@@ -65,7 +66,8 @@ export class Ile {
     public chantier?: boolean,
     public attente?: number,
     public ordre?: number,
-    public mer?: string
+    public mer?: string,
+    public ileFinale?: boolean
   ) {}
 }
 

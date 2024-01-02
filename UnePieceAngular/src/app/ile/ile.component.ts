@@ -8,6 +8,7 @@ import { MembreService } from '../membre.service';
 import { PirateService } from '../pirate.service';
 import { NavireService } from '../navire.service';
 import { BateauService } from '../bateau.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ile',
@@ -31,7 +32,8 @@ export class IleComponent {
     private membreService: MembreService,
     private pirateService: PirateService,
     private navireService: NavireService,
-    private bateauService: BateauService
+    private bateauService: BateauService,
+    private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partieService.findByIdJoueur(this.joueur.id).subscribe((resp) => {
@@ -43,7 +45,6 @@ export class IleComponent {
       this.partie.termine = false;
       this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
-      // TODO : jours d'attente doivent être égaux à attente de l'ile destination
       this.joursRestants = this.ile.attente as number;
       this.partie.joueur = this.joueur;
       this.partie.membres = this.partieService.getPartie().membres;
@@ -59,21 +60,55 @@ export class IleComponent {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`;
   }
 
+  convertName(nom: string): string {
+    console.log('-' + nom + '-');
+    switch (nom) {
+      case 'EastBlue':
+        return 'WestBlue';
+        break;
+      case 'WestBlue':
+        return 'NorthBlue';
+        break;
+      case 'NorthBlue':
+        return 'SouthBlue';
+        break;
+      case 'SouthBlue':
+        return 'GrandLine';
+        break;
+      case 'GrandLine':
+        return 'NewWorld';
+        break;
+      default:
+        return '-1';
+        break;
+    }
+  }
+
   listDestinations() {
-    this.ileService.findAll().subscribe((resp) => {
-      this.destinations = resp;
-      // montre que iles sur la même mer
-      this.destinations = this.destinations.filter((ile) => {
-        ile.mer = this.partie.ile?.mer;
-      })
-      // montre que iles ordre suivant
-      this.destinations = this.destinations.filter((ile) => {
-          ile.ordre = (this.partie?.ile?.ordre as number) + 1;
-      });
-      // si destinations est vide (càd plus d'iles suivante sur la même mer)
-      // -> montre première ile de la mer suivante
-      this.destinations = resp;
-    });
+    if (this.partie.ile && this.partie.ile.ileFinale) {
+      console.log(
+        'Ile finale, affichage des premières îles de la mer suivante'
+      );
+      this.ileService
+        .findAllFirstIlesNextMer(
+          this.convertName(this.partie.ile.mer as string)
+        )
+        .subscribe((resp) => {
+          console.log('findAllFirstIlesNextMer');
+          console.log('resp :>> ', resp);
+        });
+    } else if (this.partie.ile) {
+      console.log('Affichage des prochaines îles de la même mer');
+      this.ileService
+        .findAllNextIlesSameMer(
+          this.convertName(this.partie.ile.mer as string),
+          (this.partie.ile.ordre as number) + 1
+        )
+        .subscribe((resp) => {
+          console.log('findAllFirstIlesNextMer');
+          console.log('resp :>> ', resp);
+        });
+    }
   }
 
   rest(membre: Membre) {
@@ -186,12 +221,17 @@ export class IleComponent {
   }
 
   nextDay() {
-    this.joursRestants--;
+      (this.partie.duree as number) += 1;
+      this.partieService.update(this.partie).subscribe(resp => {
+      this.joursRestants--;
+      });
+    
   }
 
-  leave() {
-    this.chooseDestination();
+  leave(destination: Ile) {
+    this.partie.ile = destination;
+    this.partieService.update(this.partie).subscribe((resp) => {
+      this.router.navigate(['/trajet']);
+    });
   }
-
-  chooseDestination() {}
 }

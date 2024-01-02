@@ -19,6 +19,14 @@ export class IleService {
 
   }
 
+  findAllFirstIlesNextMer(ordreMer: string): Observable<Ile[]> {
+    return this.http.get<Ile[]>(`${environment.apiUrl}/ile/mer/${ordreMer}`);
+  }
+
+  findAllNextIlesSameMer(ordreMer: string, ordre : number): Observable<Ile[]> {
+    return this.http.get<Ile[]>(`${environment.apiUrl}/ile/mer/${ordreMer}/${ordre}`);
+  }
+
   findAll(): Observable<Ile[]> {
     return this.http.get<Ile[]>(`${environment.apiUrl}/ile`);
   }
@@ -42,6 +50,9 @@ export class IleService {
   determineIle() : Ile {
     // si pas d'ile associée à la partie, set l'ile sur l'ile de départ
     console.log("determineIle");
+
+
+
     this.partie = this.partieService.getPartie();
     if (this.partie.ile == undefined) {
       this.idIle = 1;
@@ -50,10 +61,10 @@ export class IleService {
     }
     this.findById(this.idIle).subscribe((resp) => {
       this.partie.ile = resp;
+      this.partieService.setPartie(this.partie);
+      this.partieService.update(this.partie);
+      this.ile = this.partie.ile as Ile;
     });
-    this.partieService.setPartie(this.partie);
-    this.partieService.update(this.partie);
-    this.ile = this.partie.ile as Ile;
     return this.ile;
   }
 }

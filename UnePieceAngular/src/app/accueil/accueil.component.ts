@@ -27,7 +27,7 @@ export class AccueilComponent {
         if (!!resp && resp.termine == false) {
           console.log('Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
-          this.router.navigate(['/start']);
+          this.router.navigate(['/ile']);
           console.log('this.partie :>> ', this.partie);
         } else this.newGame();
       });

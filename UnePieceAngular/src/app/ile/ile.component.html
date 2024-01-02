@@ -1,61 +1,92 @@
-<p *ngIf="ile">Ile actuelle : {{ showIle() }}</p>
-<p>Durée restante : {{joursRestants}}</p>
+<p *ngIf="ile">Ile actuelle : {{ ile.nom }}</p>
+<p>Durée restante : {{ joursRestants }}</p>
 
 <div *ngIf="ile.auberge && joursRestants > 0">
   <table>
     <tr>
       <th>Auberge</th>
     </tr>
-    <tr><img src="assets/buildings/auberge.png" alt="imageAuberge"/></tr>
-    
-    <tr *ngFor="let m of partie.membres">
-        <td>[Nom : {{m.pirate?.nom}}]</td>
-        <td>[PV : {{m.pv}}]</td>
-        <td>[PV max : {{m.pirate?.pv}}]</td>
-        <td><button class="btn btn-success" (click)="rest(m)">Soigner un membre de l'équipage</button></td>
+    <tr>
+      <img src="assets/buildings/auberge.png" alt="imageAuberge" />
     </tr>
 
+    <tr *ngFor="let m of partie.membres">
+      <td>[Nom : {{ m.pirate?.nom }}]</td>
+      <td>[PV : {{ m.pv }}]</td>
+      <td>[PV max : {{ m.pirate?.pv }}]</td>
+      <td>
+        <button class="btn btn-success" (click)="rest(m)">
+          Soigner un membre de l'équipage
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="ile.taverne && joursRestants > 0">
+  <table>
+    <tr>
+      <th>Taverne</th>
+    </tr>
+    <tr>
+      <img src="assets/buildings/taverne.png" alt="imageTaverne" />
+    </tr>
+    <tr *ngFor="let p of pirates">
+      <td>[Nom : {{ p.nom }}]</td>
+      <td>[PV max : {{ p.pv }}]</td>
+      <td>[Force : {{ p.power }}]</td>
+      <td>[Fruit : {{ p.fruit }}]</td>
+      <td>
+        <button (click)="recruit(p)">Recruter pour {{ p.prime }}฿</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="ile.chantier && joursRestants > 0">
+  <table>
+    <tr>
+      <th>Chantier naval</th>
+    </tr>
+    <tr>
+      <img src="assets/buildings/chantier.png" alt="imageChantier" />
+    </tr>
+    <tr *ngFor="let b of bateaux">
+      <td>[Nom : {{ b.nom }}]</td>
+      <td>[Capacité : {{ b.capacite }}]</td>
+      <td>[Robustesse : {{ b.robustesse }}]</td>
+
+      <td>
+        <button (click)="buyShip(b)">
+          Acheter un bateau pour {{ b.prix }}฿
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>Mon navire : {{ partie.navire?.bateau?.nom }}</td>
+      <td>Robustesse : {{ partie.navire?.robustesse }}</td>
+      <td>Capacité : {{ partie.navire?.bateau?.capacite }}</td>
+      <td>
+        <button (click)="repair()">
+          Réparer son bateau (+2 robustesse) pour 5฿
+        </button>
+      </td>
+    </tr>
   </table>
 </div>
 
 
-<div *ngIf="ile.taverne && joursRestants > 0">
-    <table>
-      <tr>
-        <th>Taverne</th>
-    </tr>
-    <tr><img src="assets/buildings/taverne.png" alt="imageTaverne"/></tr>
-    <tr *ngFor="let p of pirates">
-        <td>[Nom : {{p.nom}}]</td>
-        <td>[PV max : {{p.pv}}]</td>
-        <td>[Force : {{p.power}}]</td>
-        <td>[Fruit : {{p.fruit}}]</td>
-        <td><button (click)="recruit(p)">Recruter pour {{p.prime}}฿</button></td>
-    </tr>
-    </table>
-  </div>
 
-  <div *ngIf="ile.chantier && joursRestants > 0">
-    <table>
-      <tr>
-        <th>Chantier naval</th>
-    </tr>
-    <tr><img src="assets/buildings/chantier.png" alt="imageChantier"/></tr>
-    <tr *ngFor="let b of bateaux">
-        <td>[Nom : {{b.nom}}]</td>
-        <td>[Capacité : {{b.capacite}}]</td>
-        <td>[Robustesse : {{b.robustesse}}]</td>
-
-    <td><button (click)="buyShip(b)">Acheter un bateau pour {{b.prix}}฿</button></td>
-    </tr>
-    <tr>
-        <td>Mon navire : {{partie.navire?.bateau?.nom}}</td>
-        <td>Robustesse : {{partie.navire?.robustesse}}</td>
-        <td>Capacité : {{partie.navire?.bateau?.capacite}}</td>
-        <td><button (click)="repair()">Réparer son bateau (+2 robustesse) pour 5฿</button></td>
-    </tr>
-    </table>
-  </div>
-
-  <button (click)="nextDay()" *ngIf="joursRestants > 0">Passer au jour suivant</button>
-  <button (click)="leave()" *ngIf="joursRestants == 0">Partir en mer</button>
+<button (click)="nextDay()" *ngIf="joursRestants > 0">
+  Passer au jour suivant
+</button>
+<div *ngIf="joursRestants == 0">
+    <tr *ngFor="let d of destinations">
+        <td>[Nom : {{ d.nom }}]</td>
+        <td>[Taverne : {{ d.taverne }}]</td>
+        <td>[Auberge : {{ d.auberge }}]</td>
+        <td>[Chantier : {{ d.chantier }}]</td>
+        <td>[Mer : {{ d.mer }}]</td>
+        <td>[Durée du trajet : {{ d.attente }} jours]</td>
+  <td><button (click)="leave(d)">Partir vers cette destination</button></td>
+</div>
