@@ -45,26 +45,28 @@ export class IleService {
     return this.http.delete<void>(`${environment.apiUrl}/partie/${id}`);
   }
 
-  determineIle(): Ile {
+  determineIle(partie : Partie): Ile {
     // si pas d'ile associée à la partie, set l'ile sur l'ile de départ
     console.log('determineIle');
-
-    this.partie = this.partieService.getPartie();
-    if (this.partie.ile == undefined) {
+    
+    if (partie.ile == undefined) {
       this.idIle = 1;
     } else {
-      this.idIle = this.partie.ile.id as number;
+      this.idIle = partie.ile.id as number;
     }
     this.findById(this.idIle).subscribe((resp) => {
-      this.partie.ile = resp;
-      (this.partie.ile.id as number) = this.idIle;
+      partie.ile = resp;
+      (partie.ile.id as number) = this.idIle;
       console.log(
-        'Dans subscribe de determineIle : this.partie.ile :>> ',
-        this.partie.ile
+        'Dans subscribe du findById de determineIle : partie.ile :>> ',
+        partie.ile
       );
-      this.partieService.setPartie(this.partie);
-      this.partieService.update(this.partie);
-      this.ile = this.partie.ile as Ile;
+      console.log(
+        'Dans subscribe du findById de determineIle : partie :>> ',
+        partie
+      );
+      this.partieService.update(partie);
+      this.ile = partie.ile as Ile;
     });
     return this.ile;
   }

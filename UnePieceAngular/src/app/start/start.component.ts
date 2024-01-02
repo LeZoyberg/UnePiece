@@ -60,7 +60,7 @@ export class StartComponent {
       this.partieService.update(this.partie).subscribe();
       console.log('this.partie :>> ', this.partie);
       this.partieService.setPartie(this.partie);
-      this.ileService.determineIle();
+      this.ileService.determineIle(this.partie);
       this.router.navigate(['/ile']);
     });
 console.log("chooseCapitaine", capitaine);
