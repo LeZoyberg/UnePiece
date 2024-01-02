@@ -13,4 +13,6 @@ public interface IDAOPartie extends JpaRepository<Partie,Integer> {
 	@Query("SELECT p FROM Partie p WHERE p.joueur.id = ?1 and p.termine = false")
 	Optional<Partie> findByIdJoueur(Integer id);
 	
+	@Query("SELECT p FROM Partie p JOIN FETCH p.membres WHERE p.joueur.id = ?1 and p.termine = false")
+	Optional<Partie> findByIdJoueurWithMembres(Integer id);
 }

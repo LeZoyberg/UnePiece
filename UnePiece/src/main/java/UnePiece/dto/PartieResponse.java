@@ -1,7 +1,10 @@
 package UnePiece.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import UnePiece.model.Navire;
 
 public class PartieResponse {
 	
@@ -10,6 +13,8 @@ public class PartieResponse {
 	private boolean termine;
 	private Integer tresor;
 	private Integer duree;
+	private List<MembreResponse> membres = new ArrayList();
+	private Navire navire;
 
 	public Integer getId() {
 		return id;
@@ -40,6 +45,18 @@ public class PartieResponse {
 	}
 	public void setDuree(Integer duree) {
 		this.duree = duree;
+	}
+	public List<MembreResponse> getMembres() {
+		return membres;
+	}
+	public void setMembres(List<MembreResponse> membres) {
+		this.membres = membres;
+	}
+	public Navire getNavire() {
+		return navire;
+	}
+	public void setNavire(Navire navire) {
+		this.navire = navire;
 	}
 
 	
