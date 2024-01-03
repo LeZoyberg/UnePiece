@@ -66,6 +66,7 @@ export class IleComponent {
 
     this.partie = this.partieService.getPartie() as Partie;
     this.ile = this.partie.ile as Ile;
+    console.log('this.ile constructeur ile component :>> ', this.ile);
     this.joursRestants = this.ile.attente as number;
     console.log('this.ile constructeur ile component :>> ', this.ile);
     console.log('this.partie constructeur partie component :>> ', this.ile);
