@@ -118,7 +118,8 @@ export class IleComponent {
     ) {
       membre.pv += 1;
       this.membreService.update(membre).subscribe();
-      this.partie.joursRestants!--;
+      // this.partie.joursRestants!--;
+      this.nextDay();
       console.log(membre, ' a été reposé');
     } else {
       console.log('Le pirate a déjà ses PV au max');
@@ -150,7 +151,8 @@ export class IleComponent {
       this.membreService.create(newMembre).subscribe((resp) => {
         this.partie.membres.push(resp);
         this.partieService.getForceTotale();
-        this.partie.joursRestants!--;
+        // this.partie.joursRestants!--;
+        this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
@@ -187,7 +189,8 @@ export class IleComponent {
       this.navireService.create(newNavire).subscribe((resp) => {
         this.navire = resp;
         this.partie.navire = this.navire;
-        this.partie.joursRestants!--;
+        // this.partie.joursRestants!--;
+        this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
@@ -215,7 +218,8 @@ export class IleComponent {
         console.log('Le navire a déjà sa robustesse au maximum');
       }
       this.navireService.update(this.navire).subscribe(() => {
-        this.partie.joursRestants!--;
+        // this.partie.joursRestants!--;
+        this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
@@ -226,9 +230,9 @@ export class IleComponent {
 
   nextDay() {
     this.partie.joursRestants!--;
+    (this.partie.duree as number) += 1;
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);
-      (this.partie.duree as number) += 1;
     });
   }
 

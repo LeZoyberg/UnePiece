@@ -88,6 +88,18 @@ public class PartieRestController {
 		return partiesDTO;
 	}
 
+	@GetMapping("/leaderboard")
+	public List<PartieResponse> findLeaderboard() {
+		List<Partie> parties = daoPartie.findAllByOrderByDureeDesc();
+		List<PartieResponse> partiesDTO = new ArrayList<PartieResponse>();
+		for (Partie p : parties) {
+			PartieResponse partieDTO = new PartieResponse();
+			BeanUtils.copyProperties(p, partieDTO);
+			partiesDTO.add(partieDTO);
+		}
+		return partiesDTO;
+	}
+
 	@PostMapping
 	public PartieResponse insert(@RequestBody Partie partie, BindingResult result) {
 		/*
@@ -97,6 +109,13 @@ public class PartieRestController {
 		 * "La partie n'est pas valide...");
 		 * }
 		 */
+
+		Optional<Partie> opt = daoPartie.findByIdJoueur(partie.getJoueur().getId());
+		if(opt.isPresent()) {
+			Partie anciennePartie = opt.get();
+			anciennePartie.setTermine(true);
+			daoPartie.save(anciennePartie);
+		}
 		daoPartie.save(partie);
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
