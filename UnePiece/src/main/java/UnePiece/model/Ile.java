@@ -20,10 +20,23 @@ public class Ile {
 	private int ordre;
 	@Enumerated
 	private Mer mer;
-	
+	private boolean ileFinale;
 
-	public Ile() {}
-	
+	public Ile() {
+	}
+
+	public Ile(String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre, Mer mer,
+			boolean ileFinale) {
+		this.nom = nom;
+		this.taverne = taverne;
+		this.auberge = auberge;
+		this.chantier = chantier;
+		this.attente = attente;
+		this.ordre = ordre;
+		this.mer = mer;
+		this.ileFinale = ileFinale;
+	}
+
 	public Ile(String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre, Mer mer) {
 		this.nom = nom;
 		this.taverne = taverne;
@@ -32,8 +45,30 @@ public class Ile {
 		this.attente = attente;
 		this.ordre = ordre;
 		this.mer = mer;
+		this.ileFinale = false;
 	}
 
+	public Ile(Integer id, String nom, boolean taverne, boolean auberge, boolean chantier, int attente, int ordre,
+			Mer mer,
+			boolean ileFinale) {
+		this.id = id;
+		this.nom = nom;
+		this.taverne = taverne;
+		this.auberge = auberge;
+		this.chantier = chantier;
+		this.attente = attente;
+		this.ordre = ordre;
+		this.mer = mer;
+		this.ileFinale = ileFinale;
+	}
+
+	public boolean isIleFinale() {
+		return ileFinale;
+	}
+
+	public void setIleFinale(boolean ileFinale) {
+		this.ileFinale = ileFinale;
+	}
 
 	public Integer getId() {
 		return id;
