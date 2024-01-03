@@ -61,10 +61,12 @@ export class AccueilComponent {
     this.partie.duree = 0;
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
+    this.partie.joursRestants = 0;
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
         this.partie.ile = resp;
+        this.partie.joursRestants = this.partie.ile.attente;
         this.partieService.create(this.partie).subscribe((resp) => {
           console.log(
             '[newGame() in accueil.component.ts] this.partie :>> ',

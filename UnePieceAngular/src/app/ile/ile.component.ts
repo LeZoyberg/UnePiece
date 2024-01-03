@@ -37,37 +37,10 @@ export class IleComponent {
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    // this.partieService
-    //   .findByIdJoueurWithMembres(this.joueur.id)
-    //   .subscribe((resp) => {
-    //     this.partie = resp;
-    //     this.ile = this.ileService.determineIle(this.partie);
-    //     this.partie.dateDebut = resp.dateDebut;
-    //     // TODO : manque calcul durée partie (Date.now - dateDebut)
-    //     this.partie.termine = false;
-    //     //this.partie.tresor = this.partieService.getPartie().tresor;
-    //     this.partie.ile = this.ile;
-    //     this.joursRestants = this.ile.attente as number;
-    //     this.partie.joueur = this.joueur;
-    //     this.listRecruits();
-    //     this.listBateaux();
-    //     this.listDestinations();
-    //     this.partieService.setPartie(this.partie);
-    //     console.log(
-    //       '[Constructeur de ile.component.ts] this.joueur :>> ',
-    //       this.joueur
-    //     );
-    //     console.log(
-    //       '[Constructeur de ile.component.ts] this.partie :>> ',
-    //       this.partie
-    //     );
-    //     this.partieService.update(this.partie).subscribe(() => {});
-    //   });
-
     this.partie = this.partieService.getPartie() as Partie;
     this.ile = this.partie.ile as Ile;
     console.log('this.ile constructeur ile component :>> ', this.ile);
-    this.joursRestants = this.ile.attente as number;
+    //this.partie.joursRestants = this.ile.attente as number;
     console.log('this.ile constructeur ile component :>> ', this.ile);
     console.log('this.partie constructeur partie component :>> ', this.ile);
     this.showIle();
@@ -76,33 +49,6 @@ export class IleComponent {
     this.listDestinations();
     console.log('Constructeur de ile component, hors du subscribe');
     console.log('Constructeur ile component this.partie :>> ', this.partie);
-
-    // this.joueur = this.authService.getUtilisateur() as Joueur;
-
-    // this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
-    //   if(resp.ile?.id){
-    //     console.log('resp.ile?.id :>> ', resp.ile?.id);
-    //     this.ileService.findById(resp.ile?.id).subscribe(resp2 => {
-    //       console.log('resp2 :>> ', JSON.stringify(resp2));
-    //       this.ile = resp2;
-    //     });
-    //   }
-    //   else{
-    //     this.ile = this.ileService.determineIle();
-    //     console.log('this.ile :>> ', this.ile);
-    //     resp.dateDebut = this.partieService.getPartie().dateDebut;
-    //     // manque calcul durée partie (Date.now - dateDebut)
-    //     resp.termine = false;
-    //     resp.tresor = this.partieService.getPartie().tresor;
-    //     resp.ile = this.ile;
-    //     resp.joueur = this.joueur;
-    //     resp.membres = this.partieService.getPartie().membres;
-    //     this.partieService.setPartie(resp);
-    //     this.partieService.update(resp).subscribe();
-    //     console.log('this.joueur :>> ', this.joueur);
-    //     console.log('this.partie :>> ', resp);
-    //   }
-    // });
   }
 
   showIle() {
@@ -172,7 +118,7 @@ export class IleComponent {
     ) {
       membre.pv += 1;
       this.membreService.update(membre).subscribe();
-      this.joursRestants--;
+      this.partie.joursRestants!--;
       console.log(membre, ' a été reposé');
     } else {
       console.log('Le pirate a déjà ses PV au max');
@@ -208,7 +154,7 @@ export class IleComponent {
           this.partieService.savePartieInStorage(this.partie);
         });
 
-        this.joursRestants--;
+        this.partie.joursRestants!--;
         console.log(pirate, ' a été recruté');
         console.log('this.partie :>> ', this.partie);
         this.listRecruits();
@@ -246,7 +192,7 @@ export class IleComponent {
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        this.joursRestants--;
+        this.partie.joursRestants!--;
         console.log(bateau, ' a été acheté');
         console.log('this.partie :>> ', this.partie);
         this.listBateaux();
@@ -272,6 +218,7 @@ export class IleComponent {
       }
       this.navireService.update(this.navire).subscribe(() => {
         this.partieService.update(this.partie).subscribe(() => {
+          this.partie.joursRestants!--;
           this.partieService.savePartieInStorage(this.partie);
         });
         console.log('this.partie :>> ', this.partie);
@@ -282,13 +229,14 @@ export class IleComponent {
   nextDay() {
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);
-      this.joursRestants--;
+      this.partie.joursRestants!--;
       (this.partie.duree as number) += 1;
     });
   }
 
   leave(destination: Ile) {
     this.partie.ile = destination;
+    this.partie.joursRestants = destination.attente;
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);
       this.router.navigate(['/trajet']);

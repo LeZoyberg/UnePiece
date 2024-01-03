@@ -1,8 +1,8 @@
 <p *ngIf="ile">Ile actuelle : {{ ile.nom }}</p>
-<p>Durée restante : {{ joursRestants }}</p>
+<p>Durée restante : {{ partie.joursRestants }}</p>
 <stat-equipage></stat-equipage>
 
-<div *ngIf="ile.auberge && joursRestants > 0">
+<div *ngIf="ile.auberge && partie.joursRestants! > 0">
   <table>
     <tr>
       <th>Auberge</th>
@@ -24,7 +24,7 @@
   </table>
 </div>
 <br />
-<div *ngIf="ile.taverne && joursRestants > 0">
+<div *ngIf="ile.taverne && partie.joursRestants! > 0">
   <table>
     <tr>
       <th>Taverne</th>
@@ -45,7 +45,7 @@
 </div>
 <br />
 
-<div *ngIf="ile.chantier && joursRestants > 0">
+<div *ngIf="ile.chantier && partie.joursRestants! > 0">
   <table>
     <tr>
       <th>Chantier naval</th>
@@ -78,10 +78,10 @@
 </div>
 <br />
 
-<button (click)="nextDay()" *ngIf="joursRestants > 0">
+<button (click)="nextDay()" *ngIf="partie.joursRestants! > 0">
   Passer au jour suivant
 </button>
-<div *ngIf="joursRestants == 0">
+<div *ngIf="partie.joursRestants == 0">
   <tr *ngFor="let d of destinations">
     <td>[Nom : {{ d.nom }}]</td>
     <td>[Taverne : {{ d.taverne }}]</td>

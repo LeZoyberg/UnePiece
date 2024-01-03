@@ -10,7 +10,8 @@ export class Partie {
     public navire?: Navire,
     public joueur?: Joueur,
     public actions: Action[] = [],
-    public forceTotale?: number
+    public forceTotale?: number,
+    public joursRestants?: number
   ) {}
 }
 

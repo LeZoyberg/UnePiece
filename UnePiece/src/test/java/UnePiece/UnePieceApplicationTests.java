@@ -171,7 +171,6 @@ class UnePieceApplicationTests {
 	daoCompte.save(joueur1);
 	daoCompte.save(joueur2);
 	daoCompte.save(joueur3);
-	
 	daoAction.save(action1);
 	daoAction.save(action2);
 	daoAction.save(action3);
