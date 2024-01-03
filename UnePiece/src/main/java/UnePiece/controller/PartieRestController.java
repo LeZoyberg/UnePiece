@@ -33,9 +33,7 @@ public class PartieRestController {
 
 	@GetMapping("/{id}")
 	public PartieResponse findById(@PathVariable Integer id) {
-		System.out.println("findById Partie");
 		Optional<Partie> opt = daoPartie.findById(id);
-		System.out.println(opt.get().toString());
 		if (opt.isEmpty()) {
 			return null;
 		}
@@ -46,7 +44,6 @@ public class PartieRestController {
 
 	@GetMapping("/joueur/{idJoueur}")
 	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) {
-		System.out.println("findByIdJoueurDTO");
 		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
 		if (opt.isEmpty()) {
 			return null;

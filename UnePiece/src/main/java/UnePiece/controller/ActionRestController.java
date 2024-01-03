@@ -1,8 +1,10 @@
 package UnePiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,57 +18,60 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import UnePiece.dao.IDAOAction;
+import UnePiece.dto.ActionResponse;
 import UnePiece.model.Action;
 
 @RestController
 @RequestMapping("/api/action")
 @CrossOrigin("*")
 public class ActionRestController {
-	
+
 	@Autowired
 	private IDAOAction daoAction;
 
 	@GetMapping("/{id}")
-	public Action findById(@PathVariable Integer id) 
-	{
+	public ActionResponse findById(@PathVariable Integer id) {
 		Optional<Action> opt = daoAction.findById(id);
-		if(opt.isEmpty()) 
-		{
+		if (opt.isEmpty()) {
 			return null;
 		}
-		return opt.get();
+		ActionResponse actionDTO = new ActionResponse();
+		BeanUtils.copyProperties(opt.get(), actionDTO);
+		return actionDTO;
 	}
-	
+
 	@GetMapping
-	public List<Action> findAll() 
-	{
-		return daoAction.findAll();
+	public List<ActionResponse> findAll() {
+		List<Action> actions = daoAction.findAll();
+		List<ActionResponse> actionsDTO = new ArrayList<ActionResponse>();
+		for (Action a : actions) {
+			ActionResponse actionDTO = new ActionResponse();
+			BeanUtils.copyProperties(a, actionDTO);
+			System.out.println("for findAll" + a + actionDTO);
+			actionsDTO.add(actionDTO);
+		}
+		return actionsDTO;
 	}
-	
+
 	@PostMapping
-	public Action insert(@RequestBody Action action, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La action n'est pas valide...");
-		}*/
-		return daoAction.save(action);
+	public ActionResponse insert(@RequestBody Action action) {
+		daoAction.save(action);
+		ActionResponse actionDTO = new ActionResponse();
+		BeanUtils.copyProperties(action, actionDTO);
+		return actionDTO;
 	}
-	
+
 	@PutMapping("/{id}")
-	public Action update(@PathVariable Integer id, @RequestBody Action action, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La action n'est pas valide...");
-		}*/
-		return daoAction.save(action);
+	public ActionResponse update(@PathVariable Integer id, @RequestBody Action action) {
+		daoAction.save(action);
+		ActionResponse actionDTO = new ActionResponse();
+		BeanUtils.copyProperties(action, actionDTO);
+		return actionDTO;
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) 
-	{
+	public void delete(@PathVariable Integer id) {
 		daoAction.deleteById(id);
 	}
-	
+
 }

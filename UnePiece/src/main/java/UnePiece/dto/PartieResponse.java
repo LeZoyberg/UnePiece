@@ -20,7 +20,8 @@ public class PartieResponse {
 	private Ile ile;
 	private int joursRestants;
 	private Joueur joueur;
-
+	private List<ActionResponse> actions = new ArrayList();
+	
 	public Joueur getJoueur() {
 		return joueur;
 	}
@@ -99,6 +100,14 @@ public class PartieResponse {
 
 	public void setIle(Ile ile) {
 		this.ile = ile;
+	}
+
+	public List<ActionResponse> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<ActionResponse> actions) {
+		this.actions = actions;
 	}
 
 }
