@@ -5,15 +5,21 @@
 </button>
 
 <div id="container">
-  <div id="partieEnCours">
+  <div id="partieEnCours" *ngIf="partie">
     <table>  Partie en cours
      <tr>
         <th>Début</th>
         <th>Score</th>
+        <th>Capitaine</th>
+        <th>Mer</th>
+        <th>Ile</th>
      </tr>
      <tr>
-        <td>2023-10-10</td>
-        <td>29</td>
+        <td>{{partie.dateDebut}}</td>
+        <td>{{partie.duree}}</td>
+        <td *ngIf="partie.membres[0]">{{partie.membres[0].pirate?.nom}}</td>
+        <td>{{partie.ile?.mer}}</td>
+        <td>{{partie.ile}}</td>
      </tr>
     
     </table>

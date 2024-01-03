@@ -25,9 +25,12 @@ export class AccueilComponent {
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
-    if (this.partie) {
-      this.partie.joueur = this.joueur;
-    }
+     if (!this.partie) {
+      this.partieService.findByIdJoueurWithMembres(this.joueur.id).subscribe(resp =>{
+        this.partie=resp;
+      })
+     } 
+    console.log("this.partie :>>",this.partie)
     this.partieService.findAll().subscribe((resp) => {
       this.parties = resp;
       console.log('this.parties :>> ', this.parties);
