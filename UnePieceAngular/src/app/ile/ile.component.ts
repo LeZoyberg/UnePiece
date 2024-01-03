@@ -42,7 +42,7 @@ export class IleComponent {
       this.partie.dateDebut = resp.dateDebut;
       // TODO : manque calcul durée partie (Date.now - dateDebut)
       this.partie.termine = false;
-      this.partie.tresor = this.partieService.getPartie().tresor;
+      //this.partie.tresor = this.partieService.getPartie().tresor;
       this.partie.ile = this.ile;
       this.joursRestants = this.ile.attente as number;
       this.partie.joueur = this.joueur;
