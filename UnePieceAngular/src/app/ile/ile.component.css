@@ -1,3 +1,8 @@
 img {
     width:150px;
 }
+
+div {
+    border:2px solid darkblue;
+    width:50%;
+}

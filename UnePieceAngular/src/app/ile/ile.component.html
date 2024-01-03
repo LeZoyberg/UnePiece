@@ -9,7 +9,7 @@
     <tr>
       <img src="assets/buildings/auberge.png" alt="imageAuberge" />
     </tr>
-
+    <br />
     <tr *ngFor="let m of partie.membres">
       <td>[Nom : {{ m.pirate?.nom }}]</td>
       <td>[PV : {{ m.pv }}]</td>
@@ -22,7 +22,7 @@
     </tr>
   </table>
 </div>
-
+<br />
 <div *ngIf="ile.taverne && joursRestants > 0">
   <table>
     <tr>
@@ -42,6 +42,7 @@
     </tr>
   </table>
 </div>
+<br />
 
 <div *ngIf="ile.chantier && joursRestants > 0">
   <table>
@@ -74,17 +75,19 @@
     </tr>
   </table>
 </div>
+<br />
 
 <button (click)="nextDay()" *ngIf="joursRestants > 0">
   Passer au jour suivant
 </button>
 <div *ngIf="joursRestants == 0">
-    <tr *ngFor="let d of destinations">
-        <td>[Nom : {{ d.nom }}]</td>
-        <td>[Taverne : {{ d.taverne }}]</td>
-        <td>[Auberge : {{ d.auberge }}]</td>
-        <td>[Chantier : {{ d.chantier }}]</td>
-        <td>[Mer : {{ d.mer }}]</td>
-        <td>[Durée du trajet : {{ d.attente }} jours]</td>
-  <td><button (click)="leave(d)">Partir vers cette destination</button></td>
+  <tr *ngFor="let d of destinations">
+    <td>[Nom : {{ d.nom }}]</td>
+    <td>[Taverne : {{ d.taverne }}]</td>
+    <td>[Auberge : {{ d.auberge }}]</td>
+    <td>[Chantier : {{ d.chantier }}]</td>
+    <td>[Mer : {{ d.mer }}]</td>
+    <td>[Durée du trajet : {{ d.attente }} jours]</td>
+    <td><button (click)="leave(d)">Partir vers cette destination</button></td>
+  </tr>
 </div>
