@@ -8,13 +8,34 @@ import { Observable } from 'rxjs';
 })
 export class PartieService {
 
-  partie: Partie = new Partie();
+  partie!: Partie;
 
   constructor(private http: HttpClient) {
    }
 
-   getPartie() : Partie {
-    return this.partie
+   getPartie() : Partie | undefined {
+    if(this.partie) { 
+      console.log("return this.partie");
+      console.log('this.partie :>> ', this.partie);
+      return this.partie;
+    }
+    else {
+      const partieStorage = localStorage.getItem("partie");
+      if(partieStorage) {
+      console.log("return this.partie from localStorage");
+        this.partie = JSON.parse(partieStorage);
+      console.log('this.partie :>> ', this.partie);
+
+        return this.partie;
+      }
+    }
+    console.log("return undefined");
+
+    return undefined
+  }
+
+  savePartieInStorage(partie:Partie) {
+    localStorage.setItem("partie", JSON.stringify(partie));
   }
 
   setPartie(partie:Partie) {
