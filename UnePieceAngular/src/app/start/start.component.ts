@@ -47,6 +47,7 @@ export class StartComponent {
     this.membre.pv = capitaine.pv;
     this.membre.pirate = capitaine;
     this.membre.power = capitaine.power;
+    this.partie.tresor = capitaine.prime;
         
     /*
     console.log('this.membre before create :>> ', this.membre);

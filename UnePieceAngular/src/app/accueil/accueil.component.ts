@@ -10,6 +10,7 @@ import { IleService } from '../ile.service';
   styleUrls: ['./accueil.component.css'],
 })
 export class AccueilComponent {
+  joueur?: Joueur;
   partie?: Partie;
   parties?: Partie[];
   constructor(
@@ -18,7 +19,11 @@ export class AccueilComponent {
     private authService: AuthService,
     private ileService: IleService,
   ) {
+    this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
+     if(this.partie){
+       this.partie.joueur=this.joueur;
+     }
     this.partieService.findAll().subscribe(resp => {
       this.parties = resp;
       console.log('this.parties :>> ', this.parties);
@@ -26,14 +31,15 @@ export class AccueilComponent {
   }
 
   continueGame() {
+    //console.log(this.joueur?.id);
     this.partieService
-      .findByIdJoueurWithMembres(this.authService.getUtilisateur()?.id)
+      .findByIdJoueurWithMembres(this.joueur?.id)
       ?.subscribe((resp) => {
         console.log(resp);
         if (resp && resp.termine == false) {
           console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
-          this.partie.joueur = this.authService.getUtilisateur();
+          this.partie.joueur = this.joueur;
           this.partieService.savePartieInStorage(this.partie);
           console.log('[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ', this.partie);
           this.router.navigate(['/ile']);
@@ -44,7 +50,7 @@ export class AccueilComponent {
   newGame() {
     this.partie = new Partie();
     this.partie.termine = false;
-    this.partie.joueur = this.authService.getUtilisateur();
+    this.partie.joueur = this.joueur;
     this.partie.duree = 0;    
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
 
@@ -52,9 +58,11 @@ export class AccueilComponent {
       if(this.partie){
         this.partie.ile = resp;
         this.partieService.create(this.partie).subscribe((resp) => {
-          this.partie = resp;
           console.log('[newGame() in accueil.component.ts] this.partie :>> ', this.partie);
-          this.partieService.savePartieInStorage(this.partie);
+          if(this.partie){
+            this.partie.id=resp.id;
+            this.partieService.savePartieInStorage(this.partie);
+          }
           this.router.navigate(['/start']);
         });
       }      
