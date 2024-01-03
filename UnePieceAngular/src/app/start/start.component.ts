@@ -27,7 +27,8 @@ export class StartComponent {
   ) {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    //console.log('this.partie CONTROLLER :>> ', this.partie);
+    this.partie = this.partieService.getPartie() as Partie;
+    console.log('this.partie CONTROLLER :>> ', this.partie);
   }
 
   listCapitaines() {
@@ -39,31 +40,47 @@ export class StartComponent {
       );
     });
   }
-  chooseCapitaine(capitaine:Pirate) {
-    this.partie.joueur = this.authService.getUtilisateur();
-    this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
-      
-      this.partie.id = resp.id;
-      this.partie.duree = resp.duree; 
-      this.partie.dateDebut = resp.dateDebut;
-      this.partie.termine = resp.termine;
-      this.partie.tresor = capitaine.prime;
 
-      this.membre.partie=resp;
-      this.membre.pv=capitaine.pv;
-      this.membre.pirate=capitaine;
-      this.membre.power=capitaine.power;
+  chooseCapitaine(capitaine:Pirate) {
+
+    this.membre.partie = this.partie;
+    this.membre.pv = capitaine.pv;
+    this.membre.pirate = capitaine;
+    this.membre.power = capitaine.power;
+        
+    /*
+    console.log('this.membre before create :>> ', this.membre);
+    this.membreService.create(this.membre).subscribe(resp =>{
+      this.partie.membres?.push(resp);
+      console.log('this.partie before update :>> ', this.partie);
+
+      this.partieService.update(this.partie).subscribe(() => {
+        console.log('this.partie in update 1 :>> ', this.partie);
+        this.partieService.savePartieInStorage(this.partie);
+        console.log('this.partie in update 2 :>> ', this.partie);
+        this.router.navigate(['/ile']);
+      });
+
+      console.log('this.partie after update :>> ', this.partie);
+    });
+    */
+
+    console.log('this.partie before update :>> ', this.partie);
+    this.partieService.update(this.partie).subscribe(() => {
+      console.log('this.membre before create :>> ', this.membre);
       this.membreService.create(this.membre).subscribe(resp =>{
         this.partie.membres?.push(resp);
       });
+      console.log('this.membre after create :>> ', this.membre);
 
-      this.partieService.update(this.partie).subscribe();
-      console.log('this.partie :>> ', this.partie);
-      this.partieService.setPartie(this.partie);
-      this.ileService.determineIle(this.partie);
+      console.log('this.partie in update 1 :>> ', this.partie);
+      this.partieService.savePartieInStorage(this.partie);
+      console.log('this.partie in update 2 :>> ', this.partie);
       this.router.navigate(['/ile']);
     });
-console.log("chooseCapitaine", capitaine);
+    console.log('this.partie after update :>> ', this.partie);
+
+  console.log("chooseCapitaine", capitaine);
 
   }
 }
