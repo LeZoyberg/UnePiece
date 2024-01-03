@@ -8,24 +8,25 @@ import { IleService } from '../ile.service';
 @Component({
   selector: 'app-trajet',
   templateUrl: './trajet.component.html',
-  styleUrls: ['./trajet.component.css']
+  styleUrls: ['./trajet.component.css'],
 })
 export class TrajetComponent {
-tpsTrajetRestant: number;
-joueur!: Joueur;
-partie!: Partie;
-ile?: Ile;
+  //tpsTrajetRestant: number;
+  joueur!: Joueur;
+  partie!: Partie;
+  //ile?: Ile;
 
   constructor(
     private router: Router,
     private partieService: PartieService,
-    private ileService: IleService,
-    private authService: AuthService,
+    //private ileService: IleService,
+    private authService: AuthService
   ) {
-      this.partie = this.partieService.getPartie() as Partie;
-      this.tpsTrajetRestant = this.partieService.getPartie()?.ile?.attente as number;
+    this.joueur = this.authService.getUtilisateur() as Joueur;
+    this.partie = this.partieService.getPartie() as Partie;
+    //this.tpsTrajetRestant = this.partieService.getPartie()?.ile?.attente as number;
 
-      /*
+    /*
       this.joueur = this.authService.getUtilisateur() as Joueur;
       if(this.joueur != undefined){
         this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
@@ -36,10 +37,27 @@ ile?: Ile;
       */
   }
 
+  suite() {
+    if (this.partie.joursRestants! > 1) {
+      this.partie.joursRestants!--;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.partieService.savePartieInStorage(this.partie);
+      });
+    } else {
+      this.partie.joursRestants = this.partie.ile?.attente;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.partieService.savePartieInStorage(this.partie);
+        this.router.navigate(['/ile']);
+      });
+    }
+  }
+
+  /*
   Suite(){
     if(this.tpsTrajetRestant > 1){
       this.tpsTrajetRestant--;            
       (this.partie.ile!.attente as number) = this.tpsTrajetRestant;
+
       this.partieService.update(this.partie).subscribe(() => {
         this.partieService.savePartieInStorage(this.partie);
         this.router.navigate(['/trajet/']);
@@ -56,5 +74,5 @@ ile?: Ile;
       });      
     }
   }
-
+  */
 }

@@ -21,14 +21,19 @@ export class AccueilComponent {
     private authService: AuthService,
     private ileService: IleService,
     private bateauService: BateauService,
-    private navireService: NavireService,
+    private navireService: NavireService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
-    if (this.partie) {
-      this.partie.joueur = this.joueur;
+    if (!this.partie) {
+      this.partieService
+        .findByIdJoueurWithMembres(this.joueur.id)
+        .subscribe((resp) => {
+          this.partie = resp;
+          console.log('this.partie :>>', this.partie);
+        });
     }
-    this.partieService.findAll().subscribe((resp) => {
+    this.partieService.findLeaderboard().subscribe((resp) => {
       this.parties = resp;
       console.log('this.parties :>> ', this.parties);
     });
@@ -66,13 +71,12 @@ export class AccueilComponent {
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
     this.partie.joursRestants = 0;
-    
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
         this.partie.ile = resp;
         this.partie.joursRestants = this.partie.ile.attente;
-        this.bateauService.findById(1).subscribe(bateau =>{
+        this.bateauService.findById(1).subscribe((bateau) => {
           let newNavire: Navire = new Navire();
           newNavire.bateau = bateau;
           newNavire.robustesse = bateau.robustesse;
@@ -89,8 +93,8 @@ export class AccueilComponent {
               }
               this.router.navigate(['/start']);
             });
-          })
-        })
+          });
+        });
       }
     });
   }

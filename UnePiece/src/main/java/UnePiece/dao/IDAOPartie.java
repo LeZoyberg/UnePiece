@@ -1,5 +1,6 @@
 package UnePiece.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface IDAOPartie extends JpaRepository<Partie,Integer> {
 	
 	@Query("SELECT p FROM Partie p JOIN FETCH p.membres WHERE p.joueur.id = ?1 and p.termine = false")
 	Optional<Partie> findByIdJoueurWithMembres(Integer id);
+
+	List<Partie> findAllByOrderByDureeDesc();
 }
