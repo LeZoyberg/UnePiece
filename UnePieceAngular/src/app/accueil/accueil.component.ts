@@ -71,6 +71,7 @@ export class AccueilComponent {
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
     this.partie.joursRestants = 0;
+    
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
