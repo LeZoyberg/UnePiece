@@ -39,7 +39,6 @@ export class IleComponent {
     this.partieService.findByIdJoueurWithMembres(this.joueur.id).subscribe((resp) => {
       this.partie = resp;
       this.ile = this.ileService.determineIle(this.partie);
-      console.log('this.ile :>> ', this.ile);
       this.partie.dateDebut = resp.dateDebut;
       // TODO : manque calcul durée partie (Date.now - dateDebut)
       this.partie.termine = false;
@@ -51,9 +50,9 @@ export class IleComponent {
       this.listBateaux();
       this.listDestinations();
       this.partieService.setPartie(this.partie);
+      console.log('[Constructeur de ile.component.ts] this.joueur :>> ', this.joueur);
+      console.log('[Constructeur de ile.component.ts] this.partie :>> ', this.partie);
       this.partieService.update(this.partie).subscribe();
-      console.log('this.joueur :>> ', this.joueur);
-      console.log('this.partie :>> ', this.partie);
     });
 
     this.joueur = this.authService.getUtilisateur() as Joueur;
@@ -90,7 +89,6 @@ export class IleComponent {
   }
 
   convertName(nom: string): string {
-    console.log('-' + nom + '-');
     switch (nom) {
       case 'EastBlue':
         return 'WestBlue';
@@ -129,7 +127,7 @@ export class IleComponent {
             this.destinations = resp;
           });
       } else {
-        console.log('Affichage des prochaines îles de la même mer');
+        console.log('[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer');
         this.ileService
           .findAllNextIlesSameMer(
             this.convertName(this.partie.ile.mer as string),
@@ -255,7 +253,7 @@ export class IleComponent {
   }
 
   nextDay() {
-    this.partieService.update(this.partie).subscribe((resp) => {
+    this.partieService.update(this.partie).subscribe(() => {
       this.joursRestants--;
       (this.partie.duree as number) += 1;
     });

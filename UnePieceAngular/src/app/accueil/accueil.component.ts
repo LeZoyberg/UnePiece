@@ -25,11 +25,11 @@ export class AccueilComponent {
     this.partieService
       .findByIdJoueurWithMembres(this.authService.getUtilisateur()?.id)
       ?.subscribe((resp) => {
-        if (!!resp && resp.termine == false) {
+        if (resp && resp.termine == false) {
           console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
           this.partie.joueur = this.authService.getUtilisateur();
-          console.log('[continueGame() in accueil.component.ts] this.partie :>> ', this.partie);
+          console.log('[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ', this.partie);
           this.router.navigate(['/ile']);
         } else this.newGame();
       });
@@ -40,7 +40,7 @@ export class AccueilComponent {
     this.partie.termine = false;
     this.partie.joueur = this.authService.getUtilisateur();
     this.partie.duree = 0;
-    this.partie.ile = this.ileService.determineIle(this.partie);
+    
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partieService.create(this.partie).subscribe((resp) => {
       this.partie = resp;

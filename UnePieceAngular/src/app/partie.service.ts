@@ -41,13 +41,13 @@ export class PartieService {
     return this.http.delete<void>(environment.apiUrl + "/partie/"+id);
   }
 
-  recreateGame(idJoueur?: number): Partie {
-    this.findByIdJoueurWithMembres(idJoueur).subscribe(partieResp => {
-      this.partie = partieResp;
-    });
-    // 
-    return new Partie();
-  }
+  // recreateGame(idJoueur?: number): Partie {
+  //   this.findByIdJoueurWithMembres(idJoueur).subscribe(partieResp => {
+  //     this.partie = partieResp;
+  //   });
+  //   // 
+  //   return new Partie();
+  // }
 
   findByIdJoueur(id?: number) : Observable<Partie> {
     console.log("[findByIdJoueur / partie.service.ts] id joueur:", id);

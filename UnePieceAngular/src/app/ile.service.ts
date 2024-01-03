@@ -46,26 +46,24 @@ export class IleService {
   }
 
   determineIle(partie : Partie): Ile {
-    // si pas d'ile associée à la partie, set l'ile sur l'ile de départ
-    console.log('determineIle');
-    
     if (partie.ile == undefined) {
       this.idIle = 1;
     } else {
       this.idIle = partie.ile.id as number;
     }
+
     this.findById(this.idIle).subscribe((resp) => {
       partie.ile = resp;
       (partie.ile.id as number) = this.idIle;
       console.log(
-        'Dans subscribe du findById de determineIle : partie.ile :>> ',
+        '[subscribe dans determineIle()] : partie.ile :>> ',
         partie.ile
       );
       console.log(
-        'Dans subscribe du findById de determineIle : partie :>> ',
+        '[subscribe dans determineIle()] : partie :>> ',
         partie
       );
-      this.partieService.update(partie);
+      this.partieService.update(partie).subscribe();
       this.ile = partie.ile as Ile;
     });
     return this.ile;
