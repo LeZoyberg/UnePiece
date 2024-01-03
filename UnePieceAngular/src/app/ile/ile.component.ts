@@ -15,9 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './ile.component.html',
   styleUrls: ['./ile.component.css'],
 })
-// TODO : implement onInit / ngOnInit
 // TODO : ajouter stats équipage
-// TODO : ajout stat équipage
 export class IleComponent {
   joueur!: Joueur;
   partie!: Partie;
