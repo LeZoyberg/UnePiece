@@ -289,8 +289,9 @@ export class IleComponent {
 
   leave(destination: Ile) {
     this.partie.ile = destination;
+    //TODO : créer la liste d'actions à utiliser pendant le trajet, et le save dans le Local Storage
     this.partieService.update(this.partie).subscribe(() => {
-      this.partieService.savePartieInStorage(this.partie);
+      this.partieService.savePartieInStorage(this.partie);      
       this.router.navigate(['/trajet']);
     });
   }

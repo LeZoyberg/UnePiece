@@ -22,6 +22,7 @@ ile?: Ile;
     private ileService: IleService,
     private authService: AuthService,
   ) {
+      this.partie = this.partieService.getPartie() as Partie;
       this.tpsTrajetRestant = this.partieService.getPartie()?.ile?.attente as number;
 
       /*
@@ -37,13 +38,12 @@ ile?: Ile;
 
   Suite(){
     if(this.tpsTrajetRestant > 1){
-      this.tpsTrajetRestant--;
-      this.partie = this.partieService.getPartie() as Partie;      
+      this.tpsTrajetRestant--;            
       (this.partie.ile!.attente as number) = this.tpsTrajetRestant;
       this.partieService.update(this.partie).subscribe(() => {
         this.partieService.savePartieInStorage(this.partie);
-      });
-      this.router.navigate(['/trajet/']);
+        this.router.navigate(['/trajet/']);
+      });      
     }
     else{
       //console.log("--- Suite else before findById : " + this.partie.ile!.attente);

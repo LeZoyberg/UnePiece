@@ -1,4 +1,12 @@
-<h1>TODO : afficher Odyssée</h1>
+<h1>TODO : afficher Odyssée : {{ action.event?.odyssee }}</h1>
 
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
+<p>{{text}}</p>
+
+<div *ngIf = "visible">    
+    <button type="button" class="btn btn-success">{{title1}}</button>
+    <button type="button" class="btn btn-danger">{{title2}}</button>
+</div>
+
+<div *ngIf != "visible">
+    <button type="button" class="btn btn-primary">{{title}}</button>
+</div>
