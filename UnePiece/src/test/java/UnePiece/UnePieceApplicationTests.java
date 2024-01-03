@@ -172,13 +172,6 @@ class UnePieceApplicationTests {
 	daoCompte.save(joueur2);
 	daoCompte.save(joueur3);
 	
-	partie1 = daoPartie.save(partie1);
-	partie2 = daoPartie.save(partie2);
-	
-	action1.setPartie(partie1);
-	action2.setPartie(partie1);
-	action3.setPartie(partie2);
-	
 	daoAction.save(action1);
 	daoAction.save(action2);
 	daoAction.save(action3);
