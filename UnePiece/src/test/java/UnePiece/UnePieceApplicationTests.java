@@ -206,10 +206,10 @@ class UnePieceApplicationTests {
 		Ile ile2 = new Ile("Shells Town", false, false, true, 12, 2, Mer.EastBlue);
 		daoIle.save(ile2);
 
-		Ile ile4 = new Ile("Ile3_EastBlue", true, true, true, 8, 3, Mer.EastBlue);
+		Ile ile4 = new Ile("Ile3_EastBlue", true, true, false, 8, 3, Mer.EastBlue);
 		daoIle.save(ile4);
 
-		Ile ile5 = new Ile("Ile4_EastBlue", true, true, true, 4, 4, Mer.EastBlue, true);
+		Ile ile5 = new Ile("Ile4_EastBlue", true, false, true, 4, 4, Mer.EastBlue, true);
 		daoIle.save(ile5);
 
 		Ile ile6 = new Ile("Ile1_WestBlue", false, true, true, 12, 1, Mer.WestBlue);
@@ -221,16 +221,16 @@ class UnePieceApplicationTests {
 		Ile ile8 = new Ile("Ile3_WestBlue", false, true, false, 8, 3, Mer.WestBlue);
 		daoIle.save(ile8);
 
-		Ile ile9 = new Ile("Ile4_WestBlue", false, false, false, 5, 4, Mer.WestBlue, true);
+		Ile ile9 = new Ile("Ile4_WestBlue", true, false, false, 5, 4, Mer.WestBlue, true);
 		daoIle.save(ile9);
 
 		Ile ile3 = new Ile("Elena", false, false, true, 8, 1, Mer.NorthBlue);
 		daoIle.save(ile3);
 
-		Ile ile10 = new Ile("Ile2_NorthBlue", false, false, true, 8, 2, Mer.NorthBlue);
+		Ile ile10 = new Ile("Ile2_NorthBlue", true, false, true, 8, 2, Mer.NorthBlue);
 		daoIle.save(ile10);
 
-		Ile ile11 = new Ile("Ile3_NorthBlue", false, false, false, 4, 3, Mer.NorthBlue);
+		Ile ile11 = new Ile("Ile3_NorthBlue", true, true, false, 4, 3, Mer.NorthBlue);
 		daoIle.save(ile11);
 
 		Ile ile12 = new Ile("Ile4_NorthBlue", true, true, true, 8, 4, Mer.NorthBlue, true);
@@ -254,10 +254,10 @@ class UnePieceApplicationTests {
 		Ile ile18 = new Ile("Ile2_GrandLine", true, false, false, 7, 2, Mer.GrandLine);
 		daoIle.save(ile18);
 
-		Ile ile19 = new Ile("Ile3_GrandLine", false, true, true, 8, 3, Mer.GrandLine);
+		Ile ile19 = new Ile("Ile3_GrandLine", true, true, true, 8, 3, Mer.GrandLine);
 		daoIle.save(ile19);
 
-		Ile ile20 = new Ile("Ile4_GrandLine", false, false, false, 8, 4, Mer.GrandLine, true);
+		Ile ile20 = new Ile("Ile4_GrandLine", false, false, true, 8, 4, Mer.GrandLine, true);
 		daoIle.save(ile20);
 
 		Ile ile21 = new Ile("Ile1_NewWorld", true, true, true, 8, 1, Mer.NewWorld);
@@ -269,7 +269,7 @@ class UnePieceApplicationTests {
 		Ile ile23 = new Ile("Ile3_NewWorld", false, true, false, 8, 3, Mer.NewWorld);
 		daoIle.save(ile23);
 
-		Ile ile24 = new Ile("Ile4_NewWorld", false, false, true, 6, 4, Mer.NewWorld, true);
+		Ile ile24 = new Ile("Ile4_NewWorld", false, true, true, 6, 4, Mer.NewWorld, true);
 		daoIle.save(ile24);
 
 		// events
@@ -318,12 +318,14 @@ class UnePieceApplicationTests {
 		Partie partie1 = new Partie(LocalDate.of(2023, 10, 10), true, 25, 57, equipage1, ile15, navire2, joueur5,
 				actionsPartie1, 0);
 		daoPartie.save(partie1);
+		//	 save membres avec partie
 		membre1.setPartie(partie1);
 		daoMembre.save(membre1);
 		membre2.setPartie(partie1);
 		daoMembre.save(membre2);
 		membre3.setPartie(partie1);
 		daoMembre.save(membre3);
+		//	 save actions avec partie
 		action1.setPartie(partie1);
 		daoAction.save(action1);
 		action2.setPartie(partie1);
@@ -332,12 +334,14 @@ class UnePieceApplicationTests {
 		Partie partie2 = new Partie(LocalDate.of(2023, 10, 10), false, 38, 68, equipage2, ile20, navire1, joueur5,
 				actionsPartie2, 8);
 		daoPartie.save(partie2);
+		//	save membres avec partie
 		membre4.setPartie(partie2);
 		daoMembre.save(membre4);
 		membre5.setPartie(partie2);
 		daoMembre.save(membre5);
 		membre6.setPartie(partie2);
 		daoMembre.save(membre6);
+		// 	save actions avec partie
 		action3.setPartie(partie2);
 		daoAction.save(action3);
 
