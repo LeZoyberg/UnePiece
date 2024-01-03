@@ -120,10 +120,6 @@ class UnePieceApplicationTests {
 	List<Action> actionsPartie2 = new ArrayList<Action>();
 	Collections.addAll(actionsPartie2, action3);
 	
-	Partie partie1 = new Partie(LocalDate.now(), false, 100, 10, equipage1, ile1, navire1, joueur1, actionsPartie1);
-	Partie partie2 = new Partie(LocalDate.now(), false, 100, 10, equipage2, ile2, navire2, joueur2, actionsPartie2);
-	
-	
 	daoPirate.save(pirate1);
 	daoPirate.save(pirate2);
 	daoPirate.save(pirate3);
