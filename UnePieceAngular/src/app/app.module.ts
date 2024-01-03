@@ -10,6 +10,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StartComponent } from './start/start.component';
+import { IleComponent } from './ile/ile.component';
+import { TrajetComponent } from './trajet/trajet.component';
+import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { StartComponent } from './start/start.component';
     InscriptionComponent,
     LoginComponent,
     NavBarComponent,
-    StartComponent
+    StartComponent,
+    IleComponent,
+    TrajetComponent,
+    StatEquipageComponent,
   ],
   imports: [
     BrowserModule,

@@ -25,7 +25,7 @@ public class Partie {
 	private int duree;
 	@OneToMany(mappedBy = "partie")
 	private List<Membre> membres = new ArrayList();
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_ile")
 	private Ile ile;
 	@OneToOne
@@ -39,6 +39,20 @@ public class Partie {
 	
 	public Partie() {}
 	
+	public Partie(Integer id, LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
+			Navire navire, Joueur joueur, List<Action> actions) {
+				this.id = id;
+		this.dateDebut = dateDebut;
+		this.termine = termine;
+		this.tresor = tresor;
+		this.duree = duree;
+		this.membres = membres;
+		this.ile = ile;
+		this.navire = navire;
+		this.joueur = joueur;
+		this.actions = actions;
+	}
+
 	public Partie(LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
 			Navire navire, Joueur joueur, List<Action> actions) {
 		this.dateDebut = dateDebut;

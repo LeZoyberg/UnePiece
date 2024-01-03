@@ -1,7 +1,7 @@
 <br />
 <br />
-<button class="btn btn-success" (click)="newGame()">
-  Nouvelle partie <i class="bi bi-plus-circle"></i>
+<button class="btn btn-success" (click)="continueGame()">
+  Démarrer partie <i class="bi bi-plus-circle"></i>
 </button>
 
 <div id="container">
@@ -24,10 +24,12 @@
       <tr>
         <th>Joueur</th>
         <th>Score</th>
+        <th>Date</th>
      </tr>
-     <tr>
-        <td>Jordan</td>
-        <td>29</td>
+     <tr *ngFor="let p of parties">
+        <td>NOM_JOUEUR</td>
+        <td>{{p.duree}}</td>
+        <td>{{p.dateDebut}}</td>
      </tr>
     </table>
   </div>

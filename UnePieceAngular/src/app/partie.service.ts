@@ -8,8 +8,39 @@ import { Observable } from 'rxjs';
 })
 export class PartieService {
 
+  partie!: Partie;
+
   constructor(private http: HttpClient) {
    }
+
+   getPartie() : Partie | undefined {
+    if(this.partie) { 
+      console.log("return this.partie");
+      console.log('this.partie :>> ', this.partie);
+      return this.partie;
+    }
+    else {
+      const partieStorage = localStorage.getItem("partie");
+      if(partieStorage) {
+      console.log("return this.partie from localStorage");
+        this.partie = JSON.parse(partieStorage);
+      console.log('this.partie :>> ', this.partie);
+
+        return this.partie;
+      }
+    }
+    console.log("return undefined");
+
+    return undefined
+  }
+
+  savePartieInStorage(partie:Partie) {
+    localStorage.setItem("partie", JSON.stringify(partie));
+  }
+
+  setPartie(partie:Partie) {
+    this.partie = partie;
+  }
 
   findAll(): Observable<Partie[]> {
     return this.http.get<Partie[]>(environment.apiUrl + "/partie");
@@ -31,9 +62,22 @@ export class PartieService {
     return this.http.delete<void>(environment.apiUrl + "/partie/"+id);
   }
 
+  // recreateGame(idJoueur?: number): Partie {
+  //   this.findByIdJoueurWithMembres(idJoueur).subscribe(partieResp => {
+  //     this.partie = partieResp;
+  //   });
+  //   // 
+  //   return new Partie();
+  // }
+
   findByIdJoueur(id?: number) : Observable<Partie> {
-    console.log("id:", id);
+    console.log("[findByIdJoueur / partie.service.ts] id joueur:", id);
+    console.log('[findByIdJoueur / partie.service.ts] this.partie :>> ', this.partie);
     return this.http.get<Partie>(environment.apiUrl + "/partie/joueur/"+id);
+  }
+
+  findByIdJoueurWithMembres(id?: number) : Observable<Partie> {
+    return this.http.get<Partie>(environment.apiUrl + "/partie/joueur/"+id+"/membres");
   }
 
 }

@@ -1,5 +1,6 @@
 package UnePiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,77 +17,103 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import UnePiece.dao.IDAOPartie;
+import UnePiece.dto.MembreResponse;
 import UnePiece.dto.PartieResponse;
+import UnePiece.model.Membre;
 import UnePiece.model.Partie;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/partie")
 @CrossOrigin("*")
 public class PartieRestController {
-	
+
 	@Autowired
 	private IDAOPartie daoPartie;
 
 	@GetMapping("/{id}")
-	public Partie findById(@PathVariable Integer id) 
-	{
+	public PartieResponse findById(@PathVariable Integer id) {
 		System.out.println("findById Partie");
 		Optional<Partie> opt = daoPartie.findById(id);
 		System.out.println(opt.get().toString());
-		if(opt.isEmpty()) 
-		{
+		if (opt.isEmpty()) {
 			return null;
 		}
-		return opt.get();
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(opt.get(), partieDTO);
+		return partieDTO;
 	}
-	
+
 	@GetMapping("/joueur/{idJoueur}")
-	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) 
-	{
-		Partie partie = daoPartie.findByIdJoueur(idJoueur).get();
+	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) {
+		System.out.println("findByIdJoueurDTO");
+		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get(); 
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
-		
+
 		return partieDTO;
 	}
 	
+	@GetMapping("/joueur/{idJoueur}/membres")
+	public PartieResponse findByIdJoueurWithMembres(@PathVariable Integer idJoueur) {
+		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembres(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get(); 
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		for(Membre m : partie.getMembres()) {
+			MembreResponse membreDTO = new MembreResponse();
+			BeanUtils.copyProperties(m, membreDTO);
+			partieDTO.getMembres().add(membreDTO);
+		}
+
+		return partieDTO;
+	}
+
 	@GetMapping
-	public List<Partie> findAll() 
-	{
-		return daoPartie.findAll();
+	public List<PartieResponse> findAll() {
+		List<Partie> parties = daoPartie.findAll();
+		List<PartieResponse> partiesDTO = new ArrayList<PartieResponse>();
+		for (Partie p : parties) {
+			PartieResponse partieDTO = new PartieResponse();
+			BeanUtils.copyProperties(p, partieDTO);
+			partiesDTO.add(partieDTO);
+		}
+		return partiesDTO;
 	}
-	
+
 	@PostMapping
-	public Partie insert(@RequestBody Partie partie, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La partie n'est pas valide...");
-		}*/
-		return daoPartie.save(partie);
+	public PartieResponse insert(@RequestBody Partie partie, BindingResult result) {
+		/*
+		 * if(result.hasErrors())
+		 * {
+		 * throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+		 * "La partie n'est pas valide...");
+		 * }
+		 */
+		daoPartie.save(partie);
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		return partieDTO;
 	}
-	
+
 	@PutMapping("/{id}")
-	public Partie update(@PathVariable Integer id, @RequestBody Partie partie, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La partie n'est pas valide...");
-		}*/
-		return daoPartie.save(partie);
+	public PartieResponse update(@PathVariable Integer id, @RequestBody Partie partie, BindingResult result) {
+		daoPartie.save(partie);
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		return partieDTO;
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) 
-	{
+	public void delete(@PathVariable Integer id) {
 		daoPartie.deleteById(id);
 	}
 
-	
-	
-	
 }
