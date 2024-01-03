@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Ile, Joueur, Partie } from '../model';
+import { Ile, Joueur, Navire, Partie } from '../model';
 import { PartieService } from '../partie.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { IleService } from '../ile.service';
+import { BateauService } from '../bateau.service';
+import { NavireService } from '../navire.service';
 @Component({
   selector: 'accueil',
   templateUrl: './accueil.component.html',
@@ -17,7 +19,9 @@ export class AccueilComponent {
     private partieService: PartieService,
     private router: Router,
     private authService: AuthService,
-    private ileService: IleService
+    private ileService: IleService,
+    private bateauService: BateauService,
+    private navireService: NavireService,
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
@@ -62,22 +66,31 @@ export class AccueilComponent {
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
     this.partie.joursRestants = 0;
+    
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
         this.partie.ile = resp;
         this.partie.joursRestants = this.partie.ile.attente;
-        this.partieService.create(this.partie).subscribe((resp) => {
-          console.log(
-            '[newGame() in accueil.component.ts] this.partie :>> ',
-            this.partie
-          );
-          if (this.partie) {
-            this.partie.id = resp.id;
-            this.partieService.savePartieInStorage(this.partie);
-          }
-          this.router.navigate(['/start']);
-        });
+        this.bateauService.findById(1).subscribe(bateau =>{
+          let newNavire: Navire = new Navire();
+          newNavire.bateau = bateau;
+          newNavire.robustesse = bateau.robustesse;
+          this.navireService.create(newNavire).subscribe((resp) => {
+            this.partie!.navire = resp;
+            this.partieService.create(this.partie!).subscribe((resp) => {
+              console.log(
+                '[newGame() in accueil.component.ts] this.partie :>> ',
+                this.partie
+              );
+              if (this.partie) {
+                this.partie.id = resp.id;
+                this.partieService.savePartieInStorage(this.partie);
+              }
+              this.router.navigate(['/start']);
+            });
+          })
+        })
       }
     });
   }

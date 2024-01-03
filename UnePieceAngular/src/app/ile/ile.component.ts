@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
+import { Action, Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
@@ -150,11 +150,10 @@ export class IleComponent {
       this.membreService.create(newMembre).subscribe((resp) => {
         this.partie.membres.push(resp);
         this.partieService.getForceTotale();
+        this.partie.joursRestants!--;
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-
-        this.partie.joursRestants!--;
         console.log(pirate, ' a été recruté');
         console.log('this.partie :>> ', this.partie);
         this.listRecruits();
@@ -182,17 +181,16 @@ export class IleComponent {
       this.partie.tresor >= bateau.prix
     ) {
       this.partie.tresor -= bateau.prix;
-
       let newNavire: Navire = new Navire();
       newNavire.bateau = bateau;
       newNavire.robustesse = bateau.robustesse;
       this.navireService.create(newNavire).subscribe((resp) => {
         this.navire = resp;
         this.partie.navire = this.navire;
+        this.partie.joursRestants!--;
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        this.partie.joursRestants!--;
         console.log(bateau, ' a été acheté');
         console.log('this.partie :>> ', this.partie);
         this.listBateaux();
@@ -217,8 +215,8 @@ export class IleComponent {
         console.log('Le navire a déjà sa robustesse au maximum');
       }
       this.navireService.update(this.navire).subscribe(() => {
+        this.partie.joursRestants!--;
         this.partieService.update(this.partie).subscribe(() => {
-          this.partie.joursRestants!--;
           this.partieService.savePartieInStorage(this.partie);
         });
         console.log('this.partie :>> ', this.partie);
@@ -227,9 +225,9 @@ export class IleComponent {
   }
 
   nextDay() {
+    this.partie.joursRestants!--;
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);
-      this.partie.joursRestants!--;
       (this.partie.duree as number) += 1;
     });
   }
@@ -238,6 +236,8 @@ export class IleComponent {
     //TODO : créer la liste d'actions à utiliser pendant le trajet, et le save dans le Local Storage
     this.partie.ile = destination;
     this.partie.joursRestants = destination.attente;
+    //petit test pour éviter le crash shift()
+    this.partie.actions.push(new Action())
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);      
       this.router.navigate(['/trajet']);

@@ -72,8 +72,9 @@ class UnePieceApplicationTests {
 	List<Membre> equipage2 = new ArrayList<Membre>();
 	Collections.addAll(equipage2, membre4, membre5);
 	
-	Bateau bateau1 = new Bateau("Vogue Merry",10,10,10,true);
-	Bateau bateau2 = new Bateau("Thousand Sunny",15,15,15,false);
+	Bateau bateau1 = new Bateau("Petite barque",2,2,2,true);
+	Bateau bateau2 = new Bateau("Vogue Merry",10,10,10,true);
+	Bateau bateau3 = new Bateau("Thousand Sunny",15,15,15,false);
 	
 	Navire navire1 = new Navire(bateau1.getRobustesse(), bateau1);
 	Navire navire2 = new Navire(bateau2.getRobustesse(), bateau1);
@@ -138,6 +139,7 @@ class UnePieceApplicationTests {
 	
 	daoBateau.save(bateau1);
 	daoBateau.save(bateau2);
+	daoBateau.save(bateau3);
 	
 	daoNavire.save(navire1);
 	daoNavire.save(navire2);
