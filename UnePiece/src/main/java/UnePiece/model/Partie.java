@@ -36,6 +36,7 @@ public class Partie {
 	private Joueur joueur;
 	@OneToMany(mappedBy = "partie")
 	private List<Action> actions = new ArrayList();
+	private int joursRestants;
 	
 	public Partie() {}
 	
@@ -71,6 +72,15 @@ public class Partie {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public int getJoursRestants() {
+		return joursRestants;
+	}
+
+	public void setJoursRestants(int joursRestants) {
+		this.joursRestants = joursRestants;
+	}
+
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}

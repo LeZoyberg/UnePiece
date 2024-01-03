@@ -17,12 +17,21 @@ public class PartieResponse {
 	private List<MembreResponse> membres = new ArrayList();
 	private Navire navire;
 	private Ile ile;
+	private int joursRestants;
 
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public int getJoursRestants() {
+		return joursRestants;
+	}
+
+	public void setJoursRestants(int joursRestants) {
+		this.joursRestants = joursRestants;
 	}
 	public LocalDate getDateDebut() {
 		return dateDebut;
