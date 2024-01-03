@@ -24,10 +24,12 @@
       <tr>
         <th>Joueur</th>
         <th>Score</th>
+        <th>Date</th>
      </tr>
-     <tr>
-        <td>Jordan</td>
-        <td>29</td>
+     <tr *ngFor="let p of parties">
+        <td>NOM_JOUEUR</td>
+        <td>{{p.duree}}</td>
+        <td>{{p.dateDebut}}</td>
      </tr>
     </table>
   </div>

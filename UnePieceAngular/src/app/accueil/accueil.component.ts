@@ -11,7 +11,7 @@ import { IleService } from '../ile.service';
 })
 export class AccueilComponent {
   partie?: Partie;
-
+  parties?: Partie[];
   constructor(
     private partieService: PartieService,
     private router: Router,
@@ -19,6 +19,10 @@ export class AccueilComponent {
     private ileService: IleService,
   ) {
     this.partie = this.partieService.getPartie();
+    this.partieService.findAll().subscribe(resp => {
+      this.parties = resp;
+      console.log('this.parties :>> ', this.parties);
+    });
   }
 
   continueGame() {
