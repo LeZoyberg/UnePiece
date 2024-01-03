@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
 import { PartieService } from '../partie.service';
@@ -17,7 +17,8 @@ import { Router } from '@angular/router';
 })
 // TODO : implement onInit / ngOnInit
 // TODO : ajouter stats équipage
-export class IleComponent {
+// TODO : ajout stat équipage
+export class IleComponent implements OnInit {
   joueur!: Joueur;
   partie!: Partie;
   ile: Ile = new Ile();
@@ -38,26 +39,38 @@ export class IleComponent {
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partieService.findByIdJoueurWithMembres(this.joueur.id).subscribe((resp) => {
-      this.partie = resp;
-      this.ile = this.ileService.determineIle(this.partie);
-      this.partie.dateDebut = resp.dateDebut;
-      // TODO : manque calcul durée partie (Date.now - dateDebut)
-      this.partie.termine = false;
-      //this.partie.tresor = this.partieService.getPartie().tresor;
-      this.partie.ile = this.ile;
-      this.joursRestants = this.ile.attente as number;
-      this.partie.joueur = this.joueur;
-      this.listRecruits();
-      this.listBateaux();
-      this.listDestinations();
-      this.partieService.setPartie(this.partie);
-      console.log('[Constructeur de ile.component.ts] this.joueur :>> ', this.joueur);
-      console.log('[Constructeur de ile.component.ts] this.partie :>> ', this.partie);
-      this.partieService.update(this.partie).subscribe();
-    });
+    this.partieService
+      .findByIdJoueurWithMembres(this.joueur.id)
+      .subscribe((resp) => {
+        this.partie = resp;
+        this.ile = this.ileService.determineIle(this.partie);
+        this.partie.dateDebut = resp.dateDebut;
+        // TODO : manque calcul durée partie (Date.now - dateDebut)
+        this.partie.termine = false;
+        //this.partie.tresor = this.partieService.getPartie().tresor;
+        this.partie.ile = this.ile;
+        this.joursRestants = this.ile.attente as number;
+        this.partie.joueur = this.joueur;
+        this.listRecruits();
+        this.listBateaux();
+        this.listDestinations();
+        this.partieService.setPartie(this.partie);
+        console.log(
+          '[Constructeur de ile.component.ts] this.joueur :>> ',
+          this.joueur
+        );
+        console.log(
+          '[Constructeur de ile.component.ts] this.partie :>> ',
+          this.partie
+        );
+        this.partieService.update(this.partie).subscribe();
+      });
+      console.log("Constructeur de ile component, hors du subscribe");
+      console.log('Constructeur ile component this.partie :>> ', this.partie);
 
-    this.joueur = this.authService.getUtilisateur() as Joueur;
+     
+
+    // this.joueur = this.authService.getUtilisateur() as Joueur;
 
     // this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
     //   if(resp.ile?.id){
@@ -83,7 +96,15 @@ export class IleComponent {
     //     console.log('this.partie :>> ', resp);
     //   }
     // });
+  }
 
+  ngOnInit(): void {
+    console.log("ngOnInit ile component");
+    this.partieService
+    .findByIdJoueurWithMembres(this.joueur.id)
+    .subscribe(resp => {
+      this.partie = resp
+    });
   }
 
   showIle() {
@@ -128,10 +149,12 @@ export class IleComponent {
             this.destinations = resp;
           });
       } else {
-        console.log('[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer');
+        console.log(
+          '[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer'
+        );
         this.ileService
           .findAllNextIlesSameMer(
-            (this.partie.ile.mer as string),
+            this.partie.ile.mer as string,
             (this.partie.ile.ordre as number) + 1
           )
           .subscribe((resp) => {

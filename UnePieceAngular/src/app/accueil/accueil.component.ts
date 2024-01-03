@@ -33,6 +33,7 @@ export class AccueilComponent {
           console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
           this.partie.joueur = this.authService.getUtilisateur();
+          localStorage.setItem("partie", JSON.stringify(this.partie));
           console.log('[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ', this.partie);
           this.router.navigate(['/ile']);
         } else this.newGame();
