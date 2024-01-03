@@ -15,7 +15,8 @@ public class Action {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private boolean choix;
+	private Boolean choix;
+	private boolean termine;
 	@Column(name="degat_navire")
 	private int degatNavire;
 	@Column(name="degat_membre")
@@ -30,13 +31,15 @@ public class Action {
 	
 	public Action() {}
 	
-	public Action(boolean choix, int degatNavire, int degatMembre, int tresor, Evenement event) {
-		this.choix = choix;
+	public Action(int degatNavire, int degatMembre, int tresor, Evenement event) {
+		this.choix = null;
+		this.termine = false;
 		this.degatNavire = degatNavire;
 		this.degatMembre = degatMembre;
 		this.tresor = tresor;
 		this.event = event;
 	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +81,18 @@ public class Action {
 	}
 	public void setPartie(Partie partie) {
 		this.partie = partie;
+	}
+	public Boolean getChoix() {
+		return choix;
+	}
+	public void setChoix(Boolean choix) {
+		this.choix = choix;
+	}
+	public boolean isTermine() {
+		return termine;
+	}
+	public void setTermine(boolean termine) {
+		this.termine = termine;
 	}
 	
 	

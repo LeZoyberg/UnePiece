@@ -16,14 +16,14 @@ export class StartComponent {
   capitaines: Pirate[] = [];
   joueur: Joueur = {};
   partie: Partie = new Partie();
-  membre: Membre= new Membre();
+  membre: Membre = new Membre();
   constructor(
     private pirateService: PirateService,
     private partieService: PartieService,
     private authService: AuthService,
     private membreService: MembreService,
     private ileService: IleService,
-    private router : Router,
+    private router: Router
   ) {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
@@ -41,14 +41,12 @@ export class StartComponent {
     });
   }
 
-  chooseCapitaine(capitaine:Pirate) {
-
+  chooseCapitaine(capitaine: Pirate) {
     this.membre.partie = this.partie;
     this.membre.pv = capitaine.pv;
     this.membre.pirate = capitaine;
     this.membre.power = capitaine.power;
     this.partie.tresor = capitaine.prime;
-        
     /*
     console.log('this.membre before create :>> ', this.membre);
     this.membreService.create(this.membre).subscribe(resp =>{
@@ -66,22 +64,14 @@ export class StartComponent {
     });
     */
 
-    console.log('this.partie before update :>> ', this.partie);
     this.partieService.update(this.partie).subscribe(() => {
-      console.log('this.membre before create :>> ', this.membre);
-      this.membreService.create(this.membre).subscribe(resp =>{
+      this.membreService.create(this.membre).subscribe((resp) => {
         this.partie.membres?.push(resp);
+        this.partieService.getForceTotale();
+        this.partieService.savePartieInStorage(this.partie);
+        this.router.navigate(['/ile']);
       });
-      console.log('this.membre after create :>> ', this.membre);
-
-      console.log('this.partie in update 1 :>> ', this.partie);
-      this.partieService.savePartieInStorage(this.partie);
-      console.log('this.partie in update 2 :>> ', this.partie);
-      this.router.navigate(['/ile']);
+      
     });
-    console.log('this.partie after update :>> ', this.partie);
-
-  console.log("chooseCapitaine", capitaine);
-
   }
 }

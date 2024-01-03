@@ -36,11 +36,12 @@ public class Partie {
 	private Joueur joueur;
 	@OneToMany(mappedBy = "partie")
 	private List<Action> actions = new ArrayList();
+	private int joursRestants;
 	
 	public Partie() {}
 	
 	public Partie(Integer id, LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
-			Navire navire, Joueur joueur, List<Action> actions) {
+			Navire navire, Joueur joueur, List<Action> actions, int joursRestants) {
 				this.id = id;
 		this.dateDebut = dateDebut;
 		this.termine = termine;
@@ -51,10 +52,11 @@ public class Partie {
 		this.navire = navire;
 		this.joueur = joueur;
 		this.actions = actions;
+		this.joursRestants = joursRestants;
 	}
 
 	public Partie(LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
-			Navire navire, Joueur joueur, List<Action> actions) {
+			Navire navire, Joueur joueur, List<Action> actions, int joursRestants) {
 		this.dateDebut = dateDebut;
 		this.termine = termine;
 		this.tresor = tresor;
@@ -64,6 +66,7 @@ public class Partie {
 		this.navire = navire;
 		this.joueur = joueur;
 		this.actions = actions;
+		this.joursRestants = joursRestants;
 	}
 	public Integer getId() {
 		return id;
@@ -71,6 +74,15 @@ public class Partie {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public int getJoursRestants() {
+		return joursRestants;
+	}
+
+	public void setJoursRestants(int joursRestants) {
+		this.joursRestants = joursRestants;
+	}
+
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}

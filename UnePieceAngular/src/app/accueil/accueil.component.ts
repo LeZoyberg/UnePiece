@@ -17,14 +17,14 @@ export class AccueilComponent {
     private partieService: PartieService,
     private router: Router,
     private authService: AuthService,
-    private ileService: IleService,
+    private ileService: IleService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
-     if(this.partie){
-       this.partie.joueur=this.joueur;
-     }
-    this.partieService.findAll().subscribe(resp => {
+    if (this.partie) {
+      this.partie.joueur = this.joueur;
+    }
+    this.partieService.findAll().subscribe((resp) => {
       this.parties = resp;
       console.log('this.parties :>> ', this.parties);
     });
@@ -37,11 +37,18 @@ export class AccueilComponent {
       ?.subscribe((resp) => {
         console.log(resp);
         if (resp && resp.termine == false) {
-          console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
+          console.log(
+            '[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur'
+          );
           this.partie = resp;
+          this.partie.forceTotale = 0;
+
           this.partie.joueur = this.joueur;
           this.partieService.savePartieInStorage(this.partie);
-          console.log('[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ', this.partie);
+          console.log(
+            '[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ',
+            this.partie
+          );
           this.router.navigate(['/ile']);
         } else this.newGame();
       });
@@ -51,21 +58,27 @@ export class AccueilComponent {
     this.partie = new Partie();
     this.partie.termine = false;
     this.partie.joueur = this.joueur;
-    this.partie.duree = 0;    
+    this.partie.duree = 0;
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
+    this.partie.forceTotale = 0;
+    this.partie.joursRestants = 0;
 
-    this.ileService.findById(1).subscribe(resp => {
-      if(this.partie){
+    this.ileService.findById(1).subscribe((resp) => {
+      if (this.partie) {
         this.partie.ile = resp;
+        this.partie.joursRestants = this.partie.ile.attente;
         this.partieService.create(this.partie).subscribe((resp) => {
-          console.log('[newGame() in accueil.component.ts] this.partie :>> ', this.partie);
-          if(this.partie){
-            this.partie.id=resp.id;
+          console.log(
+            '[newGame() in accueil.component.ts] this.partie :>> ',
+            this.partie
+          );
+          if (this.partie) {
+            this.partie.id = resp.id;
             this.partieService.savePartieInStorage(this.partie);
           }
           this.router.navigate(['/start']);
         });
-      }      
-    });       
+      }
+    });
   }
 }

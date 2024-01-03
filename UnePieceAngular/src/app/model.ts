@@ -5,11 +5,13 @@ export class Partie {
     public termine?: boolean,
     public tresor?: number,
     public duree?: number,
-    public membres: Membre[]=[],
+    public membres: Membre[] = [],
     public ile?: Ile,
     public navire?: Navire,
     public joueur?: Joueur,
-    public actions: Action[]=[]
+    public actions: Action[] = [],
+    public forceTotale?: number,
+    public joursRestants?: number
   ) {}
 }
 
@@ -54,7 +56,6 @@ export class Navire {
   ) {}
 }
 
-
 export class Ile {
   constructor(
     public id?: number,
@@ -70,17 +71,18 @@ export class Ile {
 }
 
 export class Joueur {
-    constructor(
+  constructor(
     public id?: number,
     public login?: string,
-    public password?: string,
-    ) {}
-    }
+    public password?: string
+  ) {}
+}
 
 export class Action {
     constructor(
         public id?: number,
         public choix?: boolean,
+        public termine?: boolean,
         public degatNavire?: number,
         public degatMembre?: number,
         public tresor?: number,
@@ -90,11 +92,11 @@ export class Action {
 }
 
 export class Evenement {
-    constructor(
+  constructor(
     public id?: number,
     public degatNavire?: number,
     public degatMembre?: number,
     public tresor?: number,
-    public odyssee?: string,
-    ) {}
-    }
+    public odyssee?: string
+  ) {}
+}

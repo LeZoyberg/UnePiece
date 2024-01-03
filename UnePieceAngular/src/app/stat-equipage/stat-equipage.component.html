@@ -10,11 +10,11 @@
     </thead>
     <tbody>
         <tr>
-            <td>{{vie}}</td>
-            <td>{{nbMembre}}</td>
-            <td>{{robustesse}}</td>
-            <td>{{force}}</td>
-            <td>{{tresor}}</td>
+            <td>{{partie.membres[0].pv}}</td>
+            <td>{{partie.membres.length}}</td>
+            <td>{{partie.navire?.robustesse}}</td>
+            <td>{{partie.forceTotale}}</td>
+            <td>{{partie.tresor}}</td>
         </tr>
     </tbody>
 </table>
@@ -28,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let membre of list()">
+        <tr *ngFor="let membre of partie.membres">
             <td>{{membre.pirate?.nom}}</td>
             <td>{{membre.pv}}</td>
             <td>{{membre.power}}</td>
