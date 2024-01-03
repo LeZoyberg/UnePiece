@@ -33,6 +33,7 @@ export class AccueilComponent {
           console.log('[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur');
           this.partie = resp;
           this.partie.joueur = this.authService.getUtilisateur();
+          this.partieService.savePartieInStorage(this.partie);
           console.log('[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ', this.partie);
           this.router.navigate(['/ile']);
         } else this.newGame();
@@ -49,6 +50,7 @@ export class AccueilComponent {
     this.partieService.create(this.partie).subscribe((resp) => {
       this.partie = resp;
       console.log('[newGame() in accueil.component.ts] this.partie :>> ', this.partie);
+      this.partieService.savePartieInStorage(this.partie);
       this.router.navigate(['/start']);
     });
   }

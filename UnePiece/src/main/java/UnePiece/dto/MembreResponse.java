@@ -5,7 +5,6 @@ import UnePiece.model.Pirate;
 public class MembreResponse {
 	
 	private Integer id;
-	private String nom;
 	private int pv;
 	private int power;
 	private Pirate pirate;
@@ -26,12 +25,6 @@ public class MembreResponse {
 		this.pirate = pirate;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 	public int getPv() {
 		return pv;
 	}
