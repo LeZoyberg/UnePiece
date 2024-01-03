@@ -79,15 +79,16 @@ export class Joueur {
 }
 
 export class Action {
-  constructor(
-    public id?: number,
-    public choix?: boolean,
-    public degatNavire?: number,
-    public degatMembre?: number,
-    public tresor?: number,
-    public event?: Evenement,
-    public partie?: Partie
-  ) {}
+    constructor(
+        public id?: number,
+        public choix?: boolean,
+        public termine?: boolean,
+        public degatNavire?: number,
+        public degatMembre?: number,
+        public tresor?: number,
+        public event?: Evenement,
+        public partie?: Partie
+    ) {}
 }
 
 export class Evenement {

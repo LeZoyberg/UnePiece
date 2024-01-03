@@ -104,17 +104,20 @@ class UnePieceApplicationTests {
 	Ile ile24 = new Ile("Ile4_NewWorld", false, false, true, 8, 4, Mer.NewWorld, true);
 
 
-	Evenement event1 = new Evenement(10,10,0,Odyssee.Tempete);
-	Evenement event2 = new Evenement(15,15,10,Odyssee.Bataille);
-	Evenement event3 = new Evenement(0,0,50,Odyssee.Tresor);
+	Evenement event1 = new Evenement(1, 2, 0, Odyssee.Tempete);
+	Evenement event2 = new Evenement(2, 2, 25, Odyssee.Bataille);
+	Evenement event3 = new Evenement(0, 0, 50, Odyssee.Tresor);
+	Evenement event4 = new Evenement(2, 1, 0, Odyssee.Monstre);
+	Evenement event5 = new Evenement(-2, 0, -5, Odyssee.Restaurant);
+	
 	
 	Joueur joueur1 = new Joueur("player1", "password");
 	Joueur joueur2 = new Joueur("player2", "password");
 	Joueur joueur3 = new Joueur("player3", "password");
 	
-	Action action1 = new Action(true, event1.getDegatNavire(), event1.getDegatMembre(), event1.getTresor(), event1);
-	Action action2 = new Action(false, event2.getDegatNavire(), event2.getDegatMembre(), event2.getTresor(), event2);
-	Action action3 = new Action(false, event3.getDegatNavire(), event3.getDegatMembre(), event3.getTresor(), event3);
+	Action action1 = new Action(event1.getDegatNavire(), event1.getDegatMembre(), event1.getTresor(), event1);
+	Action action2 = new Action(event2.getDegatNavire(), event2.getDegatMembre(), event2.getTresor(), event2);
+	Action action3 = new Action(event3.getDegatNavire(), event3.getDegatMembre(), event3.getTresor(), event3);
 	List<Action> actionsPartie1 = new ArrayList<Action>();
 	Collections.addAll(actionsPartie1, action1, action2);
 	List<Action> actionsPartie2 = new ArrayList<Action>();
@@ -167,6 +170,8 @@ class UnePieceApplicationTests {
 	daoEvenement.save(event1);
 	daoEvenement.save(event2);
 	daoEvenement.save(event3);
+	daoEvenement.save(event4);
+	daoEvenement.save(event5);
 	
 	daoCompte.save(joueur1);
 	daoCompte.save(joueur2);
