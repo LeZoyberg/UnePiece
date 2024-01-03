@@ -88,7 +88,7 @@ export class IleComponent {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`;
   }
 
-  convertName(nom: string): string {
+  getNextMer(nom: string): string {
     switch (nom) {
       case 'EastBlue':
         return 'WestBlue';
@@ -115,27 +115,25 @@ export class IleComponent {
     if (this.partie.ile) {
       if (this.partie.ile.ileFinale) {
         console.log(
-          'Ile finale, affichage des premières îles de la mer suivante'
+          '[listDestinations() dans ile.component.ts] Ile finale, affichage des premières îles de la mer suivante'
         );
         this.ileService
           .findAllFirstIlesNextMer(
-            this.convertName(this.partie.ile.mer as string)
+            this.getNextMer(this.partie.ile.mer as string)
           )
           .subscribe((resp) => {
-            console.log('findAllFirstIlesNextMer');
-            console.log('resp :>> ', resp);
+            console.log('findAllFirstIlesNextMer() resp :>> ', resp);
             this.destinations = resp;
           });
       } else {
         console.log('[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer');
         this.ileService
           .findAllNextIlesSameMer(
-            this.convertName(this.partie.ile.mer as string),
+            (this.partie.ile.mer as string),
             (this.partie.ile.ordre as number) + 1
           )
           .subscribe((resp) => {
-            console.log('findAllFirstIlesNextMer');
-            console.log('resp :>> ', resp);
+            console.log('findAllNextIlesSameMer() resp :>> ', resp);
             this.destinations = resp;
           });
       }
