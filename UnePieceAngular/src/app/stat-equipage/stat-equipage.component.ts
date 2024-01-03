@@ -20,7 +20,7 @@ tresor?: number;
 nom!: string;
 color: string = "#2C75FF";
 visible: boolean = false;
-membres!: Membre[]; 
+membres!: Membre[];
 
   constructor (private partieService: PartieService){
     let user = localStorage.getItem('user')

@@ -13,6 +13,7 @@ import { StartComponent } from './start/start.component';
 import { IleComponent } from './ile/ile.component';
 import { TrajetComponent } from './trajet/trajet.component';
 import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
+import { ActionComponent } from './action/action.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
     IleComponent,
     TrajetComponent,
     StatEquipageComponent,
+    ActionComponent,
   ],
   imports: [
     BrowserModule,
