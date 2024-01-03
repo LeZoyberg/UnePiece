@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Membre } from '../model';
+import { Joueur, Membre } from '../model';
 import { MembreService } from '../membre.service';
+import { NavireService } from '../navire.service';
+import { PartieService } from '../partie.service';
 
 @Component({
   selector: 'stat-equipage',
@@ -9,34 +11,40 @@ import { MembreService } from '../membre.service';
   styleUrls: ['./stat-equipage.component.css']
 })
 export class StatEquipageComponent {
-vie: number = 1;
+joueur!: Joueur;
+vie?: number;
 nbMembre: number = 0;
-robustesse: number = 3;
-force: number = 4;
-tresor: number = 5;
+robustesse?: number;
+force: number = 0;
+tresor?: number;
 nom!: string;
 color: string = "#2C75FF";
 visible: boolean = false;
 membres!: Membre[]; 
 
-  constructor(private membreService: MembreService) {
+  constructor (private partieService: PartieService){
+    let user = localStorage.getItem('user')
+    if(user){
+    this.joueur = JSON.parse(user) as Joueur;
     this.load();
+    }
   }
 
-  load() {
-    // aller choper liste des membres de la partie grâce au partie service, genre : this.partieService.getPartie().getMembres
-    this.membreService.findAll().subscribe(resp => {
-      this.membres = resp;
+  load(){
+    this.partieService.findByIdJoueurWithMembres(this.joueur.id).subscribe(resp => {
+      this.membres=resp.membres;
       this.nbMembre=this.membres.length;
+      this.vie=this.membres[0].pv;
+      this.tresor=resp.tresor;
+      for (let membre of this.membres){
+        if (membre.power){this.force+=membre.power;};
+      }
+      //console.log(`navire : ${resp.navire}`)
+      this.robustesse=resp.navire?.robustesse;
     });
-    console.log('this.membres :>> ', this.membres);
   }
 
   list(): Membre[] {
-    if(!this.membres) {
-      console.log("pas de membres trouvés, -> this.load()");
-      this.load();
-    }
     return this.membres;
   }
 

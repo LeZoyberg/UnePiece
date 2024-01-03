@@ -40,7 +40,6 @@ export class InscriptionComponent implements OnInit {
 
   inscription() {
     this.authService.inscription(this.usernameCtrl.value, this.passwordCtrl.value);
-    this.authService.login(this.usernameCtrl.value, this.passwordCtrl.value);    
   }
 
 }

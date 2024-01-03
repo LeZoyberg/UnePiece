@@ -80,8 +80,30 @@ class UnePieceApplicationTests {
 	
 	Ile ile1 = new Ile("Fuschia Village", true, true, true, 10, 1, Mer.EastBlue);
 	Ile ile2 = new Ile("Shells Town", false, false, true, 8, 2, Mer.EastBlue);
-	Ile ile3 = new Ile("Elena", false, false, true, 8, 2, Mer.NorthBlue);
-	
+	Ile ile4 = new Ile("Ile3_EastBlue", true, true, true, 8, 3, Mer.EastBlue);
+	Ile ile5 = new Ile("Ile4_EastBlue", true, true, true, 8, 4, Mer.EastBlue, true);
+	Ile ile6 = new Ile("Ile1_WestBlue", false, true, true, 8, 1, Mer.WestBlue);
+	Ile ile7 = new Ile("Ile2_WestBlue", true, false, true, 8, 2, Mer.WestBlue);
+	Ile ile8 = new Ile("Ile3_WestBlue", false, true, false, 8, 3, Mer.WestBlue);
+	Ile ile9 = new Ile("Ile4_WestBlue", false, false, false, 8, 4, Mer.WestBlue, true);
+	Ile ile3 = new Ile("Elena", false, false, true, 8, 1, Mer.NorthBlue);
+	Ile ile10 = new Ile("Ile2_NorthBlue", false, false, true, 8, 2, Mer.NorthBlue);
+	Ile ile11 = new Ile("Ile3_NorthBlue", false, false, false, 8, 3, Mer.NorthBlue);
+	Ile ile12 = new Ile("Ile4_NorthBlue", true, true, true, 8, 4, Mer.NorthBlue, true);
+	Ile ile13 = new Ile("Ile1_SouthBlue", false, true, false, 8, 1, Mer.SouthBlue);
+	Ile ile14 = new Ile("Ile2_SouthBlue", false, true, true, 8, 2, Mer.SouthBlue);
+	Ile ile15 = new Ile("Ile3_SouthBlue", true, true, false, 8, 3, Mer.SouthBlue);
+	Ile ile16 = new Ile("Ile4_SouthBlue", true, false, true, 8, 4, Mer.SouthBlue, true);
+	Ile ile17 = new Ile("Ile1_GrandLine", false, true, true, 8, 1, Mer.GrandLine);
+	Ile ile18 = new Ile("Ile2_GrandLine", true, false, false, 8, 2, Mer.GrandLine);
+	Ile ile19 = new Ile("Ile3_GrandLine", false, true, true, 8, 3, Mer.GrandLine);
+	Ile ile20 = new Ile("Ile4_GrandLine", false, false, false, 8, 4, Mer.GrandLine, true);
+	Ile ile21 = new Ile("Ile1_NewWorld", true, true, true, 8, 1, Mer.NewWorld);
+	Ile ile22 = new Ile("Ile2_NewWorld", true, false, false, 8, 2, Mer.NewWorld);
+	Ile ile23 = new Ile("Ile3_NewWorld", false, true, false, 8, 3, Mer.NewWorld);
+	Ile ile24 = new Ile("Ile4_NewWorld", false, false, true, 8, 4, Mer.NewWorld, true);
+
+
 	Evenement event1 = new Evenement(10,10,0,Odyssee.Tempete);
 	Evenement event2 = new Evenement(15,15,10,Odyssee.Bataille);
 	Evenement event3 = new Evenement(0,0,50,Odyssee.Tresor);
@@ -123,7 +145,28 @@ class UnePieceApplicationTests {
 	
 	daoIle.save(ile1);
 	daoIle.save(ile2);
-	daoIle.save(ile3);
+	daoIle.save(ile3);	
+	daoIle.save(ile4);
+	daoIle.save(ile5);
+	daoIle.save(ile6);
+	daoIle.save(ile7);
+	daoIle.save(ile8);
+	daoIle.save(ile9);
+	daoIle.save(ile10);
+	daoIle.save(ile11);
+	daoIle.save(ile12);
+	daoIle.save(ile13);
+	daoIle.save(ile14);
+	daoIle.save(ile15);
+	daoIle.save(ile16);
+	daoIle.save(ile17);
+	daoIle.save(ile18);
+	daoIle.save(ile19);
+	daoIle.save(ile20);
+	daoIle.save(ile21);
+	daoIle.save(ile22);	
+	daoIle.save(ile23);
+	daoIle.save(ile24);
 	
 	daoEvenement.save(event1);
 	daoEvenement.save(event2);

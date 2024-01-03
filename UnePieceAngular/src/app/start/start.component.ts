@@ -31,6 +31,7 @@ export class StartComponent {
   }
 
   listCapitaines() {
+    // TODO : plutôt faire une requête HTTP dédiée qui ramène directement les bons pirates
     this.pirateService.findAll().subscribe((resp) => {
       this.capitaines = resp;
       this.capitaines = this.capitaines.filter(
@@ -59,7 +60,7 @@ export class StartComponent {
       this.partieService.update(this.partie).subscribe();
       console.log('this.partie :>> ', this.partie);
       this.partieService.setPartie(this.partie);
-      this.ileService.determineIle();
+      this.ileService.determineIle(this.partie);
       this.router.navigate(['/ile']);
     });
 console.log("chooseCapitaine", capitaine);
