@@ -240,7 +240,7 @@ export class IleComponent {
     //TODO : créer la liste d'actions à utiliser pendant le trajet, et le save dans le Local Storage
     this.partie.ile = destination;
     this.partie.joursRestants = destination.attente;
-    //petit test pour éviter le crash shift()
+    //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
     this.partie.actions.push(new Action())
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);      
