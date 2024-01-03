@@ -1,5 +1,6 @@
 <p *ngIf="ile">Ile actuelle : {{ ile.nom }}</p>
 <p>Durée restante : {{ joursRestants }}</p>
+<stat-equipage></stat-equipage>
 
 <div *ngIf="ile.auberge && joursRestants > 0">
   <table>
@@ -91,3 +92,4 @@
     <td><button (click)="leave(d)">Partir vers cette destination</button></td>
   </tr>
 </div>
+

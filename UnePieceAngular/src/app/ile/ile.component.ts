@@ -203,7 +203,7 @@ export class IleComponent {
       newMembre.partie = this.partie;
       this.membreService.create(newMembre).subscribe((resp) => {
         this.partie.membres.push(resp);
-
+        this.partieService.getForceTotale();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
