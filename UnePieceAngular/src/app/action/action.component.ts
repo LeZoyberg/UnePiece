@@ -3,6 +3,7 @@ import { Action, Partie } from '../model';
 import { IleService } from '../ile.service';
 import { PartieService } from '../partie.service';
 import { Router } from '@angular/router';
+import { ActionService } from '../action.service';
 
 @Component({
   selector: 'action',
@@ -21,6 +22,7 @@ export class ActionComponent {
   constructor(
     private ileService: IleService,
     private partieService: PartieService,
+    private actionService: ActionService,
     private router: Router
   ) {
     this.partie = this.partieService.getPartie() as Partie;
@@ -67,10 +69,14 @@ export class ActionComponent {
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
       this.partie.duree!++;
+      this.action = this.partie.actions.shift() as Action;
+     
+      this.checkForText(this.action.event?.odyssee as string);
       this.partieService.update(this.partie).subscribe(() => {
-        this.action = this.partie.actions.shift() as Action;
-        this.checkForText(this.action.event?.odyssee as string);
-        this.partieService.savePartieInStorage(this.partie);
+        this.actionService.delete(this.action.id).subscribe(() => {
+        
+          this.partieService.savePartieInStorage(this.partie);
+        });
       });
     } else {
       this.partie.joursRestants = this.partie.ile?.attente;
@@ -85,9 +91,8 @@ export class ActionComponent {
 
   bouton1() {
     if (this.partie.tresor! + this.action.tresor! < 0) {
-      alert("Pas assez d'argent pour cette action !")
-    }
-    else {
+      alert("Pas assez d'argent pour cette action !");
+    } else {
       this.partie.membres.forEach((membre, index) => {
         membre.pv! -= this.action.degatMembre!;
         this.partieService.checkPvMembre(membre, index);
