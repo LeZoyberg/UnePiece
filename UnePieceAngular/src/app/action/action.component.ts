@@ -104,6 +104,33 @@ export class ActionComponent {
   }
 
   bouton2() {
+    var degat: number = Math.floor(Math.random() * 10);
+    //choisir aléatoirement degatnavire, degatmembre ou tresor et enlever le degat
+    var alea: number = Math.floor(Math.random() *3)+1;
+    if(alea==1){
+      if (this.partie.tresor! == 0){
+        alert ("Tu as de la chance d'être pauvre, tu n'as plus de Berry à perdre...")
+      }
+      else {
+        this.partie.tresor! -= degat*2 ;
+        alert ("Vous perdez "+(degat*2)+"฿")
+        if (this.partie.tresor! <= 0){
+          this.partie.tresor = 0;
+          alert ("Tu es maintenant pauvre, gueux.")
+        }
+      }
+    }
+    if(alea==2){
+      this.partie.navire!.robustesse! -= degat ;
+      alert ("Votre navire prend "+degat+" de dégâts")
+    }
+    if(alea==3){
+      this.partie.membres.forEach((membre, index) => {
+        membre.pv! -= degat;
+        this.partieService.checkPvMembre(membre, index);
+      });
+      alert ("Vos membres perdent tous "+(degat)+"pv")
+    }
     this.suite();
   }
 
