@@ -114,10 +114,14 @@ export class PartieService {
     }
   }
 
-  checkPvMembre(membre: Membre) {
+  checkPvMembre(membre: Membre, index: number) {
     if(membre.pv! <= 0) {
       this.membreService.delete(membre.id).subscribe();
-      alert(membre.pirate?.nom + "est crevé");
+      this.partie.membres.splice(index,1);
+      this.update(this.partie).subscribe(() => {
+        this.savePartieInStorage(this.partie);
+      });  
+      alert(membre.pirate?.nom + " est crevé");
     }
   }
 
