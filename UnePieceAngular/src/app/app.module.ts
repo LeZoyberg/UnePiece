@@ -14,6 +14,7 @@ import { IleComponent } from './ile/ile.component';
 import { TrajetComponent } from './trajet/trajet.component';
 import { StatEquipageComponent } from './stat-equipage/stat-equipage.component';
 import { ActionComponent } from './action/action.component';
+import { EndingComponent } from './ending/ending.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ActionComponent } from './action/action.component';
     TrajetComponent,
     StatEquipageComponent,
     ActionComponent,
+    EndingComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@
   Nouvelle partie <i class="bi bi-plus-circle"></i>
 </button>
 <div id="container">
-  <div id="partieEnCours" *ngIf="partie">
+  <div id="partieEnCours" *ngIf="partie && partie.id != undefined">
     <button class="btn btn-success" (click)="continueGame()">
       Reprendre partie <i class="bi bi-arrow-circle"></i>
     </button>

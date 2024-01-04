@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Partie } from './model';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
 export class PartieService {
   partie!: Partie;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router : Router) {}
 
   getPartie(): Partie | undefined {
     if (this.partie) {
@@ -99,5 +100,13 @@ export class PartieService {
     }
     console.log('this.partie.membres :>> ', this.partie.membres);
     console.log('this.partieService.getForceTotale() :>> ', this.partie.forceTotale);
+  }
+
+  checkEndOfGame() {
+    if(this.partie.membres[0].pv! <= 0 || this.partie.navire?.robustesse! <= 0) {
+      this.partie.termine = true;
+      this.router.navigate(['/ending']);
+    }
+
   }
 }

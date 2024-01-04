@@ -7,18 +7,20 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { StartComponent } from './start/start.component';
 import { IleComponent } from './ile/ile.component';
 import { TrajetComponent } from './trajet/trajet.component';
+import { EndingComponent } from './ending/ending.component';
 
 const routes: Routes = [
-  {path: "accueil", component: AccueilComponent},
-  {path: "inscription", component: InscriptionComponent},
-  {path: "login", component: LoginComponent},
-  {path: "start", component: StartComponent},
-  {path: "ile", component: IleComponent},
-  {path: "trajet", component: TrajetComponent},
+  { path: 'accueil', component: AccueilComponent },
+  { path: 'inscription', component: InscriptionComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'start', component: StartComponent },
+  { path: 'ile', component: IleComponent },
+  { path: 'trajet', component: TrajetComponent },
+  { path: 'ending', component: EndingComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

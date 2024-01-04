@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Action, Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
+import {
+  Action,
+  Bateau,
+  Ile,
+  Joueur,
+  Membre,
+  Navire,
+  Partie,
+  Pirate,
+} from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
@@ -73,7 +82,7 @@ export class IleComponent {
         return 'NewWorld';
         break;
       default:
-        return '-1';
+        return 'END';
         break;
     }
   }
@@ -84,18 +93,18 @@ export class IleComponent {
         console.log(
           '[listDestinations() dans ile.component.ts] Ile finale, affichage des premières îles de la mer suivante'
         );
-        this.ileService
-          .findAllFirstIlesNextMer(
-            this.getNextMer(this.partie.ile.mer as string)
-          )
-          .subscribe((resp) => {
-            console.log('findAllFirstIlesNextMer() resp :>> ', resp);
-            this.destinations = resp;
-          });
+        if (this.getNextMer(this.partie.ile.mer as string) != 'END') {
+          this.ileService
+            .findAllFirstIlesNextMer(
+              this.getNextMer(this.partie.ile.mer as string)
+            )
+            .subscribe((resp) => {
+              this.destinations = resp;
+            });
+        } else {
+          this.router.navigate(['/ending']);
+        }
       } else {
-        console.log(
-          '[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer'
-        );
         this.ileService
           .findAllNextIlesSameMer(
             this.partie.ile.mer as string,
@@ -243,7 +252,7 @@ export class IleComponent {
     //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
     this.partie.actions.push(new Action());
     this.partieService.update(this.partie).subscribe(() => {
-      this.partieService.savePartieInStorage(this.partie);      
+      this.partieService.savePartieInStorage(this.partie);
       this.router.navigate(['/trajet']);
     });
   }
