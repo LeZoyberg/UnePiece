@@ -16,7 +16,6 @@ public interface IDAOPartie extends JpaRepository<Partie,Integer> {
 	Optional<Partie> findByIdJoueur(Integer id);
 	
 	@Query("SELECT p FROM Partie p JOIN FETCH p.membres WHERE p.joueur.id = ?1 and p.termine = false")
-	@EntityGraph(attributePaths = {"actions"})
 	Optional<Partie> findByIdJoueurWithMembres(Integer id);
 
 	@Query("SELECT p FROM Partie p JOIN FETCH p.membres LEFT JOIN FETCH p.actions WHERE p.joueur.id = ?1 and p.termine = false")

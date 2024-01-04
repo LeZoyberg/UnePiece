@@ -3,7 +3,9 @@ package UnePiece;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -309,9 +311,9 @@ class UnePieceApplicationTests {
 		Action action1 = new Action(event1.getDegatNavire(), event1.getDegatMembre(), event1.getTresor(), event1);
 		Action action2 = new Action(event2.getDegatNavire(), event2.getDegatMembre(), event2.getTresor(), event2);
 		Action action3 = new Action(event3.getDegatNavire(), event3.getDegatMembre(), event3.getTresor(), event3);
-		List<Action> actionsPartie1 = new ArrayList<Action>();
+		Set<Action> actionsPartie1 = new HashSet<Action>();
 		Collections.addAll(actionsPartie1, action1, action2);
-		List<Action> actionsPartie2 = new ArrayList<Action>();
+		Set<Action> actionsPartie2 = new HashSet<Action>();
 		Collections.addAll(actionsPartie2, action3);
 
 		// parties
@@ -330,7 +332,7 @@ class UnePieceApplicationTests {
 		daoAction.save(action1);
 		action2.setPartie(partie1);
 		daoAction.save(action2);
-
+		
 		Partie partie2 = new Partie(LocalDate.of(2023, 10, 10), false, 38, 68, equipage2, ile20, navire1, joueur5,
 				actionsPartie2, 8);
 		daoPartie.save(partie2);

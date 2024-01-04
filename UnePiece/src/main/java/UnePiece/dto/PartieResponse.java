@@ -2,7 +2,9 @@ package UnePiece.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import UnePiece.model.Ile;
 import UnePiece.model.Joueur;
@@ -20,7 +22,7 @@ public class PartieResponse {
 	private Ile ile;
 	private int joursRestants;
 	private Joueur joueur;
-	private List<ActionResponse> actions = new ArrayList();
+	private Set<ActionResponse> actions = new HashSet();
 	
 	public Joueur getJoueur() {
 		return joueur;
@@ -102,11 +104,11 @@ public class PartieResponse {
 		this.ile = ile;
 	}
 
-	public List<ActionResponse> getActions() {
+	public Set<ActionResponse> getActions() {
 		return actions;
 	}
 
-	public void setActions(List<ActionResponse> actions) {
+	public void setActions(Set<ActionResponse> actions) {
 		this.actions = actions;
 	}
 
