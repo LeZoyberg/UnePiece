@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import UnePiece.dao.IDAOAction;
+import UnePiece.dao.IDAOPartie;
 import UnePiece.dto.ActionResponse;
+import UnePiece.dto.PartieResponse;
 import UnePiece.model.Action;
+import UnePiece.model.Partie;
 
 @RestController
 @RequestMapping("/api/action")
@@ -28,6 +31,8 @@ public class ActionRestController {
 
 	@Autowired
 	private IDAOAction daoAction;
+	@Autowired
+	private IDAOPartie daoPartie;
 
 	@GetMapping("/{id}")
 	public ActionResponse findById(@PathVariable Integer id) {
@@ -48,6 +53,25 @@ public class ActionRestController {
 			ActionResponse actionDTO = new ActionResponse();
 			BeanUtils.copyProperties(a, actionDTO);
 			System.out.println("for findAll" + a + actionDTO);
+			actionsDTO.add(actionDTO);
+		}
+		return actionsDTO;
+	}
+
+	@GetMapping("/partie/{partieId}")
+	public List<ActionResponse> findAllWithPartie(@PathVariable Integer partieId) {
+		List<Action> actions = daoAction.findAllWithPartie(partieId);
+		List<ActionResponse> actionsDTO = new ArrayList<ActionResponse>();
+		for (Action a : actions) {
+			ActionResponse actionDTO = new ActionResponse();
+			BeanUtils.copyProperties(a, actionDTO);
+			Optional<Partie> opt = daoPartie.findById(partieId);
+			if(opt.isPresent()) {
+				Partie partie = opt.get();
+				PartieResponse partieDTO = new PartieResponse();
+				BeanUtils.copyProperties(partie, partieDTO);
+				actionDTO.setPartie(partieDTO);
+			}
 			actionsDTO.add(actionDTO);
 		}
 		return actionsDTO;

@@ -61,6 +61,12 @@ public class ActionResponse {
     public void setPartie(PartieResponse partie) {
         this.partie = partie;
     }
+    @Override
+    public String toString() {
+        return "ActionResponse [id=" + id + ", choix=" + choix + ", termine=" + termine + ", degatNavire=" + degatNavire
+                + ", degatMembre=" + degatMembre + ", tresor=" + tresor + ", event=" + event + ", partie=" + partie
+                + "]";
+    }
 
     
 }
