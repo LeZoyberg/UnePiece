@@ -287,7 +287,7 @@ class UnePieceApplicationTests {
 		Evenement event4 = new Evenement(1, 2, 0, Odyssee.Monstre);
 		daoEvenement.save(event4);
 
-		Evenement event5 = new Evenement(0, -2 , -50, Odyssee.Restaurant);
+		Evenement event5 = new Evenement(0,-2,-10, Odyssee.Restaurant);
 		daoEvenement.save(event5);
 
 		// joueurs
