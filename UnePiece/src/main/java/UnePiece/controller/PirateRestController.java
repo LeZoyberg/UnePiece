@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOPirate;
 import UnePiece.model.Pirate;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/pirate")

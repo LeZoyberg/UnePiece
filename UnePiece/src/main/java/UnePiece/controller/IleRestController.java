@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import UnePiece.dao.IDAOIle;
 import UnePiece.model.Ile;
 import UnePiece.model.Mer;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/ile")

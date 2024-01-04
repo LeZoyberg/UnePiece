@@ -10,16 +10,16 @@
      <tr>
         <th>Début</th>
         <th>Score</th>
-        <th>Capitaine</th>
-        <th>Mer</th>
-        <th>Ile</th>
+        <th *ngIf="partie.membres[0]">Capitaine</th>
+        <th *ngIf="partie.ile?.mer">Mer</th>
+        <th *ngIf="partie.ile?.nom">Ile</th>
      </tr>
      <tr>
         <td>{{partie.dateDebut}}</td>
         <td>{{partie.duree}}</td>
         <td *ngIf="partie.membres[0]">{{partie.membres[0].pirate?.nom}}</td>
-        <td *ngIf="partie.ile!.mer">{{partie.ile!.mer}}</td>
-        <td>{{partie.ile!.nom}}</td>
+        <td *ngIf="partie.ile?.mer">{{partie.ile?.mer}}</td>
+        <td *ngIf="partie.ile?.nom">{{partie.ile?.nom}}</td>
      </tr>
     
     </table>

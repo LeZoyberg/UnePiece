@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import UnePiece.dao.IDAOCompte;
 import UnePiece.model.Compte;
 import UnePiece.model.Joueur;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/compte")

@@ -25,7 +25,6 @@ import UnePiece.dto.MembreResponse;
 import UnePiece.model.Membre;
 import UnePiece.model.Partie;
 import UnePiece.model.Pirate;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/membre")

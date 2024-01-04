@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOEvenement;
 import UnePiece.model.Evenement;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/event")
