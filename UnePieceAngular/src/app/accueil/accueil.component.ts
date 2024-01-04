@@ -45,8 +45,6 @@ export class AccueilComponent {
     });
   }
 
-
-
   continueGame() {
     //console.log(this.joueur?.id);
     this.partieService
@@ -66,7 +64,15 @@ export class AccueilComponent {
             '[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ',
             this.partie
           );
-          this.router.navigate(['/ile']);
+
+          // check où redirect:
+          if (this.partie.actions.length > 0) {
+            console.log("actions trouvées, redirect vers trajet");
+            this.router.navigate(['/trajet']);
+          } else {
+            console.log("pas d'actions trouvées, redirect vers ile");
+            this.router.navigate(['/ile']);
+          }
         } else this.newGame();
       });
   }
@@ -93,7 +99,6 @@ export class AccueilComponent {
           this.navireService.create(newNavire).subscribe((resp) => {
             this.partie!.navire = resp;
             this.partieService.create(this.partie!).subscribe((resp) => {
-            
               if (this.partie) {
                 this.partie.id = resp.id;
                 this.partieService.savePartieInStorage(this.partie);

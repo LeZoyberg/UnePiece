@@ -61,7 +61,7 @@ class UnePieceApplicationTests {
 		Pirate capitaine1 = new Pirate(25, 25, 25, true, true, "Luffy");
 		daoPirate.save(capitaine1);
 
-		Pirate capitaine2 = new Pirate(18, 30, 40, true, true, "Moira");
+		Pirate capitaine2 = new Pirate(18, 30, 40, true, true, "Moria");
 		daoPirate.save(capitaine2);
 
 		Pirate capitaine3 = new Pirate(20, 20, 20, true, true, "Law");

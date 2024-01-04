@@ -41,7 +41,8 @@
         <td>{{ p.joueur!.login }}</td>
         <td>{{ p.duree }}</td>
         <td>{{ p.dateDebut }}</td>
-        <td>{{ p.termine }}</td>
+        <td *ngIf="p.termine">Terminé</td>
+        <td *ngIf="!p.termine">En cours</td>
       </tr>
     </table>
   </div>
@@ -52,12 +53,10 @@
       <tr>
         <th>Score</th>
         <th>Date</th>
-        <th>Terminé ?</th>
       </tr>
       <tr *ngFor="let p of historique">
         <td>{{ p.duree }}</td>
         <td>{{ p.dateDebut }}</td>
-        <td>{{ p.termine }}</td>
       </tr>
     </table>
   </div>
