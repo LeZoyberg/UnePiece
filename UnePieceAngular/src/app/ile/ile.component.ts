@@ -143,7 +143,14 @@ export class IleComponent {
   listRecruits() {
     this.pirateService.getRandomRecruits().subscribe(resp => {
       this.pirates = resp;
+      // p != partie.membres[i].pirate
+      console.log('this.pirates avant filtre :>> ', this.pirates);
+      for(let m of this.partie.membres) {
+        this.pirates = this.pirates.filter(p => p.id !== m.pirate!.id);
+      }
+      console.log('this.pirates après filtre :>> ', this.pirates);
     })
+    
   }
 
   recruit(pirate: Pirate) {
