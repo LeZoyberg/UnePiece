@@ -46,10 +46,10 @@ public class Action {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public boolean isChoix() {
+	public Boolean isChoix() {
 		return choix;
 	}
-	public void setChoix(boolean choix) {
+	public void setChoix(Boolean choix) {
 		this.choix = choix;
 	}
 	public int getDegatNavire() {
@@ -81,12 +81,6 @@ public class Action {
 	}
 	public void setPartie(Partie partie) {
 		this.partie = partie;
-	}
-	public Boolean getChoix() {
-		return choix;
-	}
-	public void setChoix(Boolean choix) {
-		this.choix = choix;
 	}
 	public boolean isTermine() {
 		return termine;

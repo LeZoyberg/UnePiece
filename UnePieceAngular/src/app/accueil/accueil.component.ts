@@ -27,7 +27,7 @@ export class AccueilComponent {
     this.partie = this.partieService.getPartie();
     if (!this.partie) {
       this.partieService
-        .findByIdJoueurWithMembres(this.joueur.id)
+        .findByIdJoueurWithMembresAndActions(this.joueur.id)
         .subscribe((resp) => {
           this.partie = resp;
           console.log('this.partie :>>', this.partie);
@@ -42,7 +42,7 @@ export class AccueilComponent {
   continueGame() {
     //console.log(this.joueur?.id);
     this.partieService
-      .findByIdJoueurWithMembres(this.joueur?.id)
+      .findByIdJoueurWithMembresAndActions(this.joueur?.id)
       ?.subscribe((resp) => {
         console.log(resp);
         if (resp && resp.termine == false) {
