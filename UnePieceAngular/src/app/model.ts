@@ -66,6 +66,7 @@ export class Ile {
     public attente?: number,
     public ordre?: number,
     public mer?: string,
+    public dangerosite?: number,
     public ileFinale?: boolean
   ) {}
 }
