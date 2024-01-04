@@ -12,14 +12,21 @@ body {
 td, th, table, thead, tbody, tr {
     background-color:transparent;
     color: rgb(250, 238, 217);
+    text-align: center;
 }
 
 :host {
     background-color: transparent;
   }
 
+  th.image-container {
+    text-align: center;
+    vertical-align: middle;
+}
 img {
     width:calc(100vh / 10);
+    position:relative;
+    
 }
 
 #membres:hover {
