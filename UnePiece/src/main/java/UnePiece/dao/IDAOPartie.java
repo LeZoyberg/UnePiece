@@ -20,6 +20,9 @@ public interface IDAOPartie extends JpaRepository<Partie,Integer> {
 
 	@Query("SELECT p FROM Partie p JOIN FETCH p.membres LEFT JOIN FETCH p.actions WHERE p.joueur.id = ?1 and p.termine = false")
 	Optional<Partie> findByIdJoueurWithMembresAndActions(Integer id);
-
+	// essayer de choper les parties termiénes ? ou top 10 ?
 	List<Partie> findAllByOrderByDureeDesc();
+
+	@Query("SELECT p from Partie p WHERE p.joueur.id = ?1")
+	List<Partie> findAllByIdJoueur(Integer id);
 }

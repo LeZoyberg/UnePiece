@@ -1,0 +1,8 @@
+<p>Partie terminée</p>
+
+<p *ngIf="partie!.membres[0].pv == 0">Capitaine mort, partie perdue</p>
+
+
+<p *ngIf="partie!.membres[0].pv != 0">Bravo, partie gagnée</p>
+
+<button (click)="retourAccueil()"> Retourner à l'accueil </button>

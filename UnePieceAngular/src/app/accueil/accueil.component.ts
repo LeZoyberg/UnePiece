@@ -14,7 +14,9 @@ import { NavireService } from '../navire.service';
 export class AccueilComponent {
   joueur?: Joueur;
   partie?: Partie;
-  parties?: Partie[];
+  leaderboard?: Partie[];
+  historique?: Partie[];
+
   constructor(
     private partieService: PartieService,
     private router: Router,
@@ -34,10 +36,16 @@ export class AccueilComponent {
         });
     }
     this.partieService.findLeaderboard().subscribe((resp) => {
-      this.parties = resp;
-      console.log('this.parties :>> ', this.parties);
+      this.leaderboard = resp;
+      this.leaderboard = this.leaderboard.slice(0, 10);
+    });
+
+    this.partieService.findAllByIdJoueur(this.joueur.id!).subscribe((resp) => {
+      this.historique = resp;
     });
   }
+
+
 
   continueGame() {
     //console.log(this.joueur?.id);
@@ -64,14 +72,15 @@ export class AccueilComponent {
   }
 
   newGame() {
+    localStorage.removeItem('partie');
     this.partie = new Partie();
+    this.partieService.setPartie(this.partie);
     this.partie.termine = false;
     this.partie.joueur = this.joueur;
     this.partie.duree = 0;
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
     this.partie.joursRestants = 0;
-    
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
@@ -84,14 +93,12 @@ export class AccueilComponent {
           this.navireService.create(newNavire).subscribe((resp) => {
             this.partie!.navire = resp;
             this.partieService.create(this.partie!).subscribe((resp) => {
-              console.log(
-                '[newGame() in accueil.component.ts] this.partie :>> ',
-                this.partie
-              );
+            
               if (this.partie) {
                 this.partie.id = resp.id;
                 this.partieService.savePartieInStorage(this.partie);
               }
+
               this.router.navigate(['/start']);
             });
           });

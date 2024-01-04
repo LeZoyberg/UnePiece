@@ -40,11 +40,13 @@ export class TrajetComponent {
   suite() {
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
+      this.partie.duree!++;
       this.partieService.update(this.partie).subscribe(() => {
         this.partieService.savePartieInStorage(this.partie);
       });
     } else {
       this.partie.joursRestants = this.partie.ile?.attente;
+      this.partie.duree!++;
       this.partieService.update(this.partie).subscribe(() => {
         this.partieService.savePartieInStorage(this.partie);
         this.router.navigate(['/ile']);
