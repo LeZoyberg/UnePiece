@@ -53,18 +53,10 @@ export class IleComponent {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie() as Partie;
     this.ile = this.partie.ile as Ile;
-    console.log('this.ile constructeur ile component :>> ', this.ile);
-    //this.partie.joursRestants = this.ile.attente as number;
-    console.log('this.ile constructeur ile component :>> ', this.ile);
-    console.log('this.partie constructeur partie component :>> ', this.ile);
     this.showIle();
     this.listBateaux();
-
     this.listRecruits();
-
     this.listDestinations();
-    console.log('Constructeur de ile component, hors du subscribe');
-    console.log('Constructeur ile component this.partie :>> ', this.partie);
   }
 
   showIle() {
@@ -97,9 +89,6 @@ export class IleComponent {
   listDestinations() {
     if (this.partie.ile) {
       if (this.partie.ile.ileFinale) {
-        console.log(
-          '[listDestinations() dans ile.component.ts] Ile finale, affichage des premières îles de la mer suivante'
-        );
         if (this.getNextMer(this.partie.ile.mer as string) != 'END') {
           this.ileService
             .findAllFirstIlesNextMer(
@@ -118,7 +107,6 @@ export class IleComponent {
             (this.partie.ile.ordre as number) + 1
           )
           .subscribe((resp) => {
-            console.log('findAllNextIlesSameMer() resp :>> ', resp);
             this.destinations = resp;
           });
       }
@@ -126,60 +114,49 @@ export class IleComponent {
   }
 
   rest(membre: Membre) {
-    if (
-      membre.pv &&
-      membre.pirate &&
-      membre.pirate.pv &&
-      membre.pv < membre.pirate.pv
-    ) {
-      membre.pv += 1;
+    if (membre.pv! < membre.pirate!.pv!) {
+      membre.pv! += 1;
       this.membreService.update(membre).subscribe();
-      // this.partie.joursRestants!--;
       this.nextDay();
-      console.log(membre, ' a été reposé');
+      alert(membre.pirate!.nom + ' a été reposé');
     } else {
-      console.log('Le pirate a déjà ses PV au max');
+      alert(membre.pirate!.nom + ' a déjà ses PV au max');
     }
   }
 
   listRecruits() {
     this.pirateService.getRandomRecruits().subscribe((resp) => {
       this.pirates = resp;
-      // p != partie.membres[i].pirate
-      console.log('this.pirates avant filtre :>> ', this.pirates);
       for (let m of this.partie.membres) {
         this.pirates = this.pirates.filter((p) => p.id !== m.pirate!.id);
       }
-      console.log('this.pirates après filtre :>> ', this.pirates);
     });
   }
 
   recruit(pirate: Pirate) {
-    if (
-      this.partie.tresor &&
-      pirate.prime &&
-      this.partie.tresor >= pirate.prime
-    ) {
-      this.partie.tresor -= pirate.prime;
-      let newMembre: Membre = new Membre();
-      newMembre.pirate = pirate;
-      newMembre.pv = pirate.pv;
-      newMembre.power = pirate.power;
-      newMembre.partie = this.partie;
-      this.membreService.create(newMembre).subscribe((resp) => {
-        this.partie.membres.push(resp);
-        this.partieService.getForceTotale();
-        // this.partie.joursRestants!--;
-        this.nextDay();
-        this.partieService.update(this.partie).subscribe(() => {
-          this.partieService.savePartieInStorage(this.partie);
+    if (this.partie.membres.length < this.partie.navire?.bateau?.capacite!) {
+      if (this.partie.tresor! >= pirate.prime!) {
+        this.partie.tresor! -= pirate.prime!;
+        let newMembre: Membre = new Membre();
+        newMembre.pirate = pirate;
+        newMembre.pv = pirate.pv;
+        newMembre.power = pirate.power;
+        newMembre.partie = this.partie;
+        this.membreService.create(newMembre).subscribe((resp) => {
+          this.partie.membres.push(resp);
+          this.partieService.getForceTotale();
+          this.nextDay();
+          this.partieService.update(this.partie).subscribe(() => {
+            this.partieService.savePartieInStorage(this.partie);
+          });
+          alert(pirate.nom + ' a été recruté');
+          this.listRecruits();
         });
-        console.log(pirate, ' a été recruté');
-        console.log('this.partie :>> ', this.partie);
-        this.listRecruits();
-      });
+      } else {
+        alert('Tu es trop pauvre mon gueux !');
+      }
     } else {
-      console.log("Pas assez d'argent pour recruter ce pirate");
+      alert('Plus de place à bord !');
     }
   }
 
@@ -207,35 +184,40 @@ export class IleComponent {
       this.navireService.create(newNavire).subscribe((resp) => {
         this.navire = resp;
         this.partie.navire = this.navire;
-        // this.partie.joursRestants!--;
         this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        console.log(bateau, ' a été acheté');
-        console.log('this.partie :>> ', this.partie);
         this.listBateaux();
       });
     }
   }
   repair() {
     if (this.partie.tresor! >= 5) {
-      if (this.partie.navire!.robustesse! < this.partie.navire!.bateau?.robustesse!) {
+      if (
+        this.partie.navire!.robustesse! <
+        this.partie.navire!.bateau?.robustesse!
+      ) {
         this.partie.navire!.robustesse! += 2;
         this.partie.tresor! -= 5;
-        if (this.partie.navire!.robustesse! > this.partie.navire!.bateau!.robustesse!) {
-          this.partie.navire!.robustesse = this.partie.navire!.bateau!.robustesse;
+        if (
+          this.partie.navire!.robustesse! >
+          this.partie.navire!.bateau!.robustesse!
+        ) {
+          this.partie.navire!.robustesse =
+            this.partie.navire!.bateau!.robustesse;
         }
-        alert(this.partie.navire!.bateau!.nom+" a été réparé");
+        alert(this.partie.navire!.bateau!.nom + ' a été réparé');
       } else {
-        alert(this.partie.navire!.bateau!.nom+" a déjà sa robustesse au maximum");
+        alert(
+          this.partie.navire!.bateau!.nom + ' a déjà sa robustesse au maximum'
+        );
       }
       this.navireService.update(this.partie.navire!).subscribe(() => {
         this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        console.log('this.partie :>> ', this.partie);
       });
     }
   }
