@@ -61,7 +61,7 @@ class UnePieceApplicationTests {
 		Pirate capitaine1 = new Pirate(25, 25, 25, true, true, "Luffy");
 		daoPirate.save(capitaine1);
 
-		Pirate capitaine2 = new Pirate(18, 30, 40, true, true, "Moira");
+		Pirate capitaine2 = new Pirate(18, 30, 40, true, true, "Moria");
 		daoPirate.save(capitaine2);
 
 		Pirate capitaine3 = new Pirate(20, 20, 20, true, true, "Law");
@@ -84,6 +84,9 @@ class UnePieceApplicationTests {
 
 		Pirate capitaine9 = new Pirate(66, 66, 66, true, true, "Doflamingo");
 		daoPirate.save(capitaine9);
+
+		Pirate capitaine10 = new Pirate(80,80,80, true, true, "BarbeBlanche");
+		daoPirate.save(capitaine10);
 
 		// pirates
 		Pirate pirate1 = new Pirate(20, 10, 10, false, false, "Franky");
@@ -287,7 +290,7 @@ class UnePieceApplicationTests {
 		Evenement event4 = new Evenement(1, 2, 0, Odyssee.Monstre);
 		daoEvenement.save(event4);
 
-		Evenement event5 = new Evenement(0, -2 , -50, Odyssee.Restaurant);
+		Evenement event5 = new Evenement(0,-2,-10, Odyssee.Restaurant);
 		daoEvenement.save(event5);
 
 		// joueurs

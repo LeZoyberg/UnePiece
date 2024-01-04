@@ -26,9 +26,10 @@
         <td *ngIf="partie.ile?.nom">{{ partie.ile?.nom }}</td>
       </tr>
     </table>
+  <stat-equipage *ngIf="partie && partie.id != undefined && partie.membres"></stat-equipage>
   </div>
   <br />
-  <div id="leaderboard">
+  <div id="leaderboard" *ngIf="leaderboard?.length != 0">
     <table border="1">
       Leaderboard
       <tr>
@@ -41,7 +42,8 @@
         <td>{{ p.joueur!.login }}</td>
         <td>{{ p.duree }}</td>
         <td>{{ p.dateDebut }}</td>
-        <td>{{ p.termine }}</td>
+        <td *ngIf="p.termine">Terminé</td>
+        <td *ngIf="!p.termine">En cours</td>
       </tr>
     </table>
   </div>
@@ -52,12 +54,10 @@
       <tr>
         <th>Score</th>
         <th>Date</th>
-        <th>Terminé ?</th>
       </tr>
       <tr *ngFor="let p of historique">
         <td>{{ p.duree }}</td>
         <td>{{ p.dateDebut }}</td>
-        <td>{{ p.termine }}</td>
       </tr>
     </table>
   </div>

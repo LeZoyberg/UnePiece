@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOPirate;
 import UnePiece.model.Pirate;
@@ -44,18 +40,22 @@ public class PirateRestController {
 	@GetMapping("/random")
 	public List<Pirate> getRandomRecruits() {
 		List<Pirate> pirates = this.findAll();
-		
-		// retire les capitaines
-		for (int i = 0; i < pirates.size(); i++) {
 
-			Pirate p = pirates.get(i);
-			if (p.isCapitaine()) {
-				pirates.remove(i);
+		// retire les capitaines
+		int totalPirates = pirates.size();
+		for (int i = 0; i < totalPirates; i++) {
+			if(i < pirates.size()) {
+				Pirate p = pirates.get(i);
+				if (p.isCapitaine()) {
+					pirates.remove(i);
+					i--;
+				}
 			}
 		}
+
 		List<Pirate> shuffledPirates = new ArrayList();
 		int max = 5;
-		int min = 2;
+		int min = 3;
 		Random random = new Random();
 		int nombrePirates = random.nextInt(max - min + 1) + min;
 		for (int i = 1; i <= nombrePirates; i++) {
@@ -64,7 +64,6 @@ public class PirateRestController {
 			shuffledPirates.add(randomPirate);
 		}
 		return shuffledPirates;
-		// empêcher 2 fois même membre
 	}
 
 	@GetMapping
@@ -74,13 +73,13 @@ public class PirateRestController {
 
 	@PostMapping
 	public Pirate insert(@RequestBody Pirate pirate, BindingResult result) {
-		
+
 		return daoPirate.save(pirate);
 	}
 
 	@PutMapping("/{id}")
 	public Pirate update(@PathVariable Integer id, @RequestBody Pirate pirate, BindingResult result) {
-		
+
 		return daoPirate.save(pirate);
 	}
 
