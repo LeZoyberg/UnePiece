@@ -40,15 +40,19 @@ public class PirateRestController {
 	@GetMapping("/random")
 	public List<Pirate> getRandomRecruits() {
 		List<Pirate> pirates = this.findAll();
-		
-		// retire les capitaines
-		for (int i = 0; i < pirates.size(); i++) {
 
-			Pirate p = pirates.get(i);
-			if (p.isCapitaine()) {
-				pirates.remove(i);
+		// retire les capitaines
+		int totalPirates = pirates.size();
+		for (int i = 0; i < totalPirates; i++) {
+			if(i < pirates.size()) {
+				Pirate p = pirates.get(i);
+				if (p.isCapitaine()) {
+					pirates.remove(i);
+					i--;
+				}
 			}
 		}
+
 		List<Pirate> shuffledPirates = new ArrayList();
 		int max = 5;
 		int min = 2;
@@ -60,7 +64,6 @@ public class PirateRestController {
 			shuffledPirates.add(randomPirate);
 		}
 		return shuffledPirates;
-		// empêcher 2 fois même membre
 	}
 
 	@GetMapping
@@ -70,13 +73,13 @@ public class PirateRestController {
 
 	@PostMapping
 	public Pirate insert(@RequestBody Pirate pirate, BindingResult result) {
-		
+
 		return daoPirate.save(pirate);
 	}
 
 	@PutMapping("/{id}")
 	public Pirate update(@PathVariable Integer id, @RequestBody Pirate pirate, BindingResult result) {
-		
+
 		return daoPirate.save(pirate);
 	}
 

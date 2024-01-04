@@ -85,6 +85,9 @@ class UnePieceApplicationTests {
 		Pirate capitaine9 = new Pirate(66, 66, 66, true, true, "Doflamingo");
 		daoPirate.save(capitaine9);
 
+		Pirate capitaine10 = new Pirate(80,80,80, true, true, "BarbeBlanche");
+		daoPirate.save(capitaine10);
+
 		// pirates
 		Pirate pirate1 = new Pirate(20, 10, 10, false, false, "Franky");
 		daoPirate.save(pirate1);
