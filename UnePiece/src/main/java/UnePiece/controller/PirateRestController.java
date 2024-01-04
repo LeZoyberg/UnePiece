@@ -53,9 +53,9 @@ public class PirateRestController {
 			}
 		}
 
-		List<Pirate> shuffledPirates = new ArrayList();
+		List<Pirate> shuffledPirates = new ArrayList<Pirate>();
 		int max = 5;
-		int min = 2;
+		int min = 3;
 		Random random = new Random();
 		int nombrePirates = random.nextInt(max - min + 1) + min;
 		for (int i = 1; i <= nombrePirates; i++) {

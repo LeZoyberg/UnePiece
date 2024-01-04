@@ -16,14 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOMembre;
-import UnePiece.dao.IDAOPartie;
 import UnePiece.dao.IDAOPirate;
 import UnePiece.dto.MembreResponse;
 import UnePiece.model.Membre;
-import UnePiece.model.Partie;
 import UnePiece.model.Pirate;
 
 @RestController
@@ -33,8 +30,6 @@ public class MembreRestController {
 	
 	@Autowired
 	private IDAOMembre daoMembre;
-	@Autowired
-	private IDAOPartie daoPartie;
 	@Autowired
 	private IDAOPirate daoPirate;
 

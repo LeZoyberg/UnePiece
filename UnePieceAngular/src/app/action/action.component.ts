@@ -3,6 +3,7 @@ import { Action, Partie } from '../model';
 import { IleService } from '../ile.service';
 import { PartieService } from '../partie.service';
 import { Router } from '@angular/router';
+import { ActionService } from '../action.service';
 
 @Component({
   selector: 'action',
@@ -21,6 +22,7 @@ export class ActionComponent {
   constructor(
     private ileService: IleService,
     private partieService: PartieService,
+    private actionService: ActionService,
     private router: Router
   ) {
     this.partie = this.partieService.getPartie() as Partie;
@@ -67,10 +69,14 @@ export class ActionComponent {
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
       this.partie.duree!++;
+      this.action = this.partie.actions.shift() as Action;
+     
+      this.checkForText(this.action.event?.odyssee as string);
       this.partieService.update(this.partie).subscribe(() => {
-        this.action = this.partie.actions.shift() as Action;
-        this.checkForText(this.action.event?.odyssee as string);
-        this.partieService.savePartieInStorage(this.partie);
+        this.actionService.delete(this.action.id).subscribe(() => {
+        
+          this.partieService.savePartieInStorage(this.partie);
+        });
       });
     } else {
       this.partie.joursRestants = this.partie.ile?.attente;
@@ -85,9 +91,8 @@ export class ActionComponent {
 
   bouton1() {
     if (this.partie.tresor! + this.action.tresor! < 0) {
-      alert("Pas assez d'argent pour cette action !")
-    }
-    else {
+      alert("Pas assez d'argent pour cette action !");
+    } else {
       this.partie.membres.forEach((membre, index) => {
         membre.pv! -= this.action.degatMembre!;
         this.partieService.checkPvMembre(membre, index);
@@ -99,6 +104,33 @@ export class ActionComponent {
   }
 
   bouton2() {
+    var degat: number = Math.floor(Math.random() * 10);
+    //choisir aléatoirement degatnavire, degatmembre ou tresor et enlever le degat
+    var alea: number = Math.floor(Math.random() *3)+1;
+    if(alea==1){
+      if (this.partie.tresor! == 0){
+        alert ("Tu as de la chance d'être pauvre, tu n'as plus de Berry à perdre...")
+      }
+      else {
+        this.partie.tresor! -= degat*2 ;
+        alert ("Vous perdez "+(degat*2)+"฿")
+        if (this.partie.tresor! <= 0){
+          this.partie.tresor = 0;
+          alert ("Tu es maintenant pauvre, gueux.")
+        }
+      }
+    }
+    if(alea==2){
+      this.partie.navire!.robustesse! -= degat ;
+      alert ("Votre navire prend "+degat+" de dégâts")
+    }
+    if(alea==3){
+      this.partie.membres.forEach((membre, index) => {
+        membre.pv! -= degat;
+        this.partieService.checkPvMembre(membre, index);
+      });
+      alert ("Vos membres perdent tous "+(degat)+"pv")
+    }
     this.suite();
   }
 

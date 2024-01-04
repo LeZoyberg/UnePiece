@@ -11,6 +11,11 @@ export class ActionService {
 
   constructor(private http: HttpClient) { }
 
+  
+  findAllWithPartie(id : number): Observable<Action[]> {
+    return this.http.get<Action[]>(environment.apiUrl + "/action/partie/"+id);
+  }
+
   findAll(): Observable<Action[]> {
     return this.http.get<Action[]>(environment.apiUrl + "/action");
   }

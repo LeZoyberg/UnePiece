@@ -131,7 +131,26 @@ export class IleComponent {
       for (let m of this.partie.membres) {
         this.pirates = this.pirates.filter((p) => p.id !== m.pirate!.id);
       }
+      
+      const uniquePirates = this.getUniquePirates(this.pirates);
+    
+    this.pirates = uniquePirates;
+      
     });
+  }
+
+  getUniquePirates(pirates: Pirate[]): Pirate[] {
+    const uniquePirates: Pirate[] = [];
+    const seenIDs: Set<number> = new Set();
+  
+    for (const pirate of pirates) {
+      if (!seenIDs.has(pirate.id!)) {
+        uniquePirates.push(pirate);
+        seenIDs.add(pirate.id!);
+      }
+    }
+  
+    return uniquePirates;
   }
 
   recruit(pirate: Pirate) {
