@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import UnePiece.model.Compte;
-import UnePiece.model.Joueur;
 
 public interface IDAOCompte extends JpaRepository<Compte,Integer> {
 

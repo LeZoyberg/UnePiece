@@ -1,8 +1,5 @@
 package UnePiece.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
 public enum Mer {
 
 	

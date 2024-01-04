@@ -53,7 +53,7 @@ public class PirateRestController {
 			}
 		}
 
-		List<Pirate> shuffledPirates = new ArrayList();
+		List<Pirate> shuffledPirates = new ArrayList<Pirate>();
 		int max = 5;
 		int min = 3;
 		Random random = new Random();

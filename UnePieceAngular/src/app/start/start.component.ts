@@ -17,6 +17,7 @@ export class StartComponent {
   joueur: Joueur = {};
   partie: Partie = new Partie();
   membre: Membre = new Membre();
+  
   constructor(
     private pirateService: PirateService,
     private partieService: PartieService,
