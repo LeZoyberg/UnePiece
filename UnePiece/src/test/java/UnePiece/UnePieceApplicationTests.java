@@ -191,11 +191,26 @@ class UnePieceApplicationTests {
 		Bateau bateau1 = new Bateau("Petite barque", 2, 2, 2, true);
 		daoBateau.save(bateau1);
 
-		Bateau bateau2 = new Bateau("Vogue Merry", 10, 10, 10, true);
+		Bateau bateau2 = new Bateau("Moyenne barque", 3, 4, 5, true);
 		daoBateau.save(bateau2);
-
-		Bateau bateau3 = new Bateau("Thousand Sunny", 15, 15, 15, false);
+		
+		Bateau bateau3 = new Bateau("Grande barque", 4, 6, 10, true);
 		daoBateau.save(bateau3);
+		
+		Bateau bateau4 = new Bateau("Petit voilier", 5, 8, 12, true);
+		daoBateau.save(bateau4);
+		
+		Bateau bateau5 = new Bateau("Moyen voilier", 6, 10, 14, true);
+		daoBateau.save(bateau5);
+		
+		Bateau bateau6 = new Bateau("Grand voilier", 7, 12, 16, true);
+		daoBateau.save(bateau6);
+		
+		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, true);
+		daoBateau.save(bateau7);
+
+		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false);
+		daoBateau.save(bateau8);
 
 		// navires
 		Navire navire1 = new Navire(bateau3.getRobustesse(), bateau3);
