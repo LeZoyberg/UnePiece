@@ -1,7 +1,9 @@
 package UnePiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +43,36 @@ public class PirateRestController {
 		return opt.get();
 	}
 	
+/*
+ * 
+ *  getRandomRecruits() : Pirate[] | void {
+    this.findAll().subscribe(piratesResp => {
+      const pirates : Pirate[] = piratesResp;
+      const shuffledPirates = pirates.sort(() => 0.5 - Math.random());
+      console.log('shuffledPirates :>> ', shuffledPirates);
+      const returnedPirates = shuffledPirates.slice(0, 5);
+      return returnedPirates;
+    });
+  }
+ * 
+ */
+  	@GetMapping("/random")
+	public List<Pirate> getRandomRecruits() {
+		List<Pirate> pirates = this.findAll();
+		List<Pirate> shuffledPirates = new ArrayList();
+		int max = 5;
+		int min = 2;
+		Random random = new Random();
+		int nombrePirates = random.nextInt(max - min + 1) + min;
+		for(int i = 1; i <= nombrePirates; i++) {
+			Random random1 = new Random();
+			Pirate randomPirate = pirates.get(random1.nextInt(pirates.size()));
+			shuffledPirates.add(randomPirate);
+		}
+		return shuffledPirates;
+		// retirer capitaines + empêcher 2 fois même membre
+	}
+
 	@GetMapping
 	public List<Pirate> findAll() 
 	{
