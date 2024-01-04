@@ -39,6 +39,10 @@ export class StartComponent {
       this.capitaines = this.capitaines.filter(
         (pirate) => pirate.capitaine == true
       );
+      // Mélanger aléatoirement la liste des capitaines
+      this.capitaines.sort(() => Math.random() - 0.5);
+      // Sélectionner les trois premiers pirates aléatoires
+      this.capitaines = this.capitaines.slice(0, 3);
     });
   }
 
