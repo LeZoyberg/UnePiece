@@ -107,6 +107,9 @@ export class PartieService {
       this.partie.termine = true;
       this.router.navigate(['/ending']);
     }
-
+    if(this.partie.ile!.nom="Ile4_NewWorld") {
+      this.partie.termine = true;
+      this.router.navigate(['/ending']);
+    }
   }
 }
