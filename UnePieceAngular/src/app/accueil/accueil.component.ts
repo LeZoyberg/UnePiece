@@ -33,13 +33,16 @@ export class AccueilComponent {
         .subscribe((resp) => {
           this.partie = resp;
           console.log('this.partie :>>', this.partie);
+          if(this.partie) {
+            this.partieService.setPartie(this.partie);
+            this.partieService.getForceTotale();  
+          }
         });
     }
     this.partieService.findLeaderboard().subscribe((resp) => {
       this.leaderboard = resp;
       this.leaderboard = this.leaderboard.slice(0, 10);
     });
-
     this.partieService.findAllByIdJoueur(this.joueur.id!).subscribe((resp) => {
       this.historique = resp;
     });

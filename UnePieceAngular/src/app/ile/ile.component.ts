@@ -211,7 +211,7 @@ export class IleComponent {
         alert(this.partie.navire!.bateau!.nom + ' a été réparé');
       } else {
         alert(
-          this.partie.navire!.bateau!.nom + ' a déjà sa robustesse au maximum'
+          this.partie.navire!.bateau!.nom + ' a déjà sa robustesse au maximum ! Vous passez la journée à essayer de le réparer en vain ...'
         );
       }
       this.navireService.update(this.partie.navire!).subscribe(() => {

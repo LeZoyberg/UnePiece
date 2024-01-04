@@ -26,9 +26,10 @@
         <td *ngIf="partie.ile?.nom">{{ partie.ile?.nom }}</td>
       </tr>
     </table>
+  <stat-equipage *ngIf="partie && partie.id != undefined && partie.membres"></stat-equipage>
   </div>
   <br />
-  <div id="leaderboard">
+  <div id="leaderboard" *ngIf="leaderboard?.length != 0">
     <table border="1">
       Leaderboard
       <tr>
