@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Partie } from './model';
+import { Membre, Partie } from './model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { MembreService } from './membre.service';
 @Injectable({
   providedIn: 'root',
 })
 export class PartieService {
   partie!: Partie;
 
-  constructor(private http: HttpClient, private router : Router) {}
+  constructor(private http: HttpClient, private router : Router, private membreService: MembreService) {}
 
   getPartie(): Partie | undefined {
     if (this.partie) {
@@ -107,9 +108,17 @@ export class PartieService {
       this.partie.termine = true;
       this.router.navigate(['/ending']);
     }
-    if(this.partie.ile!.nom="Ile4_NewWorld") {
+    if(this.partie.ile!.nom=="Ile4_NewWorld") {
       this.partie.termine = true;
       this.router.navigate(['/ending']);
     }
   }
+
+  checkPvMembre(membre: Membre) {
+    if(membre.pv! <= 0) {
+      this.membreService.delete(membre.id).subscribe();
+      alert(membre.pirate?.nom + "est crevé");
+    }
+  }
+
 }
