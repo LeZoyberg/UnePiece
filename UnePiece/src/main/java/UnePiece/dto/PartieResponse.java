@@ -17,13 +17,13 @@ public class PartieResponse {
 	private boolean termine;
 	private Integer tresor;
 	private Integer duree;
-	private List<MembreResponse> membres = new ArrayList();
+	private List<MembreResponse> membres = new ArrayList<MembreResponse>();
 	private Navire navire;
 	private Ile ile;
 	private int dangerosite;
 	private int joursRestants;
 	private Joueur joueur;
-	private Set<ActionResponse> actions = new HashSet();
+	private Set<ActionResponse> actions = new HashSet<ActionResponse>();
 	
 	public Joueur getJoueur() {
 		return joueur;

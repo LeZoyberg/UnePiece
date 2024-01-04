@@ -26,7 +26,7 @@ public class Partie {
 	private int tresor;
 	private int duree;
 	@OneToMany(mappedBy = "partie")
-	private List<Membre> membres = new ArrayList();
+	private List<Membre> membres = new ArrayList<Membre>();
 	@ManyToOne
 	@JoinColumn(name = "id_ile")
 	private Ile ile;
