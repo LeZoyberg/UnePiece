@@ -224,10 +224,18 @@ h1, div {
   transform: translate(-50%, -50%);
 }
 
+.frame-art img {
+  position:relative;
+  top:60%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  height:70%;
+}
+
 .frame-art {
   top: 25.5%;
   height: 50%;
-  background: url(../../assets/pirates/luffy.png) center top 90% / calc(35%), url(../../assets/backgrounds/background_wave.png);
+  background: url(../../assets/backgrounds/background_wave.png);
   background-repeat: no-repeat;
 }
 .frame-header {
