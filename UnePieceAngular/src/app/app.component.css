@@ -1,0 +1,5 @@
+.card-body {
+  min-height: 100vh;
+  background-image: url("../assets/backgrounds/background_wave.png");
+  background-size: 100% 100%;
+}
