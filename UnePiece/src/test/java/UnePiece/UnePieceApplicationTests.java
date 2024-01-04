@@ -333,7 +333,7 @@ class UnePieceApplicationTests {
 		action2.setPartie(partie1);
 		daoAction.save(action2);
 		
-		Partie partie2 = new Partie(LocalDate.of(2023, 10, 10), false, 38, 68, equipage2, ile20, navire1, joueur5,
+		Partie partie2 = new Partie(LocalDate.of(2023, 10, 10), false, 38, 68, equipage2, ile24, navire1, joueur5,
 				actionsPartie2, 8);
 		daoPartie.save(partie2);
 		//	save membres avec partie
