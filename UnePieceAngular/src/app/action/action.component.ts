@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Action, Partie } from '../model';
 import { IleService } from '../ile.service';
 import { PartieService } from '../partie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'action',
@@ -21,10 +22,10 @@ export class ActionComponent {
   constructor(
     private ileService: IleService,
     private partieService: PartieService,
+    private router: Router,
   ) {
     this.partie = this.partieService.getPartie() as Partie;
     this.action = this.partie.actions.shift() as Action;
-
     this.checkForText(this.action.event?.odyssee as string);
 
     this.partieService.update(this.partie).subscribe(() => {
@@ -60,5 +61,41 @@ export class ActionComponent {
         break;
     }
   }
+
+  suite() {
+    if (this.partie.joursRestants! > 1) {
+      this.partie.joursRestants!--;
+      this.partie.duree!++;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.action = this.partie.actions.shift() as Action;
+        this.checkForText(this.action.event?.odyssee as string);
+        this.partieService.savePartieInStorage(this.partie); 
+      });
+    } else {
+      this.partie.joursRestants = this.partie.ile?.attente;
+      this.partie.duree!++;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.partieService.savePartieInStorage(this.partie);
+        this.router.navigate(['/ile']);
+      });
+    }
+  }
+
+bouton1(){
+  for(let membre of this.partie.membres){
+    membre.pv! -= this.action.degatMembre!;
+    this.partieService.checkPvMembre(membre);
+  }
+  this.partie.navire!.robustesse! -= this.action.degatNavire!;
+  this.partie.tresor! += this.action.tresor!;
+  this.partieService.checkEndOfGame();
+  this.suite();
+}
+
+bouton2(){
+
+  this.suite();
+}
+
 
 }
