@@ -22,7 +22,7 @@ public class Action {
 	@Column(name="degat_membre")
 	private int degatMembre;
 	private int tresor;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_event")
 	private Evenement event;
 	@ManyToOne

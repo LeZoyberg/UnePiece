@@ -1,49 +1,64 @@
 <br />
 <br />
-<button class="btn btn-success" (click)="continueGame()">
-  Démarrer partie <i class="bi bi-plus-circle"></i>
+
+<button (click)="newGame()" class="btn btn-danger">
+  Nouvelle partie <i class="bi bi-plus-circle"></i>
 </button>
-<button (click)="newGame()"> NEW GAME TEST </button>
 <div id="container">
-  <div id="partieEnCours" *ngIf="partie">
-    <table>  Partie en cours
-     <tr>
+  <div id="partieEnCours" *ngIf="partie && partie.id != undefined">
+    <button class="btn btn-success" (click)="continueGame()">
+      Reprendre partie <i class="bi bi-arrow-circle"></i>
+    </button>
+    <table>
+      Partie en cours
+      <tr>
         <th>Début</th>
         <th>Score</th>
         <th *ngIf="partie.membres[0]">Capitaine</th>
         <th *ngIf="partie.ile?.mer">Mer</th>
         <th *ngIf="partie.ile?.nom">Ile</th>
-     </tr>
-     <tr>
-        <td>{{partie.dateDebut}}</td>
-        <td>{{partie.duree}}</td>
-        <td *ngIf="partie.membres[0]">{{partie.membres[0].pirate?.nom}}</td>
-        <td *ngIf="partie.ile?.mer">{{partie.ile?.mer}}</td>
-        <td *ngIf="partie.ile?.nom">{{partie.ile?.nom}}</td>
-     </tr>
-    
+      </tr>
+      <tr>
+        <td>{{ partie.dateDebut }}</td>
+        <td>{{ partie.duree }}</td>
+        <td *ngIf="partie.membres[0]">{{ partie.membres[0].pirate?.nom }}</td>
+        <td *ngIf="partie.ile?.mer">{{ partie.ile?.mer }}</td>
+        <td *ngIf="partie.ile?.nom">{{ partie.ile?.nom }}</td>
+      </tr>
     </table>
   </div>
+  <br />
   <div id="leaderboard">
-    <table>
+    <table border="1">
       Leaderboard
       <tr>
         <th>Joueur</th>
         <th>Score</th>
         <th>Date</th>
         <th>Terminé ?</th>
-     </tr>
-     <tr *ngFor="let p of parties">
-        <td>{{p.joueur!.login}}</td>
-        <td>{{p.duree}}</td>
-        <td>{{p.dateDebut}}</td>
-        <td>{{p.termine}}</td>
-     </tr>
+      </tr>
+      <tr *ngFor="let p of leaderboard">
+        <td>{{ p.joueur!.login }}</td>
+        <td>{{ p.duree }}</td>
+        <td>{{ p.dateDebut }}</td>
+        <td>{{ p.termine }}</td>
+      </tr>
     </table>
   </div>
+  <br>
   <div id="historique">
-    <table>
-      Historique
+    <table border="1">
+      Mon Historique
+      <tr>
+        <th>Score</th>
+        <th>Date</th>
+        <th>Terminé ?</th>
+      </tr>
+      <tr *ngFor="let p of historique">
+        <td>{{ p.duree }}</td>
+        <td>{{ p.dateDebut }}</td>
+        <td>{{ p.termine }}</td>
+      </tr>
     </table>
   </div>
 </div>
