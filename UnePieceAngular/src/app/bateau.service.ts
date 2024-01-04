@@ -11,6 +11,10 @@ export class BateauService {
 
   constructor(private http: HttpClient) { }
 
+  getRandomBateaux(idIle: number) : Observable<Bateau[]> {
+    return this.http.get<Bateau[]>(environment.apiUrl + "/bateau/random/"+idIle);
+  }
+
   findAll(): Observable<Bateau[]> {
     return this.http.get<Bateau[]>(environment.apiUrl + "/bateau");
   }

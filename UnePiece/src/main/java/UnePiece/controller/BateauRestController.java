@@ -1,7 +1,9 @@
 package UnePiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -37,6 +39,34 @@ public class BateauRestController {
 		return opt.get();
 	}
 	
+	@GetMapping("/random/{idIle}")
+	public List<Bateau> getRandomBateaux(@PathVariable Integer idIle) {
+		List<Bateau> bateaux = this.findAll();
+		// retire les bateaux pas de début quand on est sur la première île (idIle = 1)
+		int totalBateaux = bateaux.size();
+		for (int i = 0; i < totalBateaux; i++) {
+			if(i < bateaux.size()) {
+				Bateau b = bateaux.get(i);
+				if (idIle == 1 && !b.isDebut()) {
+					bateaux.remove(i);
+					i--;
+				}
+			}
+		}
+
+	List<Bateau> shuffledBateaux = new ArrayList<Bateau>();
+		int max = 3;
+		int min = 2;
+		Random random = new Random();
+		int nombreBateaux = random.nextInt(max - min + 1) + min;
+		for (int i = 1; i <= nombreBateaux; i++) {
+			Random random1 = new Random();
+			Bateau randomBateau = bateaux.get(random1.nextInt(bateaux.size()));
+			shuffledBateaux.add(randomBateau);
+		}
+		return shuffledBateaux;
+	}
+
 	@GetMapping
 	public List<Bateau> findAll() 
 	{
@@ -46,20 +76,12 @@ public class BateauRestController {
 	@PostMapping
 	public Bateau insert(@RequestBody Bateau bateau, BindingResult result) 
 	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La bateau n'est pas valide...");
-		}*/
 		return daoBateau.save(bateau);
 	}
 	
 	@PutMapping("/{id}")
 	public Bateau update(@PathVariable Integer id, @RequestBody Bateau bateau, BindingResult result) 
 	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La bateau n'est pas valide...");
-		}*/
 		return daoBateau.save(bateau);
 	}
 	
