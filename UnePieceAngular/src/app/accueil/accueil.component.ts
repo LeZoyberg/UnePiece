@@ -33,13 +33,16 @@ export class AccueilComponent {
         .subscribe((resp) => {
           this.partie = resp;
           console.log('this.partie :>>', this.partie);
+          if (this.partie) {
+            this.partieService.setPartie(this.partie);
+            this.partieService.getForceTotale();
+          }
         });
     }
     this.partieService.findLeaderboard().subscribe((resp) => {
       this.leaderboard = resp;
       this.leaderboard = this.leaderboard.slice(0, 10);
     });
-
     this.partieService.findAllByIdJoueur(this.joueur.id!).subscribe((resp) => {
       this.historique = resp;
     });
@@ -67,7 +70,7 @@ export class AccueilComponent {
 
           // check où redirect:
           if (this.partie.actions.length > 0) {
-            console.log("actions trouvées, redirect vers trajet");
+            console.log('actions trouvées, redirect vers trajet');
             this.router.navigate(['/trajet']);
           } else {
             console.log("pas d'actions trouvées, redirect vers ile");
