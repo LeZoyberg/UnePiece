@@ -116,8 +116,10 @@ export class PartieService {
 
   checkPvMembre(membre: Membre, index: number) {
     if(membre.pv! <= 0) {
-      this.membreService.delete(membre.id).subscribe();
-      this.partie.membres.splice(index,1);
+      if(!membre.pirate!.capitaine){
+        this.membreService.delete(membre.id).subscribe();
+        this.partie.membres.splice(index,1);
+      }
       this.update(this.partie).subscribe(() => {
         this.savePartieInStorage(this.partie);
       });  
