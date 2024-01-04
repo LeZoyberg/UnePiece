@@ -20,6 +20,7 @@ public class PartieResponse {
 	private List<MembreResponse> membres = new ArrayList();
 	private Navire navire;
 	private Ile ile;
+	private int dangerosite;
 	private int joursRestants;
 	private Joueur joueur;
 	private Set<ActionResponse> actions = new HashSet();
@@ -111,5 +112,15 @@ public class PartieResponse {
 	public void setActions(Set<ActionResponse> actions) {
 		this.actions = actions;
 	}
+
+	public int getDangerosite() {
+		return dangerosite;
+	}
+
+	public void setDangerosite(int dangerosite) {
+		this.dangerosite = dangerosite;
+	}
+	
+	
 
 }
