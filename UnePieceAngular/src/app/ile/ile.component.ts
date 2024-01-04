@@ -53,16 +53,11 @@ export class IleComponent {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie() as Partie;
     this.ile = this.partie.ile as Ile;
-    console.log('this.ile constructeur ile component :>> ', this.ile);
-    //this.partie.joursRestants = this.ile.attente as number;
-    console.log('this.ile constructeur ile component :>> ', this.ile);
-    console.log('this.partie constructeur partie component :>> ', this.ile);
     this.showIle();
-    this.listRecruits();
     this.listBateaux();
+    this.listRecruits();
     this.listDestinations();
-    console.log('Constructeur de ile component, hors du subscribe');
-    console.log('Constructeur ile component this.partie :>> ', this.partie);
+    this.partieService.checkEndOfGame();
   }
 
   showIle() {
@@ -95,9 +90,6 @@ export class IleComponent {
   listDestinations() {
     if (this.partie.ile) {
       if (this.partie.ile.ileFinale) {
-        console.log(
-          '[listDestinations() dans ile.component.ts] Ile finale, affichage des premières îles de la mer suivante'
-        );
         if (this.getNextMer(this.partie.ile.mer as string) != 'END') {
           this.ileService
             .findAllFirstIlesNextMer(
@@ -116,7 +108,6 @@ export class IleComponent {
             (this.partie.ile.ordre as number) + 1
           )
           .subscribe((resp) => {
-            console.log('findAllNextIlesSameMer() resp :>> ', resp);
             this.destinations = resp;
           });
       }
@@ -124,58 +115,49 @@ export class IleComponent {
   }
 
   rest(membre: Membre) {
-    if (
-      membre.pv &&
-      membre.pirate &&
-      membre.pirate.pv &&
-      membre.pv < membre.pirate.pv
-    ) {
-      membre.pv += 1;
+    if (membre.pv! < membre.pirate!.pv!) {
+      membre.pv! += 1;
       this.membreService.update(membre).subscribe();
-      // this.partie.joursRestants!--;
       this.nextDay();
-      console.log(membre, ' a été reposé');
+      alert(membre.pirate!.nom + ' a été reposé');
     } else {
-      console.log('Le pirate a déjà ses PV au max');
+      alert(membre.pirate!.nom + ' a déjà ses PV au max');
     }
   }
 
   listRecruits() {
-    // TODO : plutôt faire une requête HTTP dédiée qui ramène direct les bons pirates
-    this.pirateService.findAll().subscribe((resp) => {
+    this.pirateService.getRandomRecruits().subscribe((resp) => {
       this.pirates = resp;
-      // retire capitaines
-      this.pirates = this.pirates.filter((pirate) => pirate.capitaine == false);
-      // TODO : retirer pirates déjà membres de l'équipage
+      for (let m of this.partie.membres) {
+        this.pirates = this.pirates.filter((p) => p.id !== m.pirate!.id);
+      }
     });
   }
 
   recruit(pirate: Pirate) {
-    if (
-      this.partie.tresor &&
-      pirate.prime &&
-      this.partie.tresor >= pirate.prime
-    ) {
-      this.partie.tresor -= pirate.prime;
-      let newMembre: Membre = new Membre();
-      newMembre.pirate = pirate;
-      newMembre.pv = pirate.pv;
-      newMembre.power = pirate.power;
-      newMembre.partie = this.partie;
-      this.membreService.create(newMembre).subscribe((resp) => {
-        this.partie.membres.push(resp);
-        this.partieService.getForceTotale();
-        // this.partie.joursRestants!--;
-        this.nextDay();
-        this.partieService.update(this.partie).subscribe(() => {
-          this.partieService.savePartieInStorage(this.partie);
+    if (this.partie.membres.length < this.partie.navire?.bateau?.capacite!) {
+      if (this.partie.tresor! >= pirate.prime!) {
+        this.partie.tresor! -= pirate.prime!;
+        let newMembre: Membre = new Membre();
+        newMembre.pirate = pirate;
+        newMembre.pv = pirate.pv;
+        newMembre.power = pirate.power;
+        newMembre.partie = this.partie;
+        this.membreService.create(newMembre).subscribe((resp) => {
+          this.partie.membres.push(resp);
+          this.partieService.getForceTotale();
+          this.nextDay();
+          this.partieService.update(this.partie).subscribe(() => {
+            this.partieService.savePartieInStorage(this.partie);
+          });
+          alert(pirate.nom + ' a été recruté');
+          this.listRecruits();
         });
-        console.log(pirate, ' a été recruté');
-        console.log('this.partie :>> ', this.partie);
-        this.listRecruits();
-      });
+      } else {
+        alert('Tu es trop pauvre mon gueux !');
+      }
     } else {
-      console.log("Pas assez d'argent pour recruter ce pirate");
+      alert('Plus de place à bord !');
     }
   }
 
@@ -203,41 +185,40 @@ export class IleComponent {
       this.navireService.create(newNavire).subscribe((resp) => {
         this.navire = resp;
         this.partie.navire = this.navire;
-        // this.partie.joursRestants!--;
         this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        console.log(bateau, ' a été acheté');
-        console.log('this.partie :>> ', this.partie);
         this.listBateaux();
       });
     }
   }
   repair() {
-    if (this.partie.navire && this.partie.tresor && this.partie.tresor >= 5) {
+    if (this.partie.tresor! >= 5) {
       if (
-        this.navire.bateau &&
-        this.navire.bateau.robustesse &&
-        this.navire.robustesse &&
-        this.navire.robustesse < this.navire.bateau?.robustesse
+        this.partie.navire!.robustesse! <
+        this.partie.navire!.bateau?.robustesse!
       ) {
-        this.navire.robustesse += 2;
-        this.partie.tresor -= 5;
-        if (this.navire.robustesse > this.navire.bateau.robustesse) {
-          this.navire.robustesse = this.navire.bateau.robustesse;
+        this.partie.navire!.robustesse! += 2;
+        this.partie.tresor! -= 5;
+        if (
+          this.partie.navire!.robustesse! >
+          this.partie.navire!.bateau!.robustesse!
+        ) {
+          this.partie.navire!.robustesse =
+            this.partie.navire!.bateau!.robustesse;
         }
-        console.log(this.navire, ' a été réparé');
+        alert(this.partie.navire!.bateau!.nom + ' a été réparé');
       } else {
-        console.log('Le navire a déjà sa robustesse au maximum');
+        alert(
+          this.partie.navire!.bateau!.nom + ' a déjà sa robustesse au maximum'
+        );
       }
-      this.navireService.update(this.navire).subscribe(() => {
-        // this.partie.joursRestants!--;
+      this.navireService.update(this.partie.navire!).subscribe(() => {
         this.nextDay();
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        console.log('this.partie :>> ', this.partie);
       });
     }
   }
@@ -256,32 +237,32 @@ export class IleComponent {
     this.partie.joursRestants = destination.attente;
     //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
     this.setAction();
-    
   }
 
-  setAction(){
-    for(let i=1; i<=this.partie.joursRestants!; i++){
-      this.actionTrajet=new Action();
-      var idEvent: number = Math.floor(Math.random() * (5)) + 1;
-      this.eventService.findById(idEvent).subscribe(resp => {
+  setAction() {
+    for (let i = 1; i <= this.partie.joursRestants!; i++) {
+      this.actionTrajet = new Action();
+      var idEvent: number = Math.floor(Math.random() * 5) + 1;
+      this.eventService.findById(idEvent).subscribe((resp) => {
         this.actionTrajet.event = resp;
-        this.actionTrajet.degatMembre = resp.degatMembre!*(this.partie.ile?.dangerosite as number);
-        this.actionTrajet.degatNavire = resp.degatNavire!*(this.partie.ile?.dangerosite as number);
-        this.actionTrajet.tresor = resp.tresor!*(this.partie.ile?.dangerosite as number);
+        this.actionTrajet.degatMembre =
+          resp.degatMembre! * (this.partie.ile?.dangerosite as number);
+        this.actionTrajet.degatNavire =
+          resp.degatNavire! * (this.partie.ile?.dangerosite as number);
+        this.actionTrajet.tresor =
+          resp.tresor! * (this.partie.ile?.dangerosite as number);
         this.actionTrajet.partie = this.partie;
         this.actionTrajet.termine = false;
-        this.actionService.create(this.actionTrajet).subscribe( resp2 => {
+        this.actionService.create(this.actionTrajet).subscribe((resp2) => {
           this.partie.actions.push(resp2);
           console.log(i);
-          console.log (this.actionTrajet);
+          console.log(this.actionTrajet);
           this.partieService.update(this.partie).subscribe(() => {
-            this.partieService.savePartieInStorage(this.partie);      
+            this.partieService.savePartieInStorage(this.partie);
             this.router.navigate(['/trajet']);
           });
         });
       });
     }
-    
   }
-
 }

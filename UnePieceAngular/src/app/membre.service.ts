@@ -31,5 +31,8 @@ export class MembreService {
     return this.http.delete<void>(environment.apiUrl + "/membre/"+id);
   }
 
+  deleteByIdMembreAndIdPartie(idMembre?: number, idPartie?: number): Observable<void> {
+    return this.http.delete<void>(environment.apiUrl + '/membre/' + idMembre + idPartie);
+  }
 
 }
