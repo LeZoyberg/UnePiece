@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOIle;
 import UnePiece.model.Ile;
+import UnePiece.model.Mer;
 import UnePiece.view.Views;
 
 @RestController
@@ -28,6 +29,16 @@ public class IleRestController {
 	
 	@Autowired
 	private IDAOIle daoIle;
+
+	@GetMapping("/mer/{mer}")
+	public List<Ile> findAllFirstIlesNextMer(@PathVariable String mer) {
+		return daoIle.findAllByMerAndOrdre(Mer.valueOf(mer), 1);
+	}
+
+	@GetMapping("/mer/{mer}/{ordre}")
+	public List<Ile> findAllNextIlesSameMer(@PathVariable String mer, @PathVariable Integer ordre) {
+		return daoIle.findAllByMerAndOrdre(Mer.valueOf(mer), ordre);
+	}
 
 	@GetMapping("/{id}")
 	public Ile findById(@PathVariable Integer id) 

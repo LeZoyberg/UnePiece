@@ -3,17 +3,23 @@
 <button class="btn btn-success" (click)="continueGame()">
   Démarrer partie <i class="bi bi-plus-circle"></i>
 </button>
-
+<button (click)="newGame()"> NEW GAME TEST </button>
 <div id="container">
-  <div id="partieEnCours">
+  <div id="partieEnCours" *ngIf="partie">
     <table>  Partie en cours
      <tr>
         <th>Début</th>
         <th>Score</th>
+        <th>Capitaine</th>
+        <th>Mer</th>
+        <th>Ile</th>
      </tr>
      <tr>
-        <td>2023-10-10</td>
-        <td>29</td>
+        <td>{{partie.dateDebut}}</td>
+        <td>{{partie.duree}}</td>
+        <td *ngIf="partie.membres[0]">{{partie.membres[0].pirate?.nom}}</td>
+        <td *ngIf="partie.ile!.mer">{{partie.ile!.mer}}</td>
+        <td>{{partie.ile!.nom}}</td>
      </tr>
     
     </table>
@@ -24,10 +30,14 @@
       <tr>
         <th>Joueur</th>
         <th>Score</th>
+        <th>Date</th>
+        <th>Terminé ?</th>
      </tr>
-     <tr>
-        <td>Jordan</td>
-        <td>29</td>
+     <tr *ngFor="let p of parties">
+        <td>{{p.joueur!.login}}</td>
+        <td>{{p.duree}}</td>
+        <td>{{p.dateDebut}}</td>
+        <td>{{p.termine}}</td>
      </tr>
     </table>
   </div>
