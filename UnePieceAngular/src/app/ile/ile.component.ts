@@ -57,6 +57,7 @@ export class IleComponent {
     this.listBateaux();
     this.listRecruits();
     this.listDestinations();
+    this.partieService.checkEndOfGame();
   }
 
   showIle() {
