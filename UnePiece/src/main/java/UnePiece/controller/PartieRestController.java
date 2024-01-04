@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import UnePiece.dao.IDAOPartie;
+import UnePiece.dto.ActionResponse;
 import UnePiece.dto.MembreResponse;
 import UnePiece.dto.PartieResponse;
 import UnePiece.model.Membre;
 import UnePiece.model.Partie;
+import UnePiece.model.Action;
 
 @RestController
 @RequestMapping("/api/partie")
@@ -33,9 +35,7 @@ public class PartieRestController {
 
 	@GetMapping("/{id}")
 	public PartieResponse findById(@PathVariable Integer id) {
-		System.out.println("findById Partie");
 		Optional<Partie> opt = daoPartie.findById(id);
-		System.out.println(opt.get().toString());
 		if (opt.isEmpty()) {
 			return null;
 		}
@@ -46,28 +46,27 @@ public class PartieRestController {
 
 	@GetMapping("/joueur/{idJoueur}")
 	public PartieResponse findByIdJoueurDTO(@PathVariable Integer idJoueur) {
-		System.out.println("findByIdJoueurDTO");
 		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
 		if (opt.isEmpty()) {
 			return null;
 		}
-		Partie partie = opt.get(); 
+		Partie partie = opt.get();
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
 
 		return partieDTO;
 	}
-	
+
 	@GetMapping("/joueur/{idJoueur}/membres")
 	public PartieResponse findByIdJoueurWithMembres(@PathVariable Integer idJoueur) {
 		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembres(idJoueur);
 		if (opt.isEmpty()) {
 			return null;
 		}
-		Partie partie = opt.get(); 
+		Partie partie = opt.get();
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
-		for(Membre m : partie.getMembres()) {
+		for (Membre m : partie.getMembres()) {
 			MembreResponse membreDTO = new MembreResponse();
 			BeanUtils.copyProperties(m, membreDTO);
 			partieDTO.getMembres().add(membreDTO);
@@ -76,9 +75,56 @@ public class PartieRestController {
 		return partieDTO;
 	}
 
+	@GetMapping("/joueur/{idJoueur}/membres/actions")
+	public PartieResponse findByIdJoueurWithMembresAndActions(@PathVariable Integer idJoueur) {
+		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembresAndActions(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get();
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		for (Membre m : partie.getMembres()) {
+			MembreResponse membreDTO = new MembreResponse();
+			BeanUtils.copyProperties(m, membreDTO);
+			partieDTO.getMembres().add(membreDTO);
+		}
+		for (Action a : partie.getActions()) {
+			ActionResponse actionDTO = new ActionResponse();
+			BeanUtils.copyProperties(a, actionDTO);
+			partieDTO.getActions().add(actionDTO);
+		}
+
+		return partieDTO;
+	}
+
 	@GetMapping
 	public List<PartieResponse> findAll() {
 		List<Partie> parties = daoPartie.findAll();
+		List<PartieResponse> partiesDTO = new ArrayList<PartieResponse>();
+		for (Partie p : parties) {
+			PartieResponse partieDTO = new PartieResponse();
+			BeanUtils.copyProperties(p, partieDTO);
+			partiesDTO.add(partieDTO);
+		}
+		return partiesDTO;
+	}
+
+	@GetMapping("/historique/{idJoueur}")
+	public List<PartieResponse> findAllByIdJoueur(@PathVariable Integer idJoueur) {
+		List<Partie> parties = daoPartie.findAllByIdJoueur(idJoueur);
+		List<PartieResponse> partiesDTO = new ArrayList<PartieResponse>();
+		for (Partie p : parties) {
+			PartieResponse partieDTO = new PartieResponse();
+			BeanUtils.copyProperties(p, partieDTO);
+			partiesDTO.add(partieDTO);
+		}
+		return partiesDTO;
+	}
+
+	@GetMapping("/leaderboard")
+	public List<PartieResponse> findLeaderboard() {
+		List<Partie> parties = daoPartie.findAllByOrderByDureeDesc();
 		List<PartieResponse> partiesDTO = new ArrayList<PartieResponse>();
 		for (Partie p : parties) {
 			PartieResponse partieDTO = new PartieResponse();
@@ -97,6 +143,13 @@ public class PartieRestController {
 		 * "La partie n'est pas valide...");
 		 * }
 		 */
+
+		Optional<Partie> opt = daoPartie.findByIdJoueur(partie.getJoueur().getId());
+		if (opt.isPresent()) {
+			Partie anciennePartie = opt.get();
+			anciennePartie.setTermine(true);
+			daoPartie.save(anciennePartie);
+		}
 		daoPartie.save(partie);
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
@@ -110,7 +163,7 @@ public class PartieRestController {
 		BeanUtils.copyProperties(partie, partieDTO);
 		return partieDTO;
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Integer id) {
 		daoPartie.deleteById(id);

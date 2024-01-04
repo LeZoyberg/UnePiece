@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import UnePiece.dao.IDAOBateau;
 import UnePiece.model.Bateau;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/bateau")

@@ -14,33 +14,43 @@ import { NavireService } from '../navire.service';
 export class AccueilComponent {
   joueur?: Joueur;
   partie?: Partie;
-  parties?: Partie[];
+  leaderboard?: Partie[];
+  historique?: Partie[];
+
   constructor(
     private partieService: PartieService,
     private router: Router,
     private authService: AuthService,
     private ileService: IleService,
     private bateauService: BateauService,
-    private navireService: NavireService,
+    private navireService: NavireService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
-     if (!this.partie) {
-      this.partieService.findByIdJoueurWithMembres(this.joueur.id).subscribe(resp =>{
-        this.partie=resp;
-      })
-     } 
-    console.log("this.partie :>>",this.partie)
-    this.partieService.findAll().subscribe((resp) => {
-      this.parties = resp;
-      console.log('this.parties :>> ', this.parties);
+    if (!this.partie) {
+      this.partieService
+        .findByIdJoueurWithMembresAndActions(this.joueur.id)
+        .subscribe((resp) => {
+          this.partie = resp;
+          console.log('this.partie :>>', this.partie);
+        });
+    }
+    this.partieService.findLeaderboard().subscribe((resp) => {
+      this.leaderboard = resp;
+      this.leaderboard = this.leaderboard.slice(0, 10);
+    });
+
+    this.partieService.findAllByIdJoueur(this.joueur.id!).subscribe((resp) => {
+      this.historique = resp;
     });
   }
+
+
 
   continueGame() {
     //console.log(this.joueur?.id);
     this.partieService
-      .findByIdJoueurWithMembres(this.joueur?.id)
+      .findByIdJoueurWithMembresAndActions(this.joueur?.id)
       ?.subscribe((resp) => {
         console.log(resp);
         if (resp && resp.termine == false) {
@@ -62,38 +72,37 @@ export class AccueilComponent {
   }
 
   newGame() {
+    localStorage.removeItem('partie');
     this.partie = new Partie();
+    this.partieService.setPartie(this.partie);
     this.partie.termine = false;
     this.partie.joueur = this.joueur;
     this.partie.duree = 0;
     this.partie.dateDebut = new Date(Date.now()).toISOString().substr(0, 10);
     this.partie.forceTotale = 0;
     this.partie.joursRestants = 0;
-    
 
     this.ileService.findById(1).subscribe((resp) => {
       if (this.partie) {
         this.partie.ile = resp;
         this.partie.joursRestants = this.partie.ile.attente;
-        this.bateauService.findById(1).subscribe(bateau =>{
+        this.bateauService.findById(1).subscribe((bateau) => {
           let newNavire: Navire = new Navire();
           newNavire.bateau = bateau;
           newNavire.robustesse = bateau.robustesse;
           this.navireService.create(newNavire).subscribe((resp) => {
             this.partie!.navire = resp;
             this.partieService.create(this.partie!).subscribe((resp) => {
-              console.log(
-                '[newGame() in accueil.component.ts] this.partie :>> ',
-                this.partie
-              );
+            
               if (this.partie) {
                 this.partie.id = resp.id;
                 this.partieService.savePartieInStorage(this.partie);
               }
+
               this.router.navigate(['/start']);
             });
-          })
-        })
+          });
+        });
       }
     });
   }

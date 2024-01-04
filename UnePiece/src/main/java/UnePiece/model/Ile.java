@@ -20,6 +20,7 @@ public class Ile {
 	private int ordre;
 	@Enumerated
 	private Mer mer;
+	private int dangerosite;
 	private boolean ileFinale;
 
 	public Ile() {
@@ -34,6 +35,7 @@ public class Ile {
 		this.attente = attente;
 		this.ordre = ordre;
 		this.mer = mer;
+		this.dangerosite=this.getDangerosite();
 		this.ileFinale = ileFinale;
 	}
 
@@ -45,6 +47,7 @@ public class Ile {
 		this.attente = attente;
 		this.ordre = ordre;
 		this.mer = mer;
+		this.dangerosite=this.getDangerosite();
 		this.ileFinale = false;
 	}
 
@@ -59,6 +62,7 @@ public class Ile {
 		this.attente = attente;
 		this.ordre = ordre;
 		this.mer = mer;
+		this.dangerosite=this.getDangerosite();
 		this.ileFinale = ileFinale;
 	}
 
@@ -149,5 +153,7 @@ public class Ile {
 		this.mer = mer;
 	}
 	
-	
+	public int getDangerosite() {
+		return getMer().getDangerosite();
+	}
 }
