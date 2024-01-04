@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Action, Bateau, Ile, Joueur, Membre, Navire, Partie, Pirate } from '../model';
+import {
+  Action,
+  Bateau,
+  Ile,
+  Joueur,
+  Membre,
+  Navire,
+  Partie,
+  Pirate,
+} from '../model';
 import { PartieService } from '../partie.service';
 import { StartComponent } from '../start/start.component';
 import { IleService } from '../ile.service';
@@ -8,6 +17,8 @@ import { MembreService } from '../membre.service';
 import { PirateService } from '../pirate.service';
 import { NavireService } from '../navire.service';
 import { BateauService } from '../bateau.service';
+import { ActionService } from '../action.service';
+import { EventService } from '../event.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,6 +37,7 @@ export class IleComponent {
   bateaux!: Bateau[];
   navire!: Navire;
   destinations!: Ile[];
+  actionTrajet!: Action;
   constructor(
     private authService: AuthService,
     private partieService: PartieService,
@@ -34,6 +46,8 @@ export class IleComponent {
     private pirateService: PirateService,
     private navireService: NavireService,
     private bateauService: BateauService,
+    private actionService: ActionService,
+    private eventService: EventService,
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
@@ -73,7 +87,7 @@ export class IleComponent {
         return 'NewWorld';
         break;
       default:
-        return '-1';
+        return 'END';
         break;
     }
   }
@@ -84,18 +98,18 @@ export class IleComponent {
         console.log(
           '[listDestinations() dans ile.component.ts] Ile finale, affichage des premières îles de la mer suivante'
         );
-        this.ileService
-          .findAllFirstIlesNextMer(
-            this.getNextMer(this.partie.ile.mer as string)
-          )
-          .subscribe((resp) => {
-            console.log('findAllFirstIlesNextMer() resp :>> ', resp);
-            this.destinations = resp;
-          });
+        if (this.getNextMer(this.partie.ile.mer as string) != 'END') {
+          this.ileService
+            .findAllFirstIlesNextMer(
+              this.getNextMer(this.partie.ile.mer as string)
+            )
+            .subscribe((resp) => {
+              this.destinations = resp;
+            });
+        } else {
+          this.router.navigate(['/ending']);
+        }
       } else {
-        console.log(
-          '[listDestinations() dans ile.component.ts] Ile non finale, affichage des prochaines îles de la même mer'
-        );
         this.ileService
           .findAllNextIlesSameMer(
             this.partie.ile.mer as string,
@@ -241,10 +255,33 @@ export class IleComponent {
     this.partie.ile = destination;
     this.partie.joursRestants = destination.attente;
     //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
-    this.partie.actions.push(new Action())
-    this.partieService.update(this.partie).subscribe(() => {
-      this.partieService.savePartieInStorage(this.partie);      
-      this.router.navigate(['/trajet']);
-    });
+    this.setAction();
+    
   }
+
+  setAction(){
+    for(let i=1; i<=this.partie.joursRestants!; i++){
+      this.actionTrajet=new Action();
+      var idEvent: number = Math.floor(Math.random() * (5)) + 1;
+      this.eventService.findById(idEvent).subscribe(resp => {
+        this.actionTrajet.event = resp;
+        this.actionTrajet.degatMembre = resp.degatMembre!*(this.partie.ile?.dangerosite as number);
+        this.actionTrajet.degatNavire = resp.degatNavire!*(this.partie.ile?.dangerosite as number);
+        this.actionTrajet.tresor = resp.tresor!*(this.partie.ile?.dangerosite as number);
+        this.actionTrajet.partie = this.partie;
+        this.actionTrajet.termine = false;
+        this.actionService.create(this.actionTrajet).subscribe( resp2 => {
+          this.partie.actions.push(resp2);
+          console.log(i);
+          console.log (this.actionTrajet);
+          this.partieService.update(this.partie).subscribe(() => {
+            this.partieService.savePartieInStorage(this.partie);      
+            this.router.navigate(['/trajet']);
+          });
+        });
+      });
+    }
+    
+  }
+
 }

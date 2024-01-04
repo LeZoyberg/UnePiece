@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Partie } from './model';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
 export class PartieService {
   partie!: Partie;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router : Router) {}
 
   getPartie(): Partie | undefined {
     if (this.partie) {
@@ -62,14 +63,6 @@ export class PartieService {
     return this.http.delete<void>(environment.apiUrl + '/partie/' + id);
   }
 
-  // recreateGame(idJoueur?: number): Partie {
-  //   this.findByIdJoueurWithMembres(idJoueur).subscribe(partieResp => {
-  //     this.partie = partieResp;
-  //   });
-  //   //
-  //   return new Partie();
-  // }
-
   findByIdJoueur(id?: number): Observable<Partie> {
     console.log('[findByIdJoueur / partie.service.ts] id joueur:', id);
     console.log(
@@ -77,6 +70,10 @@ export class PartieService {
       this.partie
     );
     return this.http.get<Partie>(environment.apiUrl + '/partie/joueur/' + id);
+  }
+
+  findAllByIdJoueur(id : number): Observable<Partie[]> {
+    return this.http.get<Partie[]>(environment.apiUrl + '/partie/historique/'+id);
   }
 
   findLeaderboard(): Observable<Partie[]> {
@@ -89,6 +86,12 @@ export class PartieService {
     );
   }
 
+  findByIdJoueurWithMembresAndActions(id?: number): Observable<Partie> {
+    return this.http.get<Partie>(
+      environment.apiUrl + '/partie/joueur/' + id + '/membres/actions'
+    );
+  }
+
   getForceTotale() {
     this.partie.forceTotale = 0;
     for (let m of this.partie.membres) {
@@ -97,5 +100,13 @@ export class PartieService {
     }
     console.log('this.partie.membres :>> ', this.partie.membres);
     console.log('this.partieService.getForceTotale() :>> ', this.partie.forceTotale);
+  }
+
+  checkEndOfGame() {
+    if(this.partie.membres[0].pv! <= 0 || this.partie.navire?.robustesse! <= 0) {
+      this.partie.termine = true;
+      this.router.navigate(['/ending']);
+    }
+
   }
 }

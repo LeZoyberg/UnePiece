@@ -21,7 +21,6 @@ import UnePiece.dao.IDAOBateau;
 import UnePiece.dao.IDAONavire;
 import UnePiece.model.Bateau;
 import UnePiece.model.Navire;
-import UnePiece.view.Views;
 
 @RestController
 @RequestMapping("/api/navire")
