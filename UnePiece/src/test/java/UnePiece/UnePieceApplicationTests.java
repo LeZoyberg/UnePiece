@@ -275,7 +275,7 @@ class UnePieceApplicationTests {
 		daoIle.save(ile24);
 
 		// events
-		Evenement event1 = new Evenement(1, 2, 0, Odyssee.Tempete);
+		Evenement event1 = new Evenement(2, 1, 0, Odyssee.Tempete);
 		daoEvenement.save(event1);
 
 		Evenement event2 = new Evenement(2, 2, 25, Odyssee.Bataille);
@@ -284,10 +284,10 @@ class UnePieceApplicationTests {
 		Evenement event3 = new Evenement(0, 0, 50, Odyssee.Tresor);
 		daoEvenement.save(event3);
 
-		Evenement event4 = new Evenement(2, 1, 0, Odyssee.Monstre);
+		Evenement event4 = new Evenement(1, 2, 0, Odyssee.Monstre);
 		daoEvenement.save(event4);
 
-		Evenement event5 = new Evenement(-2, 0, -5, Odyssee.Restaurant);
+		Evenement event5 = new Evenement(0, -2 , -50, Odyssee.Restaurant);
 		daoEvenement.save(event5);
 
 		// joueurs

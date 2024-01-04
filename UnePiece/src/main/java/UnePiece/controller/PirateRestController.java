@@ -33,76 +33,60 @@ public class PirateRestController {
 	private IDAOPirate daoPirate;
 
 	@GetMapping("/{id}")
-	public Pirate findById(@PathVariable Integer id) 
-	{
+	public Pirate findById(@PathVariable Integer id) {
 		Optional<Pirate> opt = daoPirate.findById(id);
-		if(opt.isEmpty()) 
-		{
+		if (opt.isEmpty()) {
 			return null;
 		}
 		return opt.get();
 	}
-	
-/*
- * 
- *  getRandomRecruits() : Pirate[] | void {
-    this.findAll().subscribe(piratesResp => {
-      const pirates : Pirate[] = piratesResp;
-      const shuffledPirates = pirates.sort(() => 0.5 - Math.random());
-      console.log('shuffledPirates :>> ', shuffledPirates);
-      const returnedPirates = shuffledPirates.slice(0, 5);
-      return returnedPirates;
-    });
-  }
- * 
- */
-  	@GetMapping("/random")
+
+	@GetMapping("/random")
 	public List<Pirate> getRandomRecruits() {
 		List<Pirate> pirates = this.findAll();
+		
+		// retire les capitaines
+		for (int i = 0; i < pirates.size(); i++) {
+
+			Pirate p = pirates.get(i);
+			if (p.isCapitaine()) {
+				pirates.remove(i);
+			}
+		}
 		List<Pirate> shuffledPirates = new ArrayList();
 		int max = 5;
 		int min = 2;
 		Random random = new Random();
 		int nombrePirates = random.nextInt(max - min + 1) + min;
-		for(int i = 1; i <= nombrePirates; i++) {
+		for (int i = 1; i <= nombrePirates; i++) {
 			Random random1 = new Random();
 			Pirate randomPirate = pirates.get(random1.nextInt(pirates.size()));
 			shuffledPirates.add(randomPirate);
 		}
 		return shuffledPirates;
-		// retirer capitaines + empêcher 2 fois même membre
+		// empêcher 2 fois même membre
 	}
 
 	@GetMapping
-	public List<Pirate> findAll() 
-	{
+	public List<Pirate> findAll() {
 		return daoPirate.findAll();
 	}
-	
+
 	@PostMapping
-	public Pirate insert(@RequestBody Pirate pirate, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le produit n'est pas valide...");
-		}*/
+	public Pirate insert(@RequestBody Pirate pirate, BindingResult result) {
+		
 		return daoPirate.save(pirate);
 	}
-	
+
 	@PutMapping("/{id}")
-	public Pirate update(@PathVariable Integer id, @RequestBody Pirate pirate, BindingResult result) 
-	{
-		/*if(result.hasErrors()) 
-		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le produit n'est pas valide...");
-		}*/
+	public Pirate update(@PathVariable Integer id, @RequestBody Pirate pirate, BindingResult result) {
+		
 		return daoPirate.save(pirate);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) 
-	{
+	public void delete(@PathVariable Integer id) {
 		daoPirate.deleteById(id);
 	}
-	
+
 }

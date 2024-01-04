@@ -79,21 +79,32 @@ export class ActionComponent {
         this.router.navigate(['/ile']);
       });
     }
+    this.partieService.checkEndOfGame();
   }
 
 bouton1(){
-  for(let membre of this.partie.membres){
+  this.partie.membres.forEach((membre,index)=>{
     membre.pv! -= this.action.degatMembre!;
-    this.partieService.checkPvMembre(membre);
-  }
+    this.partieService.checkPvMembre(membre, index);
+  });
+
   this.partie.navire!.robustesse! -= this.action.degatNavire!;
   this.partie.tresor! += this.action.tresor!;
-  this.partieService.checkEndOfGame();
   this.suite();
 }
 
 bouton2(){
 
+  this.suite();
+}
+
+boutonTempete(){
+  this.partie.membres.forEach((membre,index)=>{
+    membre.pv! -= this.action.degatMembre!;
+    this.partieService.checkPvMembre(membre, index);
+  });
+  this.partie.navire!.robustesse! -= this.action.degatNavire!;
+  this.visible = true;
   this.suite();
 }
 
