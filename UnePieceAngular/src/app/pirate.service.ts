@@ -11,6 +11,10 @@ export class PirateService {
 
   constructor(private http: HttpClient) { }
 
+  getRandomRecruits() : Observable<Pirate[]> {
+    return this.http.get<Pirate[]>(environment.apiUrl + "/pirate/random");
+  }
+
   findAll(): Observable<Pirate[]> {
     return this.http.get<Pirate[]>(environment.apiUrl + "/pirate");
   }

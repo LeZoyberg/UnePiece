@@ -141,13 +141,9 @@ export class IleComponent {
   }
 
   listRecruits() {
-    // TODO : plutôt faire une requête HTTP dédiée qui ramène direct les bons pirates
-    this.pirateService.findAll().subscribe((resp) => {
+    this.pirateService.getRandomRecruits().subscribe(resp => {
       this.pirates = resp;
-      // retire capitaines
-      this.pirates = this.pirates.filter((pirate) => pirate.capitaine == false);
-      // TODO : retirer pirates déjà membres de l'équipage
-    });
+    })
   }
 
   recruit(pirate: Pirate) {
