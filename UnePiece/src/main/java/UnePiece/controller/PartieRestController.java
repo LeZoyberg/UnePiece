@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import UnePiece.dao.IDAOPartie;
+import UnePiece.dto.ActionResponse;
 import UnePiece.dto.MembreResponse;
 import UnePiece.dto.PartieResponse;
 import UnePiece.model.Membre;
 import UnePiece.model.Partie;
+import UnePiece.model.Action;
 
 @RestController
 @RequestMapping("/api/partie")
@@ -68,6 +70,30 @@ public class PartieRestController {
 			MembreResponse membreDTO = new MembreResponse();
 			BeanUtils.copyProperties(m, membreDTO);
 			partieDTO.getMembres().add(membreDTO);
+		}
+
+		return partieDTO;
+	}
+
+	
+	@GetMapping("/joueur/{idJoueur}/membres/actions")
+	public PartieResponse findByIdJoueurWithMembresAndActions(@PathVariable Integer idJoueur) {
+		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembresAndActions(idJoueur);
+		if (opt.isEmpty()) {
+			return null;
+		}
+		Partie partie = opt.get(); 
+		PartieResponse partieDTO = new PartieResponse();
+		BeanUtils.copyProperties(partie, partieDTO);
+		for(Membre m : partie.getMembres()) {
+			MembreResponse membreDTO = new MembreResponse();
+			BeanUtils.copyProperties(m, membreDTO);
+			partieDTO.getMembres().add(membreDTO);
+		}
+		for(Action a : partie.getActions()) {
+			ActionResponse actionDTO = new ActionResponse();
+			BeanUtils.copyProperties(a, actionDTO);
+			partieDTO.getActions().add(actionDTO);
 		}
 
 		return partieDTO;

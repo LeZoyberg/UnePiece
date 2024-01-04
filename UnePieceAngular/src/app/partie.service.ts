@@ -89,6 +89,12 @@ export class PartieService {
     );
   }
 
+  findByIdJoueurWithMembresAndActions(id?: number): Observable<Partie> {
+    return this.http.get<Partie>(
+      environment.apiUrl + '/partie/joueur/' + id + '/membres/actions'
+    );
+  }
+
   getForceTotale() {
     this.partie.forceTotale = 0;
     for (let m of this.partie.membres) {

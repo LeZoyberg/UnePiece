@@ -2,7 +2,9 @@ package UnePiece.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,13 +37,13 @@ public class Partie {
 	@JoinColumn(name = "id_joueur")
 	private Joueur joueur;
 	@OneToMany(mappedBy = "partie")
-	private List<Action> actions = new ArrayList();
+	private Set<Action> actions = new HashSet<Action>();
 	private int joursRestants;
 	
 	public Partie() {}
 	
 	public Partie(Integer id, LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
-			Navire navire, Joueur joueur, List<Action> actions, int joursRestants) {
+			Navire navire, Joueur joueur, Set<Action> actions, int joursRestants) {
 				this.id = id;
 		this.dateDebut = dateDebut;
 		this.termine = termine;
@@ -56,7 +58,7 @@ public class Partie {
 	}
 
 	public Partie(LocalDate dateDebut, boolean termine, int tresor, int duree, List<Membre> membres, Ile ile,
-			Navire navire, Joueur joueur, List<Action> actions, int joursRestants) {
+			Navire navire, Joueur joueur, Set<Action> actions, int joursRestants) {
 		this.dateDebut = dateDebut;
 		this.termine = termine;
 		this.tresor = tresor;
@@ -131,10 +133,10 @@ public class Partie {
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
 	}
-	public List<Action> getActions() {
+	public Set<Action> getActions() {
 		return actions;
 	}
-	public void setActions(List<Action> actions) {
+	public void setActions(Set<Action> actions) {
 		this.actions = actions;
 	}
 
