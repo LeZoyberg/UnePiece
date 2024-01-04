@@ -71,6 +71,10 @@ export class PartieService {
     return this.http.get<Partie>(environment.apiUrl + '/partie/joueur/' + id);
   }
 
+  findAllByIdJoueur(id : number): Observable<Partie[]> {
+    return this.http.get<Partie[]>(environment.apiUrl + '/partie/historique/'+id);
+  }
+
   findLeaderboard(): Observable<Partie[]> {
     return this.http.get<Partie[]>(environment.apiUrl + '/partie/leaderboard');
   }

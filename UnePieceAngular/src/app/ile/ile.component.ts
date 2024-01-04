@@ -241,7 +241,7 @@ export class IleComponent {
     this.partie.ile = destination;
     this.partie.joursRestants = destination.attente;
     //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
-    this.partie.actions.push(new Action())
+    this.partie.actions.push(new Action());
     this.partieService.update(this.partie).subscribe(() => {
       this.partieService.savePartieInStorage(this.partie);      
       this.router.navigate(['/trajet']);
