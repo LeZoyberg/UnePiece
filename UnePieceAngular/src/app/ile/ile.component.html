@@ -1,3 +1,17 @@
+<div id="ile-jungle">
+  <div id="accueil-resume" class="mt-3 mb-3">
+    <span
+      ><i>Jour : </i><b>{{ partie.duree }}</b> -&nbsp;
+    </span>
+    <span *ngIf="partie.membres[0]">
+      <i>Capitaine : </i><b>{{ partie.membres[0].pirate?.nom }}</b> -&nbsp;
+    </span>
+    <span *ngIf="partie.ile?.mer"
+      ><i>Ile : </i><b>{{ partie.ile?.nom }} ({{ partie.ile?.mer }})</b></span
+    >
+  </div>
+</div>
+
 <p *ngIf="ile">Ile actuelle : {{ ile.nom }}</p>
 <p>Durée restante : {{ partie.joursRestants }}</p>
 <stat-equipage></stat-equipage>
@@ -92,4 +106,3 @@
     <td><button (click)="leave(d)">Partir vers cette destination</button></td>
   </tr>
 </div>
-

@@ -1,64 +1,77 @@
-<br />
-<br />
+<div class="container-accueil">
+  <div id="accueil-logo" class="mb-5">
+    <img width="300" src="../../assets/backgrounds/logoUP.png" />
+  </div>
 
-<button (click)="newGame()" class="btn btn-danger">
-  Nouvelle partie <i class="bi bi-plus-circle"></i>
-</button>
-<div id="container">
-  <div id="partieEnCours" *ngIf="partie && partie.id != undefined">
-    <button class="btn btn-success" (click)="continueGame()">
-      Reprendre partie <i class="bi bi-arrow-circle"></i>
-    </button>
-    <table>
-      Partie en cours
-      <tr>
-        <th>Début</th>
-        <th>Score</th>
-        <th *ngIf="partie.membres[0]">Capitaine</th>
-        <th *ngIf="partie.ile?.mer">Mer</th>
-        <th *ngIf="partie.ile?.nom">Ile</th>
-      </tr>
-      <tr>
-        <td>{{ partie.dateDebut }}</td>
-        <td>{{ partie.duree }}</td>
-        <td *ngIf="partie.membres[0]">{{ partie.membres[0].pirate?.nom }}</td>
-        <td *ngIf="partie.ile?.mer">{{ partie.ile?.mer }}</td>
-        <td *ngIf="partie.ile?.nom">{{ partie.ile?.nom }}</td>
-      </tr>
-    </table>
-  <stat-equipage *ngIf="partie && partie.id != undefined && partie.membres"></stat-equipage>
-  </div>
-  <br />
-  <div id="leaderboard" *ngIf="leaderboard?.length != 0">
-    <table border="1">
-      Leaderboard
-      <tr>
-        <th>Joueur</th>
-        <th>Score</th>
-        <th>Date</th>
-        <th>Terminé ?</th>
-      </tr>
-      <tr *ngFor="let p of leaderboard">
-        <td>{{ p.joueur!.login }}</td>
-        <td>{{ p.duree }}</td>
-        <td>{{ p.dateDebut }}</td>
-        <td *ngIf="p.termine">Terminé</td>
-        <td *ngIf="!p.termine">En cours</td>
-      </tr>
-    </table>
-  </div>
-  <br>
-  <div id="historique" *ngIf="historique?.length!=0">
-    <table border="1">
-      Mon Historique
-      <tr>
-        <th>Score</th>
-        <th>Date</th>
-      </tr>
-      <tr *ngFor="let p of historique">
-        <td>{{ p.duree }}</td>
-        <td>{{ p.dateDebut }}</td>
-      </tr>
-    </table>
+  <div id="accueil-center" class="mt-5">
+    <div id="accueil-center-left" class="m-3" *ngIf="historique?.length != 0">
+      <div class="box-green" align="center">Mon historique</div>
+      <div class="box-brown" id="box-historique">
+        <table width="100%">
+          <tr align="center">
+            <th>Score</th>
+            <th>Date</th>
+          </tr>
+          <tr align="center" *ngFor="let p of historique">
+            <td>{{ p.duree }}</td>
+            <td>{{ p.dateDebut }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="accueil-center-center">
+      <div id="accueil-new">
+        <button (click)="newGame()" class="btn btn-success btn-new">
+          Nouvelle partie <i class="bi bi-plus-circle"></i>
+        </button>
+      </div>
+      <div id="partieEnCours" *ngIf="partie && partie.id != undefined">
+        <button class="btn-olive btn btn-success" (click)="continueGame()">
+          Reprendre partie en cours <i class="bi bi-plus-circle"></i>
+        </button>
+        <div class="box-opacity">
+          <div id="accueil-resume" class="mt-3 mb-3">
+            <span
+              ><i>Jour : </i><b>{{ partie.duree }}</b> -&nbsp;
+            </span>
+            <span *ngIf="partie.membres[0]">
+              <i>Capitaine : </i
+              ><b>{{ partie.membres[0].pirate?.nom }}</b> -&nbsp;
+            </span>
+            <span *ngIf="partie.ile?.mer"
+              ><i>Ile : </i
+              ><b>{{ partie.ile?.nom }} ({{ partie.ile?.mer }})</b></span
+            >
+          </div>
+          <div id="accueil-stats">
+            <stat-equipage
+              *ngIf="partie && partie.id != undefined && partie.membres"
+            ></stat-equipage>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="accueil-center-right" class="m-3">
+      <div class="box-green" align="center">Leaderboard</div>
+      <div class="box-brown">
+        <table width="100%">
+          <tr align="center">
+            <th>Joueur</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Terminé ?</th>
+          </tr>
+          <tr align="center" *ngFor="let p of leaderboard">
+            <td>{{ p.joueur!.login }}</td>
+            <td>{{ p.duree }}</td>
+            <td>{{ p.dateDebut }}</td>
+            <td *ngIf="p.termine">Terminé</td>
+            <td *ngIf="!p.termine">En cours</td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
