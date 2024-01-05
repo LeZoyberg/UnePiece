@@ -131,25 +131,24 @@ export class IleComponent {
       for (let m of this.partie.membres) {
         this.pirates = this.pirates.filter((p) => p.id !== m.pirate!.id);
       }
-      
+
       const uniquePirates = this.getUniquePirates(this.pirates);
-    
-    this.pirates = uniquePirates;
-      
+
+      this.pirates = uniquePirates;
     });
   }
 
   getUniquePirates(pirates: Pirate[]): Pirate[] {
     const uniquePirates: Pirate[] = [];
     const seenIDs: Set<number> = new Set();
-  
+
     for (const pirate of pirates) {
       if (!seenIDs.has(pirate.id!)) {
         uniquePirates.push(pirate);
         seenIDs.add(pirate.id!);
       }
     }
-  
+
     return uniquePirates;
   }
 
@@ -180,15 +179,41 @@ export class IleComponent {
     }
   }
 
-  listBateaux() {
-    this.bateauService.findAll().subscribe((resp) => {
-      this.bateaux = resp;
-      // si ile de départ, n'affiche que les bateaux de départ
-      if (this.ile.id == 1) {
-        this.bateaux.filter((bateau) => bateau.debut == true);
+  getUniqueBateaux(bateaux: Bateau[]): Bateau[] {
+    const uniqueBateaux: Bateau[] = [];
+    const seenIDs: Set<number> = new Set();
+
+    for (const bateau of bateaux) {
+      if (!seenIDs.has(bateau.id!)) {
+        uniqueBateaux.push(bateau);
+        seenIDs.add(bateau.id!);
       }
-      // TODO : retirer bateau déjà possédé
+    }
+    return uniqueBateaux;
+  }
+
+  listBateaux() {
+    this.bateauService.getRandomBateaux(this.partie.ile!.id!).subscribe((resp) => {
+      this.bateaux = resp;
+      console.log('this.bateaux resp :>> ', this.bateaux);
+      for (let b of this.bateaux) {
+        this.bateaux = this.bateaux.filter(
+          (b) => b.id !== this.partie.navire?.bateau!.id
+        );
+      }
+      const uniqueBateaux = this.getUniqueBateaux(this.bateaux);
+      this.bateaux = uniqueBateaux;
+      console.log('this.bateaux après tous les filtres :>> ', this.bateaux);
     });
+
+    // this.bateauService.findAll().subscribe((resp) => {
+    //   this.bateaux = resp;
+    //   // si ile de départ, n'affiche que les bateaux de départ
+    //   if (this.ile.id == 1) {
+    //     this.bateaux.filter((bateau) => bateau.debut == true);
+    //   }
+    //   // TODO : retirer bateau déjà possédé
+    // });
   }
 
   buyShip(bateau: Bateau) {
