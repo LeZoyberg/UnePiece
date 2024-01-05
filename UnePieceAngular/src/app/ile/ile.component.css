@@ -3,7 +3,7 @@ img {
 }
 
 #ile-jungle {
-  height: 110vh;
+  height: 150vh;
   width: 100%;
   background-image: url("../../assets/backgrounds/background_jungle.png");
   background-size: 100% 100%;
@@ -67,8 +67,8 @@ img {
   margin-top: 50px;
 }
 
-#ile-batiments > div:nth-of-type(3) {
-  width: 100%;
+#chantier {
+  width: 95% !important;
 }
 #ile-batiments > div img {
   border-radius: 50%;

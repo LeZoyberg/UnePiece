@@ -1,35 +1,38 @@
 body {
-    position:relative;
+  /* position:relative;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
     vertical-align: middle;
-    width:80%;
-    background-color: rgba(68, 50, 46, 0.9);
-    
-} 
+    width:80%;*/
+  background-color: rgba(68, 50, 46, 0.9);
+}
 
-td, th, table, thead, tbody, tr {
-    background-color:transparent;
-    color: rgb(250, 238, 217);
-    text-align: center;
+td,
+th,
+table,
+thead,
+tbody,
+tr {
+  background-color: transparent;
+  color: rgb(250, 238, 217);
+  text-align: center;
 }
 
 :host {
-    background-color: transparent;
-  }
+  background-color: transparent;
+}
 
-  th.image-container {
-    text-align: center;
-    vertical-align: middle;
+th.image-container {
+  text-align: center;
+  vertical-align: middle;
 }
 img {
-    width:calc(100vh / 10);
-    position:relative;
-    
+  width: calc(100vh / 10);
+  position: relative;
 }
 
 #membres:hover {
-transform: scale(1.05);
-cursor:pointer;
+  transform: scale(1.05);
+  cursor: pointer;
 }

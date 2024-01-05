@@ -74,7 +74,7 @@
             </table>
           </div>
 
-          <div *ngIf="ile.chantier && partie.joursRestants! > 0">
+          <div *ngIf="ile.chantier && partie.joursRestants! > 0" id="chantier">
             <table>
               <tr>
                 <img src="assets/buildings/chantier.png" alt="imageChantier" />
@@ -96,7 +96,10 @@
               <tr>
                 <td>
                   <b>Mon navire : </b>{{ partie.navire?.bateau?.nom }} -
-                  Robustesse : {{ partie.navire?.robustesse }} - Capacité :
+                  Robustesse : {{ partie.navire?.robustesse }} /{{
+                    partie.navire?.bateau?.robustesse
+                  }}
+                  - Capacité :
                   {{ partie.navire?.bateau?.capacite }}
                 </td>
                 <td>
