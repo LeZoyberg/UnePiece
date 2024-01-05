@@ -1,20 +1,25 @@
+<body>
+    
+
+    
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Vie</th>
-            <th (click)="afficheMembre()" [style.color]="color">Membre</th>
-            <th>Robustesse</th>
-            <th>Force</th>
-            <th>Tresor</th>
+            <th class="image-container"><img src="assets/icons/heart_icon.png" alt="Vie"></th>
+            <th (click)="afficheMembre()" [style.color]="color" class="image-container"><img id="membres" src="assets/icons/crew.png" alt="Membres"></th>
+            <th class="image-container"><img src="assets/icons/sword.png" alt="Force"></th>
+            <th class="image-container"><img src="assets/icons/ship.png" alt="Robustesse"></th>
+            <th class="image-container"><img src="assets/icons/coins.png" alt="Trésor"></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>{{partie.membres[0].pv}}</td>
-            <td>{{partie.membres.length}}</td>
-            <td>{{partie.navire?.robustesse}}</td>
-            <td>{{partie.forceTotale}}</td>
-            <td>{{partie.tresor}}</td>
+            <td><i>PV : </i><b>{{partie.membres[0].pv}}</b></td>
+            <td><i>Équipage : </i><b>{{partie.membres.length}}</b></td>
+            <td><i>Force totale : </i><b>{{partie.forceTotale}}</b></td>
+            <td><i>Robustesse bateau : </i><b>{{partie.navire?.robustesse}}</b></td>
+            <td><i>Trésor : </i><b>{{partie.tresor}}</b></td>
         </tr>
     </tbody>
 </table>
@@ -22,6 +27,7 @@
 <table *ngIf="visible"  class="table table-striped">
     <thead>
         <tr>
+            <th></th>
             <th>Nom</th>
             <th>Vie</th>
             <th>Force</th>
@@ -29,9 +35,13 @@
     </thead>
     <tbody>
         <tr *ngFor="let membre of partie.membres">
+            <td>image membre</td>
             <td>{{membre.pirate?.nom}}</td>
             <td>{{membre.pv}}</td>
             <td>{{membre.power}}</td>
         </tr>
     </tbody>
 </table>
+
+
+</body>
