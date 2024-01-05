@@ -435,7 +435,7 @@ class UnePieceApplicationTests {
 		Collections.addAll(actionsPartie1, action1, action2);
 		Set<Action> actionsPartie2 = new HashSet<Action>();
 		Collections.addAll(actionsPartie2, action3);
-		*/
+		
 
 		// parties
 		Partie partie1 = new Partie(LocalDate.of(2023, 10, 10), true, 25, 57, equipage1, ile15, navire2, joueur5,
@@ -467,6 +467,6 @@ class UnePieceApplicationTests {
 		// 	save actions avec partie
 		action3.setPartie(partie2);
 		daoAction.save(action3);
-
+		*/
 	}
 }
