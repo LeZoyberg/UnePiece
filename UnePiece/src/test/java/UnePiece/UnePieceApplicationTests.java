@@ -203,10 +203,10 @@ class UnePieceApplicationTests {
 		Bateau bateau5 = new Bateau("Moyen voilier", 6, 10, 14, true);
 		daoBateau.save(bateau5);
 		
-		Bateau bateau6 = new Bateau("Grand voilier", 7, 12, 16, true);
+		Bateau bateau6 = new Bateau("Grand voilier", 7, 12, 16, false);
 		daoBateau.save(bateau6);
 		
-		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, true);
+		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false);
 		daoBateau.save(bateau7);
 
 		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false);
@@ -220,77 +220,158 @@ class UnePieceApplicationTests {
 		daoNavire.save(navire2);
 
 		// iles
-		Ile ile1 = new Ile("Fuschia Village", true, true, true, 10, 1, Mer.EastBlue);
+		Ile ile1 = new Ile("Fuschia Village", true, true, true, 5, 1, Mer.EastBlue);
 		daoIle.save(ile1);
 
-		Ile ile2 = new Ile("Shells Town", false, false, true, 12, 2, Mer.EastBlue);
-		daoIle.save(ile2);
+		Ile ile2a = new Ile("Shells Town", true, false, false, 9, 2, Mer.EastBlue);
+		daoIle.save(ile2a);
+		Ile ile2b = new Ile("Village Syrup", false, false, true, 8, 2, Mer.EastBlue);
+		daoIle.save(ile2b);
 
-		Ile ile4 = new Ile("Ile3_EastBlue", true, true, false, 8, 3, Mer.EastBlue);
+		Ile ile3a = new Ile("Village Shimotsuki", true, true, false, 8, 3, Mer.EastBlue);
+		daoIle.save(ile3a);
+		Ile ile3b = new Ile("Royaume d'Oykot", true, false, true, 10, 3, Mer.EastBlue);
+		daoIle.save(ile3b);
+		
+		Ile ile4 = new Ile("Ile des animaux rares", false, false, false, 4, 4, Mer.EastBlue);
 		daoIle.save(ile4);
 
-		Ile ile5 = new Ile("Ile4_EastBlue", true, false, true, 4, 4, Mer.EastBlue, true);
-		daoIle.save(ile5);
-
-		Ile ile6 = new Ile("Ile1_WestBlue", false, true, true, 12, 1, Mer.WestBlue);
+		Ile ile5a = new Ile("Loguetown", false, true, true, 7, 5, Mer.EastBlue, true);
+		daoIle.save(ile5a);
+		Ile ile5b = new Ile("Village Kokoyashi", true, false, true, 6, 5, Mer.EastBlue);
+		daoIle.save(ile5b);
+		
+		Ile ile6 = new Ile("Arlong Park", true, true, false, 2, 6, Mer.EastBlue, true);
 		daoIle.save(ile6);
 
-		Ile ile7 = new Ile("Ile2_WestBlue", true, false, true, 7, 2, Mer.WestBlue);
-		daoIle.save(ile7);
+		
+		Ile ile7a = new Ile("Pays de Ka", false, true, true, 10, 1, Mer.WestBlue);
+		daoIle.save(ile7a);
+		Ile ile7b = new Ile("Pays de Ji", true, false, true, 12, 1, Mer.WestBlue);
+		daoIle.save(ile7b);
 
-		Ile ile8 = new Ile("Ile3_WestBlue", false, true, false, 8, 3, Mer.WestBlue);
-		daoIle.save(ile8);
+		Ile ile8a = new Ile("Pays des fleurs", true, false, false, 7, 2, Mer.WestBlue);
+		daoIle.save(ile8a);
+		Ile ile8b = new Ile("Ile de Toroa", false, true, false, 6, 2, Mer.WestBlue);
+		daoIle.save(ile8b);
 
-		Ile ile9 = new Ile("Ile4_WestBlue", true, false, false, 5, 4, Mer.WestBlue, true);
-		daoIle.save(ile9);
+		Ile ile9a = new Ile("Royaume de l'Illisia", false, true, false, 8, 3, Mer.WestBlue);
+		daoIle.save(ile9a);
+		Ile ile9b = new Ile("Royaume de Ballywood", false, false, true, 7, 3, Mer.WestBlue);
+		daoIle.save(ile9b);
 
-		Ile ile3 = new Ile("Elena", false, false, true, 8, 1, Mer.NorthBlue);
-		daoIle.save(ile3);
+		Ile ile10a = new Ile("Ohara", true, false, false, 5, 4, Mer.WestBlue, true);
+		daoIle.save(ile10a);
+		Ile ile10b = new Ile("God Valley", false, false, true, 5, 4, Mer.WestBlue, true);
+		daoIle.save(ile10b);
+		
 
-		Ile ile10 = new Ile("Ile2_NorthBlue", true, false, true, 8, 2, Mer.NorthBlue);
-		daoIle.save(ile10);
+		Ile ile11a = new Ile("Royaume de Luvneel", false, true, true, 8, 1, Mer.NorthBlue);
+		daoIle.save(ile11a);
+		Ile ile11b = new Ile("Spider Miles", true, false, true, 10, 1, Mer.NorthBlue);
+		daoIle.save(ile11b);
 
-		Ile ile11 = new Ile("Ile3_NorthBlue", true, true, false, 4, 3, Mer.NorthBlue);
-		daoIle.save(ile11);
+		Ile ile12a = new Ile("Royaume de Flevance", true, true, false, 8, 2, Mer.NorthBlue);
+		daoIle.save(ile12a);
+		Ile ile12b = new Ile("Ile de Swallow", true, false, false, 7, 2, Mer.NorthBlue);
+		daoIle.save(ile12b);
 
-		Ile ile12 = new Ile("Ile4_NorthBlue", true, true, true, 8, 4, Mer.NorthBlue, true);
-		daoIle.save(ile12);
+		Ile ile13a = new Ile("Ile de Minion", false, false, false, 2, 3, Mer.NorthBlue);
+		daoIle.save(ile13a);
+		Ile ile13b = new Ile("Ile de Rubeck", false, false, true, 4, 3, Mer.NorthBlue);
+		daoIle.save(ile13b);
 
-		Ile ile13 = new Ile("Ile1_SouthBlue", false, true, false, 8, 1, Mer.SouthBlue);
-		daoIle.save(ile13);
+		Ile ile14a = new Ile("Notice", true, true, false, 5, 4, Mer.NorthBlue, true);
+		daoIle.save(ile14a);
+		Ile ile14b = new Ile("Royaume de Germa", true, true, true, 8, 4, Mer.NorthBlue, true);
+		daoIle.save(ile14b);
+		
 
-		Ile ile14 = new Ile("Ile2_SouthBlue", false, true, true, 8, 2, Mer.SouthBlue);
-		daoIle.save(ile14);
-
-		Ile ile15 = new Ile("Ile3_SouthBlue", true, true, false, 12, 3, Mer.SouthBlue);
+		Ile ile15 = new Ile("Royaume de Briss", false, true, false, 7, 1, Mer.SouthBlue);
 		daoIle.save(ile15);
 
-		Ile ile16 = new Ile("Ile4_SouthBlue", true, false, true, 8, 4, Mer.SouthBlue, true);
-		daoIle.save(ile16);
+		Ile ile16a = new Ile("Royaume Dezoizo", false, true, true, 8, 2, Mer.SouthBlue);
+		daoIle.save(ile16a);
+		Ile ile16b = new Ile("Batterilla", true, false, true, 9, 2, Mer.SouthBlue);
+		daoIle.save(ile16b);
 
-		Ile ile17 = new Ile("Ile1_GrandLine", false, true, true, 4, 1, Mer.GrandLine);
-		daoIle.save(ile17);
+		Ile ile17a = new Ile("Ile de Karate", true, true, false, 10, 3, Mer.SouthBlue);
+		daoIle.save(ile17a);
+		Ile ile17b = new Ile("Saint Reia", true, false, false, 9, 3, Mer.SouthBlue);
+		daoIle.save(ile17b);
 
-		Ile ile18 = new Ile("Ile2_GrandLine", true, false, false, 7, 2, Mer.GrandLine);
+		Ile ile18 = new Ile("Royaume de Sorbet", true, true, true, 5, 4, Mer.SouthBlue, true);
 		daoIle.save(ile18);
+		
 
-		Ile ile19 = new Ile("Ile3_GrandLine", true, true, true, 8, 3, Mer.GrandLine);
+		Ile ile19 = new Ile("Cap des Jumaeaux", false, true, true, 4, 1, Mer.GrandLine);
 		daoIle.save(ile19);
 
-		Ile ile20 = new Ile("Ile4_GrandLine", false, false, true, 8, 4, Mer.GrandLine, true);
-		daoIle.save(ile20);
+		Ile ile20a = new Ile("Royaume de Drum", true, false, false, 7, 2, Mer.GrandLine);
+		daoIle.save(ile20a);
+		Ile ile20b = new Ile("Banaro", true, true, false, 9, 2, Mer.GrandLine);
+		daoIle.save(ile20b);
+		Ile ile20c = new Ile("Whiskey Peak", false, true, false, 6, 2, Mer.GrandLine);
+		daoIle.save(ile20c);
+		Ile ile20d = new Ile("Gare de Shift", false, false, true, 11, 2, Mer.GrandLine, true);
+		daoIle.save(ile20d);
 
-		Ile ile21 = new Ile("Ile1_NewWorld", true, true, true, 8, 1, Mer.NewWorld);
-		daoIle.save(ile21);
+		Ile ile21a = new Ile("Baltigo", true, false, true, 8, 3, Mer.GrandLine);
+		daoIle.save(ile21a);
+		Ile ile21b = new Ile("Water 7", false, true, true, 7, 3, Mer.GrandLine);
+		daoIle.save(ile21b);
+		Ile ile21c = new Ile("Long Ring Long Land", false, false, false, 2, 3, Mer.GrandLine);
+		daoIle.save(ile21c);
 
-		Ile ile22 = new Ile("Ile2_NewWorld", true, false, false, 12, 2, Mer.NewWorld);
-		daoIle.save(ile22);
+		Ile ile22a = new Ile("Balgimoa", false, false, true, 5, 4, Mer.GrandLine, true);
+		daoIle.save(ile22a);
+		Ile ile22b = new Ile("Enies Loby", false, true, true, 8, 4, Mer.GrandLine);
+		daoIle.save(ile22b);
+		Ile ile22c = new Ile("Ile de Kuraigama", true, true, false, 7, 4, Mer.GrandLine, true);
+		daoIle.save(ile22c);
+		Ile ile22d = new Ile("Kedetrav", true, false, false, 6, 4, Mer.GrandLine, true);
+		daoIle.save(ile22d);
+		
+		Ile ile23a = new Ile("Marine Ford", true, false, true, 8, 5, Mer.GrandLine);
+		daoIle.save(ile23a);
+		Ile ile23b = new Ile("Impel Down", true, true, false, 7, 5, Mer.GrandLine, true);
+		daoIle.save(ile23b);
 
-		Ile ile23 = new Ile("Ile3_NewWorld", false, true, false, 8, 3, Mer.NewWorld);
-		daoIle.save(ile23);
-
-		Ile ile24 = new Ile("Ile4_NewWorld", false, true, true, 6, 4, Mer.NewWorld, true);
+		Ile ile24 = new Ile("Archipel de Sabaody", true, false, true, 4, 6, Mer.GrandLine, true);
 		daoIle.save(ile24);
+		
+		
+		Ile ile25a = new Ile("Punk Hazard", true, true, true, 8, 1, Mer.NewWorld);
+		daoIle.save(ile25a);
+		Ile ile25b = new Ile("Ile de Rajin", false, true, true, 6, 1, Mer.NewWorld);
+		daoIle.save(ile25b);
+
+		Ile ile26a = new Ile("Ile de Maubeugemour", true, false, false, 5, 2, Mer.NewWorld);
+		daoIle.save(ile26a);
+		Ile ile26b = new Ile("End Point", false, false, true, 6, 2, Mer.NewWorld);
+		daoIle.save(ile26b);
+		Ile ile26c = new Ile("Piriodo Island", false, true, false, 4, 2, Mer.NewWorld);
+		daoIle.save(ile26c);
+
+		Ile ile27a = new Ile("Dressrosa", false, true, true, 8, 3, Mer.NewWorld);
+		daoIle.save(ile27a);
+		Ile ile27b = new Ile("Green Bit", false, true, false, 7, 3, Mer.NewWorld);
+		daoIle.save(ile27b);
+		
+		Ile ile28a = new Ile("Ile des Pirates", true, true, true, 12, 4, Mer.NewWorld);
+		daoIle.save(ile28a);
+		Ile ile28b = new Ile("Pays de Wa", true, true, false, 9, 4, Mer.NewWorld);
+		daoIle.save(ile28b);
+		Ile ile28c = new Ile("Royaume de Prodence", false, true, true, 10, 4, Mer.NewWorld);
+		daoIle.save(ile28c);
+		
+		Ile ile29a = new Ile("Elbaf", true, true, false, 8, 5, Mer.NewWorld);
+		daoIle.save(ile29a);
+		Ile ile29b = new Ile("Onigashima", false, true, true, 9, 5, Mer.NewWorld);
+		daoIle.save(ile29b);
+
+		Ile ile30 = new Ile("Laugh Tale", true, true, true, 10, 6, Mer.NewWorld, true);
+		daoIle.save(ile30);
 
 		// events
 		Evenement event1 = new Evenement(2, 1, 0, Odyssee.Tempete);
