@@ -104,7 +104,7 @@ export class ActionComponent {
   }
 
   bouton2() {
-    var degat: number = Math.floor(Math.random() * 10);
+    var degat: number = Math.floor(Math.random() * 4);
     //choisir aléatoirement degatnavire, degatmembre ou tresor et enlever le degat
     var alea: number = Math.floor(Math.random() *3)+1;
     if(alea==1){
