@@ -1,0 +1,5 @@
+ul, :root, :host {
+    background-image: url(../../assets/ships/ship_1.png);
+    background-color:transparent;
+}
+

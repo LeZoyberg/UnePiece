@@ -28,7 +28,7 @@ th.image-container {
   vertical-align: middle;
 }
 img {
-  width: calc(100vh / 10);
+  width: calc(100vw / 25);
   position: relative;
 }
 
