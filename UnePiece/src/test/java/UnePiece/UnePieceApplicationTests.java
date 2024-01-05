@@ -188,22 +188,22 @@ class UnePieceApplicationTests {
 		Collections.addAll(equipage2, membre4, membre5, membre6);
 
 		// bateaux
-		Bateau bateau1 = new Bateau("Petite barque", 2, 2, 2, true);
+		Bateau bateau1 = new Bateau("Canot", 2, 5, 2, true);
 		daoBateau.save(bateau1);
 
-		Bateau bateau2 = new Bateau("Moyenne barque", 3, 4, 5, true);
+		Bateau bateau2 = new Bateau("Moyenne barque", 3, 7, 5, true);
 		daoBateau.save(bateau2);
 		
-		Bateau bateau3 = new Bateau("Grande barque", 4, 6, 10, true);
+		Bateau bateau3 = new Bateau("Grande barque", 4, 9, 10, true);
 		daoBateau.save(bateau3);
 		
-		Bateau bateau4 = new Bateau("Petit voilier", 5, 8, 12, true);
+		Bateau bateau4 = new Bateau("Petit voilier", 5, 6, 12, true);
 		daoBateau.save(bateau4);
 		
 		Bateau bateau5 = new Bateau("Moyen voilier", 6, 10, 14, true);
 		daoBateau.save(bateau5);
 		
-		Bateau bateau6 = new Bateau("Grand voilier", 7, 12, 16, false);
+		Bateau bateau6 = new Bateau("Grand voilier", 7, 15, 16, true);
 		daoBateau.save(bateau6);
 		
 		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false);
@@ -211,6 +211,42 @@ class UnePieceApplicationTests {
 
 		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false);
 		daoBateau.save(bateau8);
+		
+		Bateau bateau9 = new Bateau("Barque Mortuaire", 2, 50, 40, false);
+		daoBateau.save(bateau9);
+		
+		Bateau bateau10 = new Bateau("Striker", 2, 30, 20, false);
+		daoBateau.save(bateau10);
+		
+		Bateau bateau11 = new Bateau("Moby Dick", 100, 90, 120, false);
+		daoBateau.save(bateau11);
+		
+		Bateau bateau12 = new Bateau("Red Force", 20, 50, 60, false);
+		daoBateau.save(bateau12);
+		
+		Bateau bateau13 = new Bateau("Polar Tang", 7, 30, 40, false);
+		daoBateau.save(bateau13);
+		
+		Bateau bateau14 = new Bateau("Queen Mamma Chanteur", 70, 70, 100, false);
+		daoBateau.save(bateau14);
+		
+		Bateau bateau15 = new Bateau("Victoria Punk", 10, 40, 50, false);
+		daoBateau.save(bateau15);
+		
+		Bateau bateau16 = new Bateau("Thriller Bark", 250, 300, 450, false);
+		daoBateau.save(bateau16);
+		
+		Bateau bateau17 = new Bateau("Sexy Foxy", 100, 50, 50, false);
+		daoBateau.save(bateau17);
+		
+		Bateau bateau18 = new Bateau("Oro Jackson", 30, 80, 90, false);
+		daoBateau.save(bateau18);
+		
+		Bateau bateau19 = new Bateau("Bateau du Germa 66", 50, 100, 100, false);
+		daoBateau.save(bateau19);
+		
+		Bateau bateau20 = new Bateau("Hollandais Volant", 30, 30, 40, false);
+		daoBateau.save(bateau20);
 
 		// navires
 		Navire navire1 = new Navire(bateau3.getRobustesse(), bateau3);
@@ -223,14 +259,14 @@ class UnePieceApplicationTests {
 		Ile ile1 = new Ile("Fuschia Village", true, true, true, 5, 1, Mer.EastBlue);
 		daoIle.save(ile1);
 
-		Ile ile2a = new Ile("Shells Town", true, false, false, 9, 2, Mer.EastBlue);
+		Ile ile2a = new Ile("Shells Town", true, false, false, 7, 2, Mer.EastBlue);
 		daoIle.save(ile2a);
-		Ile ile2b = new Ile("Village Syrup", false, false, true, 8, 2, Mer.EastBlue);
+		Ile ile2b = new Ile("Village Syrup", false, false, true, 6, 2, Mer.EastBlue);
 		daoIle.save(ile2b);
 
-		Ile ile3a = new Ile("Village Shimotsuki", true, true, false, 8, 3, Mer.EastBlue);
+		Ile ile3a = new Ile("Village Shimotsuki", true, true, false, 7, 3, Mer.EastBlue);
 		daoIle.save(ile3a);
-		Ile ile3b = new Ile("Royaume d'Oykot", true, false, true, 10, 3, Mer.EastBlue);
+		Ile ile3b = new Ile("Royaume d'Oykot", true, false, true, 8, 3, Mer.EastBlue);
 		daoIle.save(ile3b);
 		
 		Ile ile4 = new Ile("Ile des animaux rares", false, false, false, 4, 4, Mer.EastBlue);
@@ -381,14 +417,14 @@ class UnePieceApplicationTests {
 		Evenement event1c = new Evenement(3, 1, -5, Odyssee.Tempete);
 		daoEvenement.save(event1c);
 
-		Evenement event2a = new Evenement(1, 1, 50, Odyssee.Bataille);
+		Evenement event2a = new Evenement(0, 0, 50, Odyssee.Bataille);
 		daoEvenement.save(event2a);
-		Evenement event2b = new Evenement(2, 2, 25, Odyssee.Bataille);
+		Evenement event2b = new Evenement(1, 2, 25, Odyssee.Bataille);
 		daoEvenement.save(event2b);
 		Evenement event2c = new Evenement(2, 5, -50, Odyssee.Bataille);
 		daoEvenement.save(event2c);
 
-		Evenement event3a = new Evenement(0, -5, 50, Odyssee.Tresor);
+		Evenement event3a = new Evenement(-3, -5, 50, Odyssee.Tresor);
 		daoEvenement.save(event3a);
 		Evenement event3b = new Evenement(0, 0, 20, Odyssee.Tresor);
 		daoEvenement.save(event3b);
@@ -402,7 +438,7 @@ class UnePieceApplicationTests {
 		Evenement event4c = new Evenement(5, 4, -5, Odyssee.Monstre);
 		daoEvenement.save(event4c);
 
-		Evenement event5a = new Evenement(0,-10,-10, Odyssee.Restaurant);
+		Evenement event5a = new Evenement(-3,-10,-10, Odyssee.Restaurant);
 		daoEvenement.save(event5a);
 		Evenement event5b = new Evenement(0,-5,-15, Odyssee.Restaurant);
 		daoEvenement.save(event5b);
