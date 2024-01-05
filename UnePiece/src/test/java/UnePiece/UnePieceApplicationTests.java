@@ -374,20 +374,40 @@ class UnePieceApplicationTests {
 		daoIle.save(ile30);
 
 		// events
-		Evenement event1 = new Evenement(2, 1, 0, Odyssee.Tempete);
-		daoEvenement.save(event1);
+		Evenement event1a = new Evenement(1, 1, 0, Odyssee.Tempete);
+		daoEvenement.save(event1a);
+		Evenement event1b = new Evenement(2, 1, 0, Odyssee.Tempete);
+		daoEvenement.save(event1b);
+		Evenement event1c = new Evenement(3, 1, -5, Odyssee.Tempete);
+		daoEvenement.save(event1c);
 
-		Evenement event2 = new Evenement(2, 2, 25, Odyssee.Bataille);
-		daoEvenement.save(event2);
+		Evenement event2a = new Evenement(1, 1, 50, Odyssee.Bataille);
+		daoEvenement.save(event2a);
+		Evenement event2b = new Evenement(2, 2, 25, Odyssee.Bataille);
+		daoEvenement.save(event2b);
+		Evenement event2c = new Evenement(2, 5, -50, Odyssee.Bataille);
+		daoEvenement.save(event2c);
 
-		Evenement event3 = new Evenement(0, 0, 50, Odyssee.Tresor);
-		daoEvenement.save(event3);
+		Evenement event3a = new Evenement(0, -5, 50, Odyssee.Tresor);
+		daoEvenement.save(event3a);
+		Evenement event3b = new Evenement(0, 0, 20, Odyssee.Tresor);
+		daoEvenement.save(event3b);
+		Evenement event3c = new Evenement(0, 1, -5, Odyssee.Tresor);
+		daoEvenement.save(event3c);
 
-		Evenement event4 = new Evenement(1, 2, 0, Odyssee.Monstre);
-		daoEvenement.save(event4);
+		Evenement event4a = new Evenement(1, 2, 0, Odyssee.Monstre);
+		daoEvenement.save(event4a);
+		Evenement event4b = new Evenement(2, 3, 0, Odyssee.Monstre);
+		daoEvenement.save(event4b);
+		Evenement event4c = new Evenement(5, 4, -5, Odyssee.Monstre);
+		daoEvenement.save(event4c);
 
-		Evenement event5 = new Evenement(0,-2,-10, Odyssee.Restaurant);
-		daoEvenement.save(event5);
+		Evenement event5a = new Evenement(0,-10,-10, Odyssee.Restaurant);
+		daoEvenement.save(event5a);
+		Evenement event5b = new Evenement(0,-5,-15, Odyssee.Restaurant);
+		daoEvenement.save(event5b);
+		Evenement event5c = new Evenement(0,-2,-25, Odyssee.Restaurant);
+		daoEvenement.save(event5c);
 
 		// joueurs
 		Joueur joueur1 = new Joueur("player1", "password");
@@ -405,6 +425,7 @@ class UnePieceApplicationTests {
 		Joueur joueur5 = new Joueur("player5", "password");
 		daoCompte.save(joueur5);
 
+		/*
 		// actions
 		// les actions sont save après partie
 		Action action1 = new Action(event1.getDegatNavire(), event1.getDegatMembre(), event1.getTresor(), event1);
@@ -414,6 +435,7 @@ class UnePieceApplicationTests {
 		Collections.addAll(actionsPartie1, action1, action2);
 		Set<Action> actionsPartie2 = new HashSet<Action>();
 		Collections.addAll(actionsPartie2, action3);
+		*/
 
 		// parties
 		Partie partie1 = new Partie(LocalDate.of(2023, 10, 10), true, 25, 57, equipage1, ile15, navire2, joueur5,
