@@ -90,7 +90,10 @@ export class ActionComponent {
   }
 
   bouton1() {
-    if (this.partie.tresor! + this.action.tresor! < 0) {
+    console.log('(this.action.event?.odyssee as string) :>> ', (this.action.event?.odyssee as string));
+    
+    if ((this.action.event?.odyssee as string) == 'Restaurant' &&
+      this.partie.tresor! + this.action.tresor! < 0) {
       alert("Pas assez d'argent pour cette action !");
     } else {
       this.partie.membres.forEach((membre, index) => {
@@ -99,6 +102,9 @@ export class ActionComponent {
       });
       this.partie.navire!.robustesse! -= this.action.degatNavire!;
       this.partie.tresor! += this.action.tresor!;
+      if(this.partie.tresor! < 0 ) {
+        this.partie.tresor = 0;
+      }
       this.suite();
     }
   }

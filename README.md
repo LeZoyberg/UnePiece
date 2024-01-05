@@ -7,14 +7,17 @@ TODO : faire une fonction redirect qui redirige vers la bonne url en fonction de
 
 TODO : virer ancienne partie du localStorage quand on fait newGame
 
-TODO pas changer bateaux chaque jour
+TODO pas changer bateaux chaque jour : pas RP
 
-TODOafficher capacite bateau stat-equipage component
+TODO afficher capacite bateau stat-equipage component
 
 TODO capacite bateau devient inférieure à nombre de membres dans l'équipage -> ?
-
-TODO bataille fait perdre plus d'argent que tresor actuel : marche pas plutôt que faire tomber à 0 et ne permet pas de passer l'action
 
 TODO faire "continuer" à restaurant fait action fuite
 
 TODO gros bateaux devraient apparaître que sur les îles de mer élevées
+
+TODO retirer partie local storage
+
+
+-> Plutôt que gérer bouton1 / bouton2 comme ça pour action, les boutons devraient juste set "choix" de action sur true ou false, et appeler une méthode 'resolveAction" qui détermine l'issue en fonction de l'evenement et du choix
