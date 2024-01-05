@@ -36,3 +36,7 @@ img {
   transform: scale(1.05);
   cursor: pointer;
 }
+
+.img-pirate {
+  width: 30px;
+}

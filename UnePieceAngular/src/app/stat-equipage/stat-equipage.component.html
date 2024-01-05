@@ -35,7 +35,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let membre of partie.membres">
-            <td>image membre</td>
+            <td><img
+                class="img-pirate"
+                src="../../assets/pirates/{{ membre.pirate?.nom }}.png"
+                alt="image membre"
+              /></td>
             <td>{{membre.pirate?.nom}}</td>
             <td>{{membre.pv}}</td>
             <td>{{membre.power}}</td>
