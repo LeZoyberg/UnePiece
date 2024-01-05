@@ -169,7 +169,6 @@ export class IleComponent {
             this.partieService.savePartieInStorage(this.partie);
           });
           alert(pirate.nom + ' a été recruté');
-          this.listRecruits();
         });
       } else {
         alert('Tu es trop pauvre mon gueux !');
@@ -193,18 +192,20 @@ export class IleComponent {
   }
 
   listBateaux() {
-    this.bateauService.getRandomBateaux(this.partie.ile!.id!).subscribe((resp) => {
-      this.bateaux = resp;
-      console.log('this.bateaux resp :>> ', this.bateaux);
-      for (let b of this.bateaux) {
-        this.bateaux = this.bateaux.filter(
-          (b) => b.id !== this.partie.navire?.bateau!.id
-        );
-      }
-      const uniqueBateaux = this.getUniqueBateaux(this.bateaux);
-      this.bateaux = uniqueBateaux;
-      console.log('this.bateaux après tous les filtres :>> ', this.bateaux);
-    });
+    this.bateauService
+      .getRandomBateaux(this.partie.ile!.id!)
+      .subscribe((resp) => {
+        this.bateaux = resp;
+        console.log('this.bateaux resp :>> ', this.bateaux);
+        for (let b of this.bateaux) {
+          this.bateaux = this.bateaux.filter(
+            (b) => b.id !== this.partie.navire?.bateau!.id
+          );
+        }
+        const uniqueBateaux = this.getUniqueBateaux(this.bateaux);
+        this.bateaux = uniqueBateaux;
+        console.log('this.bateaux après tous les filtres :>> ', this.bateaux);
+      });
 
     // this.bateauService.findAll().subscribe((resp) => {
     //   this.bateaux = resp;
@@ -233,7 +234,6 @@ export class IleComponent {
         this.partieService.update(this.partie).subscribe(() => {
           this.partieService.savePartieInStorage(this.partie);
         });
-        this.listBateaux();
       });
     }
   }
@@ -269,6 +269,8 @@ export class IleComponent {
   }
 
   nextDay() {
+    this.listRecruits();
+    this.listBateaux();
     this.partie.joursRestants!--;
     (this.partie.duree as number) += 1;
     this.partieService.update(this.partie).subscribe(() => {
@@ -287,7 +289,7 @@ export class IleComponent {
   setAction() {
     for (let i = 1; i <= this.partie.joursRestants!; i++) {
       this.actionTrajet = new Action();
-      var idEvent: number = Math.floor(Math.random() * 5) + 1;
+      var idEvent: number = Math.floor(Math.random() * 14) + 1;
       this.eventService.findById(idEvent).subscribe((resp) => {
         this.actionTrajet.event = resp;
         this.actionTrajet.degatMembre =

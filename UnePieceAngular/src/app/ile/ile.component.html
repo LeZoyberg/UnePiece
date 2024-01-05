@@ -33,8 +33,7 @@
                     src="../../assets/pirates/{{ m.pirate?.nom }}.png"
                     alt=""
                   />
-                  {{ m.pirate?.nom }} - {{ m.pv }} PV - {{ m.pirate?.pv }} PV
-                  max<span *ngIf="m.pirate?.fruit"
+                  {{ m.pirate?.nom }} - PV {{ m.pv }} / {{ m.pirate?.pv }}<span *ngIf="m.pirate?.fruit"
                     ><img class="icon-fruit" src="../../assets/icons/fruit.png"
                   /></span>
                 </td>
@@ -60,7 +59,7 @@
                     src="../../assets/pirates/{{ p.nom }}.png"
                     alt=""
                   />
-                  {{ p.nom }} - {{ p.pv }} PV
+                  {{ p.nom }} - {{ p.pv }} PV - {{ p.power }} Force
                   <span *ngIf="p.fruit"
                     ><img class="icon-fruit" src="../../assets/icons/fruit.png"
                   /></span>
