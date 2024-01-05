@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -131,37 +131,38 @@ table {
 /* -------[ ^ The above style harmonizes style no matter which browser is used]------- */
 
 p {
-  font-family:Impact;
-  font-size:40px;
-  text-align:center;
+  font-family: Impact;
+  font-size: 40px;
+  text-align: center;
 }
 
-h1, div {
-  font-family:Impact;
+h1,
+div {
+  font-family: Impact;
 }
 
 #icon_pv {
   background-image: url(../../assets/icons/heart.png);
-  background-size:70%;
-  background-repeat:no-repeat;
+  background-size: 70%;
+  background-repeat: no-repeat;
 }
 
 #icon_power {
   background-image: url(../../assets/icons/attack.png);
-  background-size:70%;
-  background-repeat:no-repeat;
+  background-size: 70%;
+  background-repeat: no-repeat;
 }
 
 #icon_fruit {
   background-image: url(../../assets/icons/fruit.png);
-  background-size:70%;
-  background-repeat:no-repeat;
+  background-size: 70%;
+  background-repeat: no-repeat;
 }
 
 #icon_prime {
   background-image: url(../../assets/icons/coin.png);
-  background-size:10%;
-  background-repeat:no-repeat;
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 
 .card-container {
@@ -170,6 +171,7 @@ h1, div {
   width: 500px;
   height: 700px;
   margin: auto;
+  margin-left: 15px;
   margin-top: 50px;
   border-radius: 2%;
   box-sizing: border-box;
@@ -189,11 +191,11 @@ h1, div {
 }
 
 .card {
-  margin-right:100px;
+  margin-right: 100px;
 }
 
 .card-frame {
-  cursor:pointer;
+  cursor: pointer;
   border-radius: 2%;
   z-index: 1;
   position: relative;
@@ -209,7 +211,7 @@ h1, div {
 }
 
 .card-container:hover {
-  transform:scale(1.05);
+  transform: scale(1.05);
 }
 
 .frame-textbox,
@@ -225,11 +227,11 @@ h1, div {
 }
 
 .frame-art img {
-  position:relative;
-  top:60%;
-  left:50%;
+  position: relative;
+  top: 60%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  height:70%;
+  height: 70%;
 }
 
 .frame-art {
@@ -239,61 +241,63 @@ h1, div {
   background-repeat: no-repeat;
 }
 .frame-header {
-  top:5.5%;
-  background:white;
+  top: 5.5%;
+  background: white;
   border: 5px solid blue;
   border-radius: 8px;
-  font-size:xx-large;
+  font-size: xx-large;
   position: absolute;
-  text-align:center;
+  text-align: center;
   width: 95%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .frame-textbox {
-  position:absolute;
+  position: absolute;
   top: 72.5%;
   height: 42%;
-  background:whitesmoke;
+  background: whitesmoke;
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 }
 
 .frame-prime {
-  position:absolute;
-  top:93%;
-  width:100%;
+  position: absolute;
+  top: 93%;
+  width: 100%;
   text-align: center;
 }
 
 .card {
-  width:50%;
+  width: 50%;
 }
 
 table {
-  height:90%;
-  width:90%;
-  font-size:xx-large;
+  height: 90%;
+  width: 90%;
+  font-size: xx-large;
 }
 
-th, tr, td {
+th,
+tr,
+td {
   vertical-align: middle;
 }
 
 #td-message {
-  text-align:center;
+  text-align: center;
 }
 
 .flex-container {
-  display:flex;
+  display: flex;
 }
 
 .flex-container td {
-  width:20%;
+  width: 20%;
 }
 
 .card-cell {
-  margin-right:10%;
+  margin-right: 10%;
 }
