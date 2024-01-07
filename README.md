@@ -19,5 +19,7 @@ TODO gros bateaux devraient apparaître que sur les îles de mer élevées
 
 TODO retirer partie local storage
 
+TODO ajouter tier aux bateaux / pirates
+
 
 -> Plutôt que gérer bouton1 / bouton2 comme ça pour action, les boutons devraient juste set "choix" de action sur true ou false, et appeler une méthode 'resolveAction" qui détermine l'issue en fonction de l'evenement et du choix

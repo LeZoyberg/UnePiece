@@ -44,6 +44,7 @@ public class BateauRestController {
 	@GetMapping("/random/{idIle}")
 	public List<Bateau> getRandomBateaux(@PathVariable Integer idIle) {
 		List<Bateau> bateaux = this.findAll();
+
 		// retire les bateaux pas de début quand on est sur la première île (idIle = 1)
 		int totalBateaux = bateaux.size();
 		for (int i = 0; i < totalBateaux; i++) {
@@ -65,39 +66,36 @@ public class BateauRestController {
 		Ile destination = opt.get();
 		String seaName = destination.getMer().name();
 		for (int i = 0; i < bateaux.size(); i++) {
-			int tier = bateaux.get(i).getTier();
 			if (seaName == "EastBlue") {
-				if (tier != 1) {
-					bateaux.remove(i);
-					i--;
-				}
+				System.out.println("getting tier 1 boats");
+				bateaux = daoBateau.findAllByTier(1);
+				System.out.println(bateaux);
 			} else if (seaName == "WestBlue" || seaName == "NorthBlue") {
-				if (tier == 3 || tier == 4) {
-					bateaux.remove(i);
-					i--;
-				}
-			} else if (seaName == "SouthBlue") {
-				if (tier == 1 || tier == 4) {
-					bateaux.remove(i);
-					i--;
-				}
-			} else if (seaName == "GrandLine" || seaName == "NewWorld") {
-				if (tier == 1 || tier == 2) {
-					bateaux.remove(i);
-					i--;
-				}
-			} 
-		}
 
+				bateaux = daoBateau.findAllByTierOrTier(1, 2);
+			} else if (seaName == "SouthBlue") {
+				bateaux = daoBateau.findAllByTierOrTier(2, 3);
+			} else if (seaName == "GrandLine" || seaName == "NewWorld") {
+				bateaux = daoBateau.findAllByTierOrTier(3, 4);
+			}
+		}
+		System.out.println("bateaux après tri ile :>> " + bateaux);
+		System.out.println(seaName);
+
+		// renvoie des bateaux random et uniques
 		List<Bateau> shuffledBateaux = new ArrayList<Bateau>();
 		int max = 3;
 		int min = 2;
 		Random random = new Random();
 		int nombreBateaux = random.nextInt(max - min + 1) + min;
-		for (int i = 1; i <= nombreBateaux; i++) {
+		int i = 1;
+		while (i <= nombreBateaux) {
 			Random random1 = new Random();
 			Bateau randomBateau = bateaux.get(random1.nextInt(bateaux.size()));
-			shuffledBateaux.add(randomBateau);
+			if (!shuffledBateaux.contains(randomBateau)) {
+				shuffledBateaux.add(randomBateau);
+				i++;
+			}
 		}
 		return shuffledBateaux;
 	}

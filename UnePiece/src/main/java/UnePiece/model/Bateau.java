@@ -37,6 +37,16 @@ public class Bateau {
 		this.debut = debut;
 		this.tier = tier;
 	}
+
+	public Bateau(Integer id, String nom, int capacite, int robustesse, int prix, boolean debut, int tier) {
+		this.id = id;
+		this.nom = nom;
+		this.capacite = capacite;
+		this.robustesse = robustesse;
+		this.prix = prix;
+		this.debut = debut;
+		this.tier = tier;
+	}
 	
 	public Integer getId() {
 		return id;

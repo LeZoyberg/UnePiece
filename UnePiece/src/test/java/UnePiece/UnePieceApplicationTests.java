@@ -188,64 +188,64 @@ class UnePieceApplicationTests {
 		Collections.addAll(equipage2, membre4, membre5, membre6);
 
 		// bateaux
-		Bateau bateau1 = new Bateau("Canot", 2, 5, 2, true);
+		Bateau bateau1 = new Bateau("Canot", 2, 5, 2, true, 0);
 		daoBateau.save(bateau1);
 
-		Bateau bateau2 = new Bateau("Moyenne barque", 3, 7, 5, true);
+		Bateau bateau2 = new Bateau("Moyenne barque", 3, 7, 5, true, 1);
 		daoBateau.save(bateau2);
 		
-		Bateau bateau3 = new Bateau("Grande barque", 4, 9, 10, true);
+		Bateau bateau3 = new Bateau("Grande barque", 4, 9, 10, true, 2);
 		daoBateau.save(bateau3);
 		
-		Bateau bateau4 = new Bateau("Petit voilier", 5, 6, 12, true);
+		Bateau bateau4 = new Bateau("Petit voilier", 5, 6, 12, true, 1);
 		daoBateau.save(bateau4);
 		
-		Bateau bateau5 = new Bateau("Moyen voilier", 6, 10, 14, true);
+		Bateau bateau5 = new Bateau("Moyen voilier", 6, 10, 14, true, 1);
 		daoBateau.save(bateau5);
 		
-		Bateau bateau6 = new Bateau("Grand voilier", 7, 15, 16, true);
+		Bateau bateau6 = new Bateau("Grand voilier", 7, 15, 16, true, 2);
 		daoBateau.save(bateau6);
 		
-		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false);
+		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false, 1);
 		daoBateau.save(bateau7);
 
-		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false);
+		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false, 2);
 		daoBateau.save(bateau8);
 		
-		Bateau bateau9 = new Bateau("Barque Mortuaire", 2, 50, 40, false);
+		Bateau bateau9 = new Bateau("Barque Mortuaire", 2, 50, 40, false, 2);
 		daoBateau.save(bateau9);
 		
-		Bateau bateau10 = new Bateau("Striker", 2, 30, 20, false);
+		Bateau bateau10 = new Bateau("Striker", 2, 30, 20, false, 1);
 		daoBateau.save(bateau10);
 		
-		Bateau bateau11 = new Bateau("Moby Dick", 100, 90, 120, false);
+		Bateau bateau11 = new Bateau("Moby Dick", 100, 90, 120, false, 4);
 		daoBateau.save(bateau11);
 		
-		Bateau bateau12 = new Bateau("Red Force", 20, 50, 60, false);
+		Bateau bateau12 = new Bateau("Red Force", 20, 50, 60, false, 3);
 		daoBateau.save(bateau12);
 		
-		Bateau bateau13 = new Bateau("Polar Tang", 7, 30, 40, false);
+		Bateau bateau13 = new Bateau("Polar Tang", 7, 30, 40, false, 2);
 		daoBateau.save(bateau13);
 		
-		Bateau bateau14 = new Bateau("Queen Mamma Chanteur", 70, 70, 100, false);
+		Bateau bateau14 = new Bateau("Queen Mamma Chanteur", 70, 70, 100, false, 4);
 		daoBateau.save(bateau14);
 		
-		Bateau bateau15 = new Bateau("Victoria Punk", 10, 40, 50, false);
+		Bateau bateau15 = new Bateau("Victoria Punk", 10, 40, 50, false, 3);
 		daoBateau.save(bateau15);
 		
-		Bateau bateau16 = new Bateau("Thriller Bark", 250, 300, 450, false);
+		Bateau bateau16 = new Bateau("Thriller Bark", 250, 300, 450, false, 4);
 		daoBateau.save(bateau16);
 		
-		Bateau bateau17 = new Bateau("Sexy Foxy", 100, 50, 50, false);
+		Bateau bateau17 = new Bateau("Sexy Foxy", 100, 50, 50, false, 3);
 		daoBateau.save(bateau17);
 		
-		Bateau bateau18 = new Bateau("Oro Jackson", 30, 80, 90, false);
+		Bateau bateau18 = new Bateau("Oro Jackson", 30, 80, 90, false, 3);
 		daoBateau.save(bateau18);
 		
-		Bateau bateau19 = new Bateau("Bateau du Germa 66", 50, 100, 100, false);
+		Bateau bateau19 = new Bateau("Bateau du Germa 66", 50, 100, 100, false, 4);
 		daoBateau.save(bateau19);
 		
-		Bateau bateau20 = new Bateau("Hollandais Volant", 30, 30, 40, false);
+		Bateau bateau20 = new Bateau("Hollandais Volant", 30, 30, 40, false, 3);
 		daoBateau.save(bateau20);
 
 		// navires
