@@ -33,7 +33,8 @@ export class Pirate {
     public prime?: number,
     public fruit?: boolean,
     public capitaine?: boolean,
-    public nom?: string
+    public nom?: string,
+    public tier?: number
   ) {}
 }
 
@@ -44,7 +45,8 @@ export class Bateau {
     public capacite?: number,
     public robustesse?: number,
     public prix?: number,
-    public debut?: boolean
+    public debut?: boolean,
+    public tier?: number
   ) {}
 }
 

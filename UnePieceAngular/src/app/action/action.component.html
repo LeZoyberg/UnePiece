@@ -2,11 +2,11 @@
 
 <p>{{text}}</p>
 
-<div *ngIf = "visible">    
+<div *ngIf = "choixPossible">    
     <button (click)="bouton1()" type="button" class="btn btn-success">{{title1}}</button>
     <button (click)="bouton2()" type="button" class="btn btn-danger">{{title2}}</button>
 </div>
 
-<div *ngIf = "!visible">
+<div *ngIf = "!choixPossible">
     <button (click)="boutonTempete()" type="button" class="btn btn-primary">{{title}}</button>
 </div>

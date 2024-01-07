@@ -60,6 +60,16 @@ export class IleComponent {
     this.partieService.checkEndOfGame();
   }
 
+  getColorByTier(tier: number | undefined): string {
+    switch(tier) {
+      case 1 : return 'darkgreen';
+      case 2 : return 'darkblue';
+      case 3 : return 'darkpurple';
+      case 4 : return 'darkorange';
+      default : return 'black';
+    }
+  }
+
   showIle() {
     return `Nom : ${this.ile.nom} / Taverne : ${this.ile.taverne} / Chantier : ${this.ile.chantier} / Auberge :  ${this.ile.auberge} / Attente : ${this.ile.attente} / Ordre : ${this.ile.ordre} / Mer : ${this.ile.mer}`;
   }

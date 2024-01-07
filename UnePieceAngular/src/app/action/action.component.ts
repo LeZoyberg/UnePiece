@@ -92,7 +92,18 @@ export class ActionComponent {
   }
 
   resolveAction() {
-    // bouton 1
+    // pas de choix possible (i.e. tempête)
+	if(!this.action.choix) {
+		this.partie.membres.forEach((membre, index) => {
+			membre.pv! -= this.action.degatMembre!;
+			this.partieService.checkDeathMembre(membre, index);
+		  });
+		  this.partie.navire!.robustesse! -= this.action.degatNavire!;
+		  this.choixPossible = true;
+		  this.suite();
+	}
+	
+	// bouton 1
     if (this.action.choix == true) {
       if (
         this.actionPayante == true &&
@@ -115,10 +126,11 @@ export class ActionComponent {
     // bouton 2
     else if (this.action.choix == false) {
       if (this.actionPayante == false) {
+		// choisis aléatoirement un nombre de dégat, et une statistique à affecter
         const degat: number = Math.floor(Math.random() * 4);
         const alea: number = Math.floor(Math.random() * 3) + 1;
         
-		// tresor
+		// affecte tresor
 		if (alea == 1) {
           this.partie.tresor! -= degat * 2;
           if (this.partie.tresor! <= 0) {
@@ -129,13 +141,13 @@ export class ActionComponent {
           }
         } 
 		
-		// robustesse
+		// affecte robustesse
 		else if (alea == 2) {
           this.partie.navire!.robustesse! -= degat;
           alert('Votre navire prend ' + degat + ' dégâts');
         } 
 		
-		// degat membres
+		// affecte pv membres
 		else if (alea == 3) {
           const membreRandom: number = Math.floor(
             Math.random() * this.partie.membres.length
@@ -164,64 +176,16 @@ export class ActionComponent {
   }
 
   bouton1() {
-    console.log(
-      '(this.action.event?.odyssee as string) :>> ',
-      this.action.event?.odyssee as string
-    );
     this.action.choix = true;
     this.resolveAction();
   }
 
   bouton2() {
-    // choisit aléatoirement degatnavire, degatmembre ou tresor et enlève degat
-    const degat: number = Math.floor(Math.random() * 4);
-    const alea: number = Math.floor(Math.random() * 3) + 1;
-    if (alea == 1) {
-      // tresor
-      this.partie.tresor! -= degat * 2;
-      if (this.partie.tresor! <= 0) {
-        this.partie.tresor = 0;
-        alert('Vous avez perdu tout votre or !');
-      } else {
-        alert('Vous avez perdu ' + degat * 2 + '฿');
-      }
-    } else if (alea == 2) {
-      // robustesse
-      this.partie.navire!.robustesse! -= degat;
-      alert('Votre navire prend ' + degat + ' dégâts');
-    } else if (alea == 3) {
-      // degat membres
-      const membreRandom: number = Math.floor(
-        Math.random() * this.partie.membres.length
-      );
-      // 2 chance sur 3 de n'affecter qu'un membre
-      const alea2: number = Math.floor(Math.random() * 3);
-      if (alea2 != 3) {
-        this.partie.membres[membreRandom].pv! -= degat;
-        alert(
-          this.partie.membres[membreRandom].pirate?.nom +
-            ' subit ' +
-            degat +
-            ' dégâts'
-        );
-      } else {
-        this.partie.membres.forEach((membre, index) => {
-          membre.pv! -= degat;
-          this.partieService.checkDeathMembre(membre, index);
-        });
-        alert('Vos membres subissent ' + degat + ' dégâts');
-      }
-    }
-    this.suite();
+    this.action.choix = false;
+	this.resolveAction();
   }
 
   boutonTempete() {
-    this.partie.membres.forEach((membre, index) => {
-      membre.pv! -= this.action.degatMembre!;
-      this.partieService.checkDeathMembre(membre, index);
-    });
-    this.partie.navire!.robustesse! -= this.action.degatNavire!;
-    this.choixPossible = true;
-    this.suite();
+	this.resolveAction();
   }
 }

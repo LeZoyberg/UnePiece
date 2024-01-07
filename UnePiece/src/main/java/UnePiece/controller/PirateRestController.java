@@ -41,8 +41,8 @@ public class PirateRestController {
 		return opt.get();
 	}
 
-	@GetMapping("/random/{idIle}")
-	public List<Pirate> getRandomRecruits(@PathVariable Integer idIle) {
+	@GetMapping("/random")
+	public List<Pirate> getRandomRecruits(/*@PathVariable Integer idIle*/) {
 		List<Pirate> pirates = daoPirate.findAllNotCapitaine();
 
 		// retire les capitaines

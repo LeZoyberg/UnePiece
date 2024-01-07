@@ -33,7 +33,7 @@
                     src="../../assets/pirates/{{ m.pirate?.nom }}.png"
                     alt=""
                   />
-                  {{ m.pirate?.nom }} - PV {{ m.pv }} / {{ m.pirate?.pv }}<span *ngIf="m.pirate?.fruit"
+                  <b [ngStyle]="{'color':getColorByTier(m.pirate?.tier)}">{{m.pirate?.tier}}☆ {{ m.pirate?.nom }}</b> - PV {{ m.pv }} / {{ m.pirate?.pv }}<span *ngIf="m.pirate?.fruit"
                     ><img class="icon-fruit" src="../../assets/icons/fruit.png"
                   /></span>
                 </td>
@@ -59,7 +59,7 @@
                     src="../../assets/pirates/{{ p.nom }}.png"
                     alt=""
                   />
-                  {{ p.nom }} - {{ p.pv }} PV - {{ p.power }} Force
+                  <b [ngStyle]="{'color':getColorByTier(p.tier)}">{{p.tier}}☆ {{ p.nom }}</b> - {{ p.pv }} PV - {{ p.power }} Force
                   <span *ngIf="p.fruit"
                     ><img class="icon-fruit" src="../../assets/icons/fruit.png"
                   /></span>
@@ -83,7 +83,7 @@
               </tr>
               <tr *ngFor="let b of bateaux">
                 <td>
-                  {{ b.nom }} - Capacite : {{ b.capacite }} - Robustesse :
+                  <b [ngStyle]="{'color':getColorByTier(b.tier)}">{{b.tier}}☆ {{ b.nom }}</b> - Capacite : {{ b.capacite }} - Robustesse :
                   {{ b.robustesse }}
                 </td>
                 <td>
