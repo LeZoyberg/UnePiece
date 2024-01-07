@@ -67,44 +67,43 @@ export class ActionComponent {
     }
   }
 
-  suite() {
-    if (this.partie.joursRestants! > 1) {
-      this.partie.joursRestants!--;
-      this.partie.duree!++;
-      if (this.partie.actions.length != 0) {
-        this.action = this.partie.actions.shift() as Action;
-        this.checkForText(this.action.event?.odyssee as string);
-        this.partieService.update(this.partie).subscribe(() => {
-          this.actionService.delete(this.action.id).subscribe(() => {
-            this.partieService.savePartieInStorage(this.partie);
-          });
-        });
-      }
-    } else {
-      this.partie.joursRestants = this.partie.ile?.attente;
-      this.partie.duree!++;
-      this.partieService.update(this.partie).subscribe(() => {
-        this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/ile']);
-      });
-    }
-    this.partieService.checkEndOfGame();
+  bouton1() {
+    this.action.choix = true;
+    this.resolveAction();
+  }
+
+  bouton2() {
+    this.action.choix = false;
+    this.resolveAction();
+  }
+
+  boutonTempete() {
+    this.action.choix = undefined;
+    this.resolveAction();
   }
 
   resolveAction() {
     // pas de choix possible (i.e. tempête)
-	if(!this.action.choix) {
-		this.partie.membres.forEach((membre, index) => {
-			membre.pv! -= this.action.degatMembre!;
-			this.partieService.checkDeathMembre(membre, index);
-		  });
-		  this.partie.navire!.robustesse! -= this.action.degatNavire!;
-		  this.choixPossible = true;
-		  this.suite();
-	}
-	
-	// bouton 1
-    if (this.action.choix == true) {
+    if (this.action.choix == undefined) {
+      this.partie.membres.forEach((membre, index) => {
+        membre.pv! -= this.action.degatMembre!;
+        this.partieService.checkDeathMembre(membre, index);
+      });
+      this.partie.navire!.robustesse! -= this.action.degatNavire!;
+      this.choixPossible = true;
+	  alert(
+		'Dégâts membres : ' +
+		  this.action.degatMembre +
+		  ' | Tresor ' +
+		  this.action.tresor +
+		  ' | Dégâts navire ' +
+		  this.action.degatNavire
+	  );
+      this.suite();
+    }
+
+    // bouton 1
+    else if (this.action.choix == true) {
       if (
         this.actionPayante == true &&
         this.partie.tresor! + this.action.tresor! < 0
@@ -120,18 +119,26 @@ export class ActionComponent {
         if (this.partie.tresor! < 0) {
           this.partie.tresor = 0;
         }
+        alert(
+          'Dégâts membres : ' +
+            this.action.degatMembre +
+            ' | Tresor ' +
+            this.action.tresor +
+            ' | Dégâts navire ' +
+            this.action.degatNavire
+        );
         this.suite();
       }
     }
     // bouton 2
     else if (this.action.choix == false) {
       if (this.actionPayante == false) {
-		// choisis aléatoirement un nombre de dégat, et une statistique à affecter
+        // choisis aléatoirement un nombre de dégat, et une statistique à affecter
         const degat: number = Math.floor(Math.random() * 4);
         const alea: number = Math.floor(Math.random() * 3) + 1;
-        
-		// affecte tresor
-		if (alea == 1) {
+
+        // affecte tresor
+        if (alea == 1) {
           this.partie.tresor! -= degat * 2;
           if (this.partie.tresor! <= 0) {
             this.partie.tresor = 0;
@@ -139,16 +146,16 @@ export class ActionComponent {
           } else {
             alert('Vous avez perdu ' + degat * 2 + '฿');
           }
-        } 
-		
-		// affecte robustesse
-		else if (alea == 2) {
+        }
+
+        // affecte robustesse
+        else if (alea == 2) {
           this.partie.navire!.robustesse! -= degat;
           alert('Votre navire prend ' + degat + ' dégâts');
-        } 
-		
-		// affecte pv membres
-		else if (alea == 3) {
+        }
+
+        // affecte pv membres
+        else if (alea == 3) {
           const membreRandom: number = Math.floor(
             Math.random() * this.partie.membres.length
           );
@@ -173,19 +180,30 @@ export class ActionComponent {
       }
       this.suite();
     }
+    console.log('this.action resolved action :>> ', this.action);
   }
 
-  bouton1() {
-    this.action.choix = true;
-    this.resolveAction();
-  }
-
-  bouton2() {
-    this.action.choix = false;
-	this.resolveAction();
-  }
-
-  boutonTempete() {
-	this.resolveAction();
+  suite() {
+    if (this.partie.joursRestants! > 1) {
+      this.partie.joursRestants!--;
+      this.partie.duree!++;
+      if (this.partie.actions.length != 0) {
+        this.action = this.partie.actions.shift() as Action;
+        this.checkForText(this.action.event?.odyssee as string);
+        this.partieService.update(this.partie).subscribe(() => {
+          this.actionService.delete(this.action.id).subscribe(() => {
+            this.partieService.savePartieInStorage(this.partie);
+          });
+        });
+      }
+    } else {
+      this.partie.joursRestants = this.partie.ile?.attente;
+      this.partie.duree!++;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.partieService.savePartieInStorage(this.partie);
+        this.router.navigate(['/ile']);
+      });
+    }
+    this.partieService.checkEndOfGame();
   }
 }
