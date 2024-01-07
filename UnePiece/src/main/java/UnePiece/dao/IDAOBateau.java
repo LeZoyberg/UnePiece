@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import UnePiece.model.Bateau;
 
-public interface IDAOBateau extends JpaRepository<Bateau,Integer> {
+public interface IDAOBateau extends JpaRepository<Bateau, Integer> {
 
-@Query("SELECT b FROM Bateau b WHERE b.tier = :tier")
+    @Query("SELECT b FROM Bateau b WHERE b.tier = :tier")
     List<Bateau> findAllByTier(@Param("tier") int tier);
 
     @Query("SELECT b FROM Bateau b WHERE b.tier = :tier1 OR b.tier = :tier2")

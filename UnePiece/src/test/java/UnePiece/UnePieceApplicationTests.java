@@ -194,7 +194,7 @@ class UnePieceApplicationTests {
 		Bateau bateau2 = new Bateau("Moyenne barque", 3, 7, 5, true, 1);
 		daoBateau.save(bateau2);
 		
-		Bateau bateau3 = new Bateau("Grande barque", 4, 9, 10, true, 2);
+		Bateau bateau3 = new Bateau("Grande barque", 4, 9, 10, true, 1);
 		daoBateau.save(bateau3);
 		
 		Bateau bateau4 = new Bateau("Petit voilier", 5, 6, 12, true, 1);
@@ -206,7 +206,7 @@ class UnePieceApplicationTests {
 		Bateau bateau6 = new Bateau("Grand voilier", 7, 15, 16, true, 2);
 		daoBateau.save(bateau6);
 		
-		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false, 1);
+		Bateau bateau7 = new Bateau("Vogue Merry", 7, 25, 30, false, 2);
 		daoBateau.save(bateau7);
 
 		Bateau bateau8 = new Bateau("Thousand Sunny", 10, 50, 50, false, 2);

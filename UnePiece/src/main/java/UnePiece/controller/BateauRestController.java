@@ -45,17 +45,17 @@ public class BateauRestController {
 	public List<Bateau> getRandomBateaux(@PathVariable Integer idIle) {
 		List<Bateau> bateaux = this.findAll();
 
-		// retire les bateaux pas de début quand on est sur la première île (idIle = 1)
-		int totalBateaux = bateaux.size();
-		for (int i = 0; i < totalBateaux; i++) {
-			if (i < bateaux.size()) {
-				Bateau b = bateaux.get(i);
-				if (idIle == 1 && !b.isDebut()) {
-					bateaux.remove(i);
-					i--;
-				}
-			}
-		}
+		// // retire les bateaux pas de début quand on est sur la première île (idIle = 1)
+		// int totalBateaux = bateaux.size();
+		// for (int i = 0; i < totalBateaux; i++) {
+		// 	if (i < bateaux.size()) {
+		// 		Bateau b = bateaux.get(i);
+		// 		if (idIle == 1 && !b.isDebut()) {
+		// 			bateaux.remove(i);
+		// 			i--;
+		// 		}
+		// 	}
+		// }
 
 		// trie selon la mer et le tier du bateau
 		Optional<Ile> opt = daoIle.findById(idIle);
@@ -67,9 +67,7 @@ public class BateauRestController {
 		String seaName = destination.getMer().name();
 		for (int i = 0; i < bateaux.size(); i++) {
 			if (seaName == "EastBlue") {
-				System.out.println("getting tier 1 boats");
 				bateaux = daoBateau.findAllByTier(1);
-				System.out.println(bateaux);
 			} else if (seaName == "WestBlue" || seaName == "NorthBlue") {
 
 				bateaux = daoBateau.findAllByTierOrTier(1, 2);
@@ -79,8 +77,6 @@ public class BateauRestController {
 				bateaux = daoBateau.findAllByTierOrTier(3, 4);
 			}
 		}
-		System.out.println("bateaux après tri ile :>> " + bateaux);
-		System.out.println(seaName);
 
 		// renvoie des bateaux random et uniques
 		List<Bateau> shuffledBateaux = new ArrayList<Bateau>();
