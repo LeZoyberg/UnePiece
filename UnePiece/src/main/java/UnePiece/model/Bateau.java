@@ -16,6 +16,7 @@ public class Bateau {
 	private int robustesse;
 	private int prix;
 	private boolean debut;
+	private int tier;
 	
 	public Bateau() {}
 	
@@ -25,7 +26,18 @@ public class Bateau {
 		this.robustesse = robustesse;
 		this.prix = prix;
 		this.debut = debut;
+		this.tier = 1;
 	}
+
+	public Bateau(String nom, int capacite, int robustesse, int prix, boolean debut, int tier) {
+		this.nom = nom;
+		this.capacite = capacite;
+		this.robustesse = robustesse;
+		this.prix = prix;
+		this.debut = debut;
+		this.tier = tier;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -61,6 +73,14 @@ public class Bateau {
 	}
 	public void setDebut(boolean debut) {
 		this.debut = debut;
+	}
+
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
+
+	public int getTier() {
+		return tier;
 	}
 	
 	
