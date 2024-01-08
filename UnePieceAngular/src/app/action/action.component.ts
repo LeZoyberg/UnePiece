@@ -69,17 +69,26 @@ export class ActionComponent {
 
   bouton1() {
     this.action.choix = true;
-    this.resolveAction();
+    this.actionService.update(this.action).subscribe(() => {
+      console.log('button1, saving in db :>> ', this.action);
+      this.resolveAction();
+    });
   }
 
   bouton2() {
     this.action.choix = false;
-    this.resolveAction();
+    this.actionService.update(this.action).subscribe(() => {
+      console.log('button2, saving in db :>> ', this.action);
+      this.resolveAction();
+    });
   }
 
   boutonTempete() {
     this.action.choix = undefined;
-    this.resolveAction();
+    this.actionService.update(this.action).subscribe(() => {
+      console.log('button3, saving in db :>> ', this.action);
+      this.resolveAction();
+    });
   }
 
   resolveAction() {
@@ -180,18 +189,19 @@ export class ActionComponent {
       }
       this.suite();
     }
-    console.log('this.action resolved action :>> ', this.action);
+   
   }
 
   suite() {
+    
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
       this.partie.duree!++;
       if (this.partie.actions.length != 0) {
         this.action = this.partie.actions.shift() as Action;
         this.checkForText(this.action.event?.odyssee as string);
-        this.partieService.update(this.partie).subscribe(() => {
-          this.actionService.delete(this.action.id).subscribe(() => {
+        this.actionService.delete(this.action.id).subscribe(() => {
+          this.partieService.update(this.partie).subscribe(() => {
             this.partieService.savePartieInStorage(this.partie);
           });
         });

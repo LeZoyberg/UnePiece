@@ -35,7 +35,7 @@ export class PartieService {
   }
 
   savePartieInStorage(partie: Partie) {
-    localStorage.setItem('partie', JSON.stringify(partie));
+    //localStorage.setItem('partie', JSON.stringify(partie));
   }
 
   setPartie(partie: Partie) {

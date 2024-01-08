@@ -6,6 +6,7 @@ body {
     vertical-align: middle;
     width:80%;*/
   background-color: rgba(68, 50, 46, 0.9);
+  max-width:800px;
 }
 
 td,
