@@ -25,7 +25,7 @@ export class TrajetComponent {
     private actionService: ActionService,
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie() as Partie;
+    this.partie = this.partieService.getPartie(this.joueur) as Partie;
     //this.tpsTrajetRestant = this.partieService.getPartie()?.ile?.attente as number;
 
     /*

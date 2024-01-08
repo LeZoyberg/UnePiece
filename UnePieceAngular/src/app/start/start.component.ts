@@ -17,7 +17,7 @@ export class StartComponent {
   joueur: Joueur = {};
   partie: Partie = new Partie();
   membre: Membre = new Membre();
-  
+
   constructor(
     private pirateService: PirateService,
     private partieService: PartieService,
@@ -28,7 +28,7 @@ export class StartComponent {
   ) {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie() as Partie;
+    this.partie = this.partieService.getPartie(this.joueur) as Partie;
     console.log('this.partie CONTROLLER :>> ', this.partie);
   }
 
@@ -76,7 +76,6 @@ export class StartComponent {
         this.partieService.savePartieInStorage(this.partie);
         this.router.navigate(['/ile']);
       });
-      
     });
   }
 }

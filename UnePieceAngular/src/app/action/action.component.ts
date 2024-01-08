@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Action, Partie } from '../model';
-import { IleService } from '../ile.service';
-import { PartieService } from '../partie.service';
 import { Router } from '@angular/router';
 import { ActionService } from '../action.service';
+import { AuthService } from '../auth.service';
+import { IleService } from '../ile.service';
+import { Action, Joueur, Partie } from '../model';
+import { PartieService } from '../partie.service';
 
 @Component({
   selector: 'action',
@@ -19,14 +20,17 @@ export class ActionComponent {
   title?: string = 'Faites Face';
   title1?: string;
   title2?: string;
+  joueur!:Joueur;
 
   constructor(
     private ileService: IleService,
     private partieService: PartieService,
     private actionService: ActionService,
+    private authService: AuthService,
     private router: Router
   ) {
-    this.partie = this.partieService.getPartie() as Partie;
+    this.joueur = this.authService.getUtilisateur() as Joueur;
+    this.partie = this.partieService.getPartie(this.joueur) as Partie;
     this.action = this.partie.actions.shift() as Action;
     this.checkForText(this.action.event?.odyssee as string);
 

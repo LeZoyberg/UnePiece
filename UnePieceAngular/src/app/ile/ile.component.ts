@@ -51,7 +51,7 @@ export class IleComponent {
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie() as Partie;
+    this.partie = this.partieService.getPartie(this.joueur) as Partie;
     this.ile = this.partie.ile as Ile;
     this.showIle();
     this.listBateaux();

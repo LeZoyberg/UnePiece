@@ -39,10 +39,15 @@
               <i>Capitaine : </i
               ><b>{{ partie.membres[0].pirate?.nom }}</b> &nbsp;
             </span>
-            <span *ngIf="partie.ile?.mer"
-              ><i>Ile : </i
+            <span *ngIf="partie.ile?.mer && partie.actions.length == 0"
+              ><i>Accosté à : </i
               ><b>{{ partie.ile?.nom }} ({{ partie.ile?.mer }})</b></span
             >
+            <span *ngIf="partie.ile?.mer && partie.actions.length > 0"
+              ><i>En mer, vers : </i
+              ><b>{{ partie.ile?.nom }} ({{ partie.ile?.mer }})</b></span
+            >
+
           </div>
           <div id="accueil-stats">
             <stat-equipage

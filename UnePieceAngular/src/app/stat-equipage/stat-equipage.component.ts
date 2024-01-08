@@ -18,8 +18,8 @@ partie!: Partie;
   constructor (private partieService: PartieService, private authService: AuthService){
     
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie() as Partie;
-    this.partieService.getForceTotale();  
+    this.partie = this.partieService.getPartie(this.joueur) as Partie;
+    if(this.partie && this.partie.membres.length > 0) this.partieService.getForceTotale();  
   }
 
   list(): Membre[] {
