@@ -1,14 +1,8 @@
-TODO : virer ancienne partie du localStorage quand on fait newGame
-
 TODO pas changer bateaux chaque jour : pas RP
 
 TODO capacite bateau devient inférieure à nombre de membres dans l'équipage -> ?
 
-TODO retirer partie local storage
-
 TODO ajouter fonction redirect globale
-
-TODO cartes evenements
 
 TODO créer autres types d'évènements payants que restaurant (restaurant = uniquement pv membre / navire ouvrier répare bateau)
 
