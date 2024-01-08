@@ -6,6 +6,8 @@ TODO ajouter fonction redirect globale
 
 TODO créer autres types d'évènements payants que restaurant (restaurant = uniquement pv membre / navire ouvrier répare bateau)
 
+TODO check pourquoi membre (ou juste capitaine?) récupère tous PV quand deco/reco
+
 # UnePieceRepo
 TODO : faire une fonction redirect qui redirige vers la bonne url en fonction de l'état de la partie 
 - ex si pas de membres, redirige vers start component
