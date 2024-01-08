@@ -69,29 +69,36 @@ export class ActionComponent {
 
   bouton1() {
     this.action.choix = true;
+    this.action.termine = true;
+    this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      console.log('button1, saving in db :>> ', this.action);
       this.resolveAction();
+      console.log('button1, saving in db :>> ', this.action);
     });
   }
 
   bouton2() {
+    this.action.termine = true;
     this.action.choix = false;
+    this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      console.log('button2, saving in db :>> ', this.action);
       this.resolveAction();
+      console.log('button2, saving in db :>> ', this.action);
     });
   }
 
   boutonTempete() {
+    this.action.termine = true;
     this.action.choix = undefined;
+    this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      console.log('button3, saving in db :>> ', this.action);
       this.resolveAction();
+      console.log('button3, saving in db :>> ', this.action);
     });
   }
 
   resolveAction() {
+    this.action.termine = true;
     // pas de choix possible (i.e. tempête)
     if (this.action.choix == undefined) {
       this.partie.membres.forEach((membre, index) => {
@@ -100,14 +107,14 @@ export class ActionComponent {
       });
       this.partie.navire!.robustesse! -= this.action.degatNavire!;
       this.choixPossible = true;
-	  alert(
-		'Dégâts membres : ' +
-		  this.action.degatMembre +
-		  ' | Tresor ' +
-		  this.action.tresor +
-		  ' | Dégâts navire ' +
-		  this.action.degatNavire
-	  );
+      alert(
+        'Dégâts membres : ' +
+          this.action.degatMembre +
+          ' | Tresor ' +
+          this.action.tresor +
+          ' | Dégâts navire ' +
+          this.action.degatNavire
+      );
       this.suite();
     }
 
@@ -189,11 +196,9 @@ export class ActionComponent {
       }
       this.suite();
     }
-   
   }
 
   suite() {
-    
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
       this.partie.duree!++;

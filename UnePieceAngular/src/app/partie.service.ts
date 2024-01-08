@@ -35,7 +35,7 @@ export class PartieService {
   }
 
   savePartieInStorage(partie: Partie) {
-    //localStorage.setItem('partie', JSON.stringify(partie));
+   // localStorage.setItem('partie', JSON.stringify(partie));
   }
 
   setPartie(partie: Partie) {
@@ -83,6 +83,7 @@ export class PartieService {
   }
 
   findByIdJoueurWithMembres(id?: number): Observable<Partie> {
+    console.log("findByIdJoueurWithMembres");
     return this.http.get<Partie>(
       environment.apiUrl + '/partie/joueur/' + id + '/membres'
     );
@@ -121,13 +122,18 @@ export class PartieService {
         this.membreService.delete(membre.id).subscribe();
         this.partie.membres.splice(index,1);
       }
-      this.update(this.partie).subscribe(() => {
-        this.savePartieInStorage(this.partie);
-      });  
       alert(membre.pirate?.nom + " est mort !");
     } else if(membre.pv! > membre?.pirate?.pv!) {
       membre.pv = membre.pirate?.pv;
-    }
+    } 
+    // else {
+    //   this.membreService.update(membre).subscribe(() => {
+    //     console.log('updating membre in db :>> ', membre);
+    //   });
+    // }
+    this.update(this.partie).subscribe(() => {
+      this.savePartieInStorage(this.partie);
+    });  
   }
 
 }

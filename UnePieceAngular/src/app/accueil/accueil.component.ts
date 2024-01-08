@@ -29,7 +29,7 @@ export class AccueilComponent {
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie();
-    if (!this.partie) {
+    if (this.partie == undefined) {
       // this.partieService
       //   .findByIdJoueurWithMembresAndActions(this.joueur.id)
       //   .subscribe((resp) => {
@@ -40,11 +40,12 @@ export class AccueilComponent {
       //       this.partieService.getForceTotale();
       //     }
       //   });
-
+      console.log('this.joueur.id :>> ', this.joueur.id);
       this.partieService
         .findByIdJoueurWithMembres(this.joueur.id)
         .subscribe((partieResp) => {
           this.partie = partieResp;
+          console.log('this.partie :>> ', this.partie);
           if (this.partie) {
             this.actionService
               .findAllWithPartie(this.partie.id!)
