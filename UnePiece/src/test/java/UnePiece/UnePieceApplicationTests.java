@@ -1,11 +1,8 @@
 package UnePiece;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import UnePiece.dao.IDAOMembre;
 import UnePiece.dao.IDAONavire;
 import UnePiece.dao.IDAOPartie;
 import UnePiece.dao.IDAOPirate;
-import UnePiece.model.Action;
 import UnePiece.model.Bateau;
 import UnePiece.model.Evenement;
 import UnePiece.model.Ile;
@@ -29,7 +25,6 @@ import UnePiece.model.Membre;
 import UnePiece.model.Mer;
 import UnePiece.model.Navire;
 import UnePiece.model.Odyssee;
-import UnePiece.model.Partie;
 import UnePiece.model.Pirate;
 
 @SpringBootTest
@@ -249,11 +244,6 @@ class UnePieceApplicationTests {
 		daoBateau.save(bateau20);
 
 		// navires
-		Navire navire1 = new Navire(bateau3.getRobustesse(), bateau3);
-		daoNavire.save(navire1);
-
-		Navire navire2 = new Navire(bateau2.getRobustesse(), bateau1);
-		daoNavire.save(navire2);
 
 		// iles
 		Ile ile1 = new Ile("Fuschia Village", true, true, true, 5, 1, Mer.EastBlue);

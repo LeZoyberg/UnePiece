@@ -21,6 +21,7 @@ import UnePiece.dao.IDAOPartie;
 import UnePiece.dto.ActionResponse;
 import UnePiece.dto.PartieResponse;
 import UnePiece.model.Action;
+import UnePiece.model.Evenement;
 import UnePiece.model.Partie;
 
 @RestController
@@ -32,6 +33,8 @@ public class ActionRestController {
 	private IDAOAction daoAction;
 	@Autowired
 	private IDAOPartie daoPartie;
+	@Autowired
+	private EventRestController eventRC;
 
 	@GetMapping("/{id}")
 	public ActionResponse findById(@PathVariable Integer id) {
@@ -42,6 +45,55 @@ public class ActionRestController {
 		ActionResponse actionDTO = new ActionResponse();
 		BeanUtils.copyProperties(opt.get(), actionDTO);
 		return actionDTO;
+	}
+
+	/*
+	 * if(events.length != 0) {
+	 * for(let e of events) {
+	 * let action : Action = new Action();
+	 * action.event = e;
+	 * action.partie = this.partie;
+	 * action.termine = false;
+	 * action.degatMembre = Math.floor((e.degatMembre as number) *
+	 * (destination.dangerosite as number) / 2);
+	 * action.degatNavire = Math.floor((e.degatNavire as number) *
+	 * (destination.dangerosite as number) / 2);
+	 * action.tresor = Math.floor((e.tresor as number) * (destination.dangerosite as
+	 * number));
+	 * this.actionService.create(action).subscribe(actionResp => {
+	 * action.id = actionResp.id;
+	 * actions.push(action);
+	 * })
+	 * }
+	 */
+
+	@GetMapping("/random/{N}/{partieId}")
+	public List<ActionResponse> findNRandomActions(@PathVariable int N, @PathVariable Integer partieId) {
+
+		Optional<Partie> opt = daoPartie.findById(partieId);
+		if (opt.isPresent()) {
+			Partie partie = opt.get();
+			List<Evenement> events = this.eventRC.findNRandomEvents(N);
+			List<ActionResponse> actions = new ArrayList<ActionResponse>();
+			for (Evenement e : events) {
+				Action action = new Action();
+				action.setPartie(partie);
+				action.setEvent(e);
+				action.setTermine(false);
+				int degatMembre = (int) Math.ceil((action.getPartie().getIle().getDangerosite() * e.getDegatMembre()) * 0.75);
+				action.setDegatMembre(degatMembre);
+				int degatNavire = (int) Math.ceil((action.getPartie().getIle().getDangerosite() * e.getDegatNavire()) * 0.75);
+				action.setDegatNavire(degatNavire);
+				int tresor = (action.getPartie().getIle().getDangerosite() * e.getTresor());
+				action.setTresor(tresor);
+				this.insert(action);
+				ActionResponse actionDTO = new ActionResponse();
+				BeanUtils.copyProperties(action, actionDTO);
+				actions.add(actionDTO);
+			}
+			return actions;
+		}
+		return null;
 	}
 
 	@GetMapping
@@ -65,7 +117,7 @@ public class ActionRestController {
 			ActionResponse actionDTO = new ActionResponse();
 			BeanUtils.copyProperties(a, actionDTO);
 			Optional<Partie> opt = daoPartie.findById(partieId);
-			if(opt.isPresent()) {
+			if (opt.isPresent()) {
 				Partie partie = opt.get();
 				PartieResponse partieDTO = new PartieResponse();
 				BeanUtils.copyProperties(partie, partieDTO);

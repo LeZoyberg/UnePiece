@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActionService } from '../action.service';
 import { AuthService } from '../auth.service';
+import { BateauService } from '../bateau.service';
+import { EventService } from '../event.service';
+import { IleService } from '../ile.service';
+import { MembreService } from '../membre.service';
 import {
   Action,
   Bateau,
+  Evenement,
   Ile,
   Joueur,
   Membre,
@@ -10,16 +17,9 @@ import {
   Partie,
   Pirate,
 } from '../model';
-import { PartieService } from '../partie.service';
-import { StartComponent } from '../start/start.component';
-import { IleService } from '../ile.service';
-import { MembreService } from '../membre.service';
-import { PirateService } from '../pirate.service';
 import { NavireService } from '../navire.service';
-import { BateauService } from '../bateau.service';
-import { ActionService } from '../action.service';
-import { EventService } from '../event.service';
-import { Router } from '@angular/router';
+import { PartieService } from '../partie.service';
+import { PirateService } from '../pirate.service';
 
 @Component({
   selector: 'ile',
@@ -292,8 +292,38 @@ export class IleComponent {
     //TODO : créer la liste d'actions à utiliser pendant le trajet, et le save dans le Local Storage
     this.partie.ile = destination;
     this.partie.joursRestants = destination.attente;
-    //petit test pour éviter le crash quand on arrive sur trajet si pas d'actions
-    this.setAction();
+    this.setActions(destination);
+  }
+
+  setActions(destination: Ile) {
+    // const N = destination.attente as number;
+    // this.eventService.findNRandomEvents(N).subscribe(events => {
+    //   let actions : Action[] = [];
+    //   if(events.length != 0) {
+    //     for(let e of events) {
+    //       let action : Action = new Action();
+    //       action.event = e;
+    //       action.partie = this.partie;
+    //       action.termine = false;
+    //       action.degatMembre = Math.floor((e.degatMembre as number) * (destination.dangerosite as number) / 2);
+    //       action.degatNavire = Math.floor((e.degatNavire as number) * (destination.dangerosite as number) / 2);
+    //       action.tresor = Math.floor((e.tresor as number) * (destination.dangerosite as number));
+    //       this.actionService.create(action).subscribe(actionResp => {
+    //         action.id = actionResp.id;
+    //         actions.push(action);
+    //       })
+    //     }
+    //   }
+    // });
+
+    const N = destination.attente as number;
+    const partieId = this.partie.id as number;
+    this.actionService.findNRandomActions(N, partieId).subscribe(actionsResp => {
+      this.partie.actions = actionsResp;
+      this.partieService.update(this.partie).subscribe(() => {
+        this.router.navigate(['/trajet']);
+      })
+    });
   }
 
   setAction() {
@@ -302,14 +332,17 @@ export class IleComponent {
       var idEvent: number = Math.floor(Math.random() * 14) + 1;
       this.eventService.findById(idEvent).subscribe((resp) => {
         this.actionTrajet.event = resp;
+
         this.actionTrajet.degatMembre =
           resp.degatMembre! * (this.partie.ile?.dangerosite as number);
         this.actionTrajet.degatNavire =
           resp.degatNavire! * (this.partie.ile?.dangerosite as number);
         this.actionTrajet.tresor =
           resp.tresor! * (this.partie.ile?.dangerosite as number);
+
         this.actionTrajet.partie = this.partie;
         this.actionTrajet.termine = false;
+
         this.actionService.create(this.actionTrajet).subscribe((resp2) => {
           this.partie.actions.push(resp2);
           console.log(i);

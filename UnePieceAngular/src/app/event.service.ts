@@ -11,6 +11,10 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
+  findNRandomEvents(N : number): Observable<Evenement[]> {
+    return this.http.get<Evenement[]>(environment.apiUrl + "/event/random/"+N);
+  }
+
   findAll(): Observable<Evenement[]> {
     return this.http.get<Evenement[]>(environment.apiUrl + "/event");
   }

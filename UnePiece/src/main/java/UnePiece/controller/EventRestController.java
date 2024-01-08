@@ -1,7 +1,9 @@
 package UnePiece.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -37,6 +39,21 @@ public class EventRestController {
 		return opt.get();
 	}
 	
+	@GetMapping("/random/{N}")
+	public List<Evenement> findNRandomEvents(@PathVariable int N) {
+		List<Evenement> events = daoEvent.findAll();
+		if(!events.isEmpty()) {
+			Random r = new Random();
+			List<Evenement> shuffledEvents = new ArrayList<Evenement>();
+			for(int i = 0; i < N ; i++) {
+				Evenement randomEvent = events.get(r.nextInt(events.size()));
+				shuffledEvents.add(randomEvent); 
+			}
+			return shuffledEvents;
+		}
+		return null;
+	}
+
 	@GetMapping
 	public List<Evenement> findAll() 
 	{

@@ -11,6 +11,9 @@ export class ActionService {
 
   constructor(private http: HttpClient) { }
 
+  findNRandomActions(N : number, partieId : number) : Observable<Action[]> {
+    return this.http.get<Action[]>(environment.apiUrl + "/action/random/"+N+"/"+partieId);
+  }
   
   findAllWithPartie(id : number): Observable<Action[]> {
     return this.http.get<Action[]>(environment.apiUrl + "/action/partie/"+id);
