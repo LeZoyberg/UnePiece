@@ -18,7 +18,7 @@
             <td><i>PV : </i><b>{{partie.membres[0].pv}} / {{partie.membres[0].pirate?.pv}}</b></td>
             <td><i>Équipage : </i><b>{{partie.membres.length}} / {{partie.navire?.bateau?.capacite}}</b></td>
             <td><i>Force totale : </i><b>{{partie.forceTotale}}</b></td>
-            <td><i>Robustesse bateau : </i><b>{{partie.navire?.robustesse}}</b></td>
+            <td><i>Robustesse bateau : </i><b>{{partie.navire?.robustesse}} / {{partie.navire?.bateau?.robustesse}}</b></td>
             <td><i>Trésor : </i><b>{{partie.tresor}}</b></td>
         </tr>
     </tbody>
@@ -29,7 +29,7 @@
         <tr>
             <th></th>
             <th>Nom</th>
-            <th>Vie</th>
+            <th>PV</th>
             <th>Force</th>
         </tr>
     </thead>
