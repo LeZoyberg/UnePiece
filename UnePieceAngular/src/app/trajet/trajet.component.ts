@@ -25,58 +25,31 @@ export class TrajetComponent {
     private actionService: ActionService,
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie(this.joueur) as Partie;
-    //this.tpsTrajetRestant = this.partieService.getPartie()?.ile?.attente as number;
-
-    /*
-      this.joueur = this.authService.getUtilisateur() as Joueur;
-      if(this.joueur != undefined){
-        this.partieService.findByIdJoueur(this.joueur.id).subscribe(resp => {
-          console.log("ile id : " + resp.ile?.id)
-          this.ile = resp.ile?.id;
-        });
-      }
-      */
+    this.partie = this.partieService.getPartie(this.joueur);
+    if(this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
+        this.partie = resp;
+        this.load();
+      });
+    }
   }
-
+  load() {
+    console.log('this.partie trajet :>> ', this.partie);
+  }
   suite() {
+
     if (this.partie.joursRestants! > 1) {
       this.partie.joursRestants!--;
       this.partie.duree!++;
-      this.partieService.update(this.partie).subscribe(() => {
-        this.partieService.savePartieInStorage(this.partie);
-      });
+      this.partieService.update(this.partie).subscribe();
     } else {
       this.partie.joursRestants = this.partie.ile?.attente;
       this.partie.duree!++;
       this.partieService.update(this.partie).subscribe(() => {
-        this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/ile']);
+        this.partieService.redirect(this.partie);
       });
     }
   }
-
-  /*
-  Suite(){
-    if(this.tpsTrajetRestant > 1){
-      this.tpsTrajetRestant--;            
-      (this.partie.ile!.attente as number) = this.tpsTrajetRestant;
-
-      this.partieService.update(this.partie).subscribe(() => {
-        this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/trajet/']);
-      });      
-    }
-    else{
-      //console.log("--- Suite else before findById : " + this.partie.ile!.attente);
-      this.ileService.findById(this.partie.ile!.id).subscribe(resp => {
-        //console.log("--- Suite else in findById 1 : " + resp.attente);
-        this.partie.ile!.attente = resp.attente;
-        //console.log("--- Suite else after findById : " + this.partie.ile!.attente);
-        this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/ile/']);
-      });      
-    }
-  }
-  */
 }

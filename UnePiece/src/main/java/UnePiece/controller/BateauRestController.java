@@ -45,18 +45,19 @@ public class BateauRestController {
 	public List<Bateau> getRandomBateaux(@PathVariable Integer idIle) {
 		List<Bateau> bateaux = this.findAll();
 
-		// // retire les bateaux pas de début quand on est sur la première île (idIle = 1)
-		// int totalBateaux = bateaux.size();
-		// for (int i = 0; i < totalBateaux; i++) {
-		// 	if (i < bateaux.size()) {
-		// 		Bateau b = bateaux.get(i);
-		// 		if (idIle == 1 && !b.isDebut()) {
-		// 			bateaux.remove(i);
-		// 			i--;
-		// 		}
-		// 	}
-		// }
-
+		// retire les bateaux pas de début quand on est sur la première île (idIle = 1)
+		if (idIle == 1) {
+			int totalBateaux = bateaux.size();
+			for (int i = 0; i < totalBateaux; i++) {
+				if (i < bateaux.size()) {
+					Bateau b = bateaux.get(i);
+					if (!b.isDebut()) {
+						bateaux.remove(i);
+						i--;
+					}
+				}
+			}
+		}
 		// trie selon la mer et le tier du bateau
 		Optional<Ile> opt = daoIle.findById(idIle);
 		if (opt.isEmpty()) {

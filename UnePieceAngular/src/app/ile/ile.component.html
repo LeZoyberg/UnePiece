@@ -18,7 +18,7 @@
           <span>Bâtiments disponibles</span>
         </div>
         <div id="ile-batiments">
-          <div *ngIf="ile.auberge && partie.joursRestants! > 0">
+          <div *ngIf="partie.ile?.auberge && partie.joursRestants! > 0">
             <table>
               <tr>
                 <img src="assets/buildings/auberge.png" alt="imageAuberge" />
@@ -44,7 +44,7 @@
             </table>
           </div>
 
-          <div *ngIf="ile.taverne && partie.joursRestants! > 0">
+          <div *ngIf="partie.ile?.taverne && partie.joursRestants! > 0">
             <table>
               <tr>
                 <img src="assets/buildings/taverne.png" alt="imageTaverne" />
@@ -73,7 +73,7 @@
             </table>
           </div>
 
-          <div *ngIf="ile.chantier && partie.joursRestants! > 0" id="chantier">
+          <div *ngIf="partie.ile?.chantier && partie.joursRestants! > 0" id="chantier">
             <table>
               <tr>
                 <img src="assets/buildings/chantier.png" alt="imageChantier" />

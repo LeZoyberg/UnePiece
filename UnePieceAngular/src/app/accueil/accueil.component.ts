@@ -27,42 +27,29 @@ export class AccueilComponent {
     private actionService: ActionService,
     private navireService: NavireService
   ) {
+
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie(this.joueur);
-    if (this.partie == undefined) {
-      // this.partieService
-      //   .findByIdJoueurWithMembresAndActions(this.joueur.id)
-      //   .subscribe((resp) => {
-      //     this.partie = resp;
-      //     console.log('this.partie :>>', this.partie);
-      //     if (this.partie) {
-      //       this.partieService.setPartie(this.partie);
-      //       this.partieService.getForceTotale();
-      //     }
-      //   });
-      this.partieService
-        .findByIdJoueurWithMembres(this.joueur.id)
-        .subscribe((partieResp) => {
-          this.partie = partieResp;
-          if (this.partie) {
-            this.actionService
-              .findAllWithPartie(this.partie.id!)
-              .subscribe((actionsResp) => {
-                this.partie!.actions = actionsResp;
-                this.partieService.setPartie(this.partie!);
-                this.partieService.getForceTotale();
-                console.log('this.partie accueil component :>>', this.partie);
-              });
-          }
-        });
+    if(this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
+        this.partie = resp;
+        this.load();
+      })
     }
+  }
+
+  load() {
+    console.log('this.partie accueil :>> ', this.partie);
     this.partieService.findLeaderboard().subscribe((resp) => {
       this.leaderboard = resp;
       this.leaderboard = this.leaderboard.slice(0, 10);
     });
-    this.partieService.findAllByIdJoueur(this.joueur.id!).subscribe((resp) => {
+    this.partieService.findAllByIdJoueur(this.joueur?.id!).subscribe((resp) => {
       this.historique = resp;
     });
+    console.log('this.partie accueil component :>> ', this.partie);
   }
 
   continueGame() {
@@ -71,13 +58,15 @@ export class AccueilComponent {
     
         console.log('reprise de cette partie :>>', this.partie);
        
-        if (this.partie!.actions.length > 0) {
+        if (this.partie) {
+        if(this.partie.actions.length > 0) {
           console.log('actions trouvées, redirect vers trajet');
-          this.router.navigate(['/trajet']);
+          this.partieService.redirect(this.partie);
         } else {
           console.log("pas d'actions trouvées, redirect vers ile");
-          this.router.navigate(['/ile']);
+          this.partieService.redirect(this.partie);
         }
+      }
         
     // //console.log(this.joueur?.id);
     // this.partieService
@@ -111,6 +100,7 @@ export class AccueilComponent {
   }
 
   newGame() {
+    console.log("starting new game");
     localStorage.removeItem('partie');
     this.partie = new Partie();
     this.partieService.setPartie(this.partie);
@@ -134,10 +124,8 @@ export class AccueilComponent {
             this.partieService.create(this.partie!).subscribe((resp) => {
               if (this.partie) {
                 this.partie.id = resp.id;
-                this.partieService.savePartieInStorage(this.partie);
+                this.router.navigate(['/start']);
               }
-
-              this.router.navigate(['/start']);
             });
           });
         });

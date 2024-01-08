@@ -16,12 +16,21 @@ visible: boolean = false;
 partie!: Partie;
 
   constructor (private partieService: PartieService, private authService: AuthService){
-    
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie(this.joueur) as Partie;
-    if(this.partie && this.partie.membres.length > 0) this.partieService.getForceTotale();  
+    this.partie = this.partieService.getPartie(this.joueur);
+    if(this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
+        this.partie = resp;
+        this.load();
+      })
+    }
+  
   }
-
+  load() {
+    console.log('this.partie stat-equipage :>> ', this.partie);
+  }
   list(): Membre[] {
     return this.partie.membres;
   }

@@ -9,9 +9,12 @@ import { Joueur } from '../model';
 })
 export class NavBarComponent {
 
-  player!: Joueur;
+
   constructor(private authService: AuthService) { 
-    this.player = authService.getUtilisateur() as Joueur;
+  }
+
+  showUser() : string {
+    return `${this.authService.getUtilisateur()?.login}`;
   }
 
   logout() {    

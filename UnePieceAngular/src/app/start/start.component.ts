@@ -26,9 +26,21 @@ export class StartComponent {
     private ileService: IleService,
     private router: Router
   ) {
-    this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie(this.joueur) as Partie;
+    this.partie = this.partieService.getPartie(this.joueur);
+    if(this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
+        this.partie = resp;
+        this.load();
+      })
+    }
+  }
+
+  load() {
+    console.log('this.partie start :>> ', this.partie);
+    this.listCapitaines();
   }
 
   listCapitaines() {
@@ -73,7 +85,7 @@ export class StartComponent {
         this.partie.membres?.push(resp);
         this.partieService.getForceTotale();
         this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/ile']);
+        this.partieService.redirect(this.partie);
       });
     });
   }

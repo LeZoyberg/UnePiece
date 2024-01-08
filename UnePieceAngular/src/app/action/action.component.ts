@@ -20,7 +20,7 @@ export class ActionComponent {
   title?: string = 'Faites Face';
   title1?: string;
   title2?: string;
-  joueur!:Joueur;
+  joueur!: Joueur;
 
   constructor(
     private ileService: IleService,
@@ -30,13 +30,27 @@ export class ActionComponent {
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie(this.joueur) as Partie;
+    this.partie = this.partieService.getPartie(this.joueur);
+    if (this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe((resp) => {
+        this.partie = resp;
+        this.load();
+      });
+    }
+  }
+  load() {
+    console.log('this.partie action :>> ', this.partie);
+    this.drawAction();
+    // this.partieService.update(this.partie).subscribe(() => {
+    //   this.partieService.savePartieInStorage(this.partie);
+    // });
+  }
+
+  drawAction() {
     this.action = this.partie.actions.shift() as Action;
     this.checkForText(this.action.event?.odyssee as string);
-
-    this.partieService.update(this.partie).subscribe(() => {
-      this.partieService.savePartieInStorage(this.partie);
-    });
   }
 
   checkForText(nom: string) {
@@ -76,8 +90,8 @@ export class ActionComponent {
     this.action.termine = true;
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      this.resolveAction();
       console.log('button1, saving in db :>> ', this.action);
+      this.resolveAction();
     });
   }
 
@@ -86,8 +100,8 @@ export class ActionComponent {
     this.action.choix = false;
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      this.resolveAction();
       console.log('button2, saving in db :>> ', this.action);
+      this.resolveAction();
     });
   }
 
@@ -96,14 +110,17 @@ export class ActionComponent {
     this.action.choix = undefined;
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
-      this.resolveAction();
       console.log('button3, saving in db :>> ', this.action);
+      this.resolveAction();
     });
   }
 
   resolveAction() {
-    this.action.termine = true;
+    console.log('this.action before resolve :>> ', this.action);
+    // this.action.termine = true;
+
     // pas de choix possible (i.e. tempête)
+    console.log('this.partie resolveAction :>> ', this.partie);
     if (this.action.choix == undefined) {
       this.partie.membres.forEach((membre, index) => {
         membre.pv! -= this.action.degatMembre!;
@@ -119,6 +136,8 @@ export class ActionComponent {
           ' | Dégâts navire ' +
           this.action.degatNavire
       );
+      console.log('deleting this.action after resolve :>> ', this.action);
+      this.actionService.delete(this.action.id).subscribe();
       this.suite();
     }
 
@@ -147,6 +166,8 @@ export class ActionComponent {
             ' | Dégâts navire ' +
             this.action.degatNavire
         );
+        console.log('deleting this.action after resolve :>> ', this.action);
+        this.actionService.delete(this.action.id).subscribe();
         this.suite();
       }
     }
@@ -198,31 +219,28 @@ export class ActionComponent {
           }
         }
       }
+      console.log('deleting this.action after resolve :>> ', this.action);
+      this.actionService.delete(this.action.id).subscribe();
       this.suite();
     }
   }
 
   suite() {
-    if (this.partie.joursRestants! > 1) {
+    if (this.partie) {
+      this.partieService.checkEndOfGame(this.partie);
+    }
+
+    if (this.partie.actions.length > 0) {
       this.partie.joursRestants!--;
       this.partie.duree!++;
-      if (this.partie.actions.length != 0) {
-        this.action = this.partie.actions.shift() as Action;
-        this.checkForText(this.action.event?.odyssee as string);
-        this.actionService.delete(this.action.id).subscribe(() => {
-          this.partieService.update(this.partie).subscribe(() => {
-            this.partieService.savePartieInStorage(this.partie);
-          });
-        });
-      }
+      this.drawAction();
+      this.partieService.update(this.partie).subscribe();
     } else {
       this.partie.joursRestants = this.partie.ile?.attente;
       this.partie.duree!++;
       this.partieService.update(this.partie).subscribe(() => {
-        this.partieService.savePartieInStorage(this.partie);
-        this.router.navigate(['/ile']);
+        this.partieService.redirect(this.partie);
       });
     }
-    this.partieService.checkEndOfGame();
   }
 }

@@ -20,10 +20,10 @@ public class PartieResponse {
 	private List<MembreResponse> membres = new ArrayList<MembreResponse>();
 	private Navire navire;
 	private Ile ile;
-	private int dangerosite;
+	// private int dangerosite;
 	private int joursRestants;
 	private Joueur joueur;
-	private Set<ActionResponse> actions = new HashSet<ActionResponse>();
+	private List<ActionResponse> actions = new ArrayList<ActionResponse>();
 	
 	public Joueur getJoueur() {
 		return joueur;
@@ -105,21 +105,21 @@ public class PartieResponse {
 		this.ile = ile;
 	}
 
-	public Set<ActionResponse> getActions() {
+	public List<ActionResponse> getActions() {
 		return actions;
 	}
 
-	public void setActions(Set<ActionResponse> actions) {
+	public void setActions(List<ActionResponse> actions) {
 		this.actions = actions;
 	}
 
-	public int getDangerosite() {
-		return dangerosite;
-	}
+	// public int getDangerosite() {
+	// 	return dangerosite;
+	// }
 
-	public void setDangerosite(int dangerosite) {
-		this.dangerosite = dangerosite;
-	}
+	// public void setDangerosite(int dangerosite) {
+	// 	this.dangerosite = dangerosite;
+	// }
 	
 	
 

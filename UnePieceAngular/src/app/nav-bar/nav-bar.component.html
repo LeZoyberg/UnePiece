@@ -11,7 +11,7 @@
     <li class="nav-item" *ngIf="isLogged()">
       <a class="nav-link" (click)="logout()" routerLinkActive="active">Logout</a>
     </li>
-  <li id="player" class="nav-item"> <a class="nav-link" style="color:black; text-align: right;"> {{player.login}}</a>
+  <li id="player" class="nav-item" *ngIf="showUser() != 'undefined'"> <a class="nav-link" style="color:black; text-align: right;"> Hi, {{showUser()}}</a>
   </li>
     <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="['/start']" routerLinkActive="active">Start</a>

@@ -51,13 +51,25 @@ export class IleComponent {
     private router: Router
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie(this.joueur) as Partie;
-    this.ile = this.partie.ile as Ile;
+    this.partie = this.partieService.getPartie(this.joueur);
+    if(this.partie) {
+      this.load();
+    } else {
+      this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
+        this.partie = resp;
+        this.load();
+      })
+    }
+    
+  }
+
+  load() {
+    console.log('this.partie ile :>> ', this.partie);
     this.showIle();
     this.listBateaux();
     this.listRecruits();
     this.listDestinations();
-    this.partieService.checkEndOfGame();
+    this.partieService.checkEndOfGame(this.partie);
   }
 
   getColorByTier(tier: number | undefined): string {
@@ -109,7 +121,8 @@ export class IleComponent {
               this.destinations = resp;
             });
         } else {
-          this.router.navigate(['/ending']);
+          this.partie.termine = true;
+          this.partieService.redirect(this.partie);
         }
       } else {
         this.ileService
@@ -188,52 +201,19 @@ export class IleComponent {
     }
   }
 
-  getUniqueBateaux(bateaux: Bateau[]): Bateau[] {
-    const uniqueBateaux: Bateau[] = [];
-    const seenIDs: Set<number> = new Set();
-
-    for (const bateau of bateaux) {
-      if (!seenIDs.has(bateau.id!)) {
-        uniqueBateaux.push(bateau);
-        seenIDs.add(bateau.id!);
-      }
-    }
-    return uniqueBateaux;
-  }
-
   listBateaux() {
     this.bateauService
       .getRandomBateaux(this.partie.ile!.id!)
       .subscribe((resp) => {
         this.bateaux = resp;
-        console.log('this.bateaux resp :>> ', this.bateaux);
-        for (let b of this.bateaux) {
-          this.bateaux = this.bateaux.filter(
-            (b) => b.id !== this.partie.navire?.bateau!.id
-          );
-        }
-        const uniqueBateaux = this.getUniqueBateaux(this.bateaux);
-        this.bateaux = uniqueBateaux;
-        console.log('this.bateaux après tous les filtres :>> ', this.bateaux);
-      });
-
-    // this.bateauService.findAll().subscribe((resp) => {
-    //   this.bateaux = resp;
-    //   // si ile de départ, n'affiche que les bateaux de départ
-    //   if (this.ile.id == 1) {
-    //     this.bateaux.filter((bateau) => bateau.debut == true);
-    //   }
-    //   // TODO : retirer bateau déjà possédé
-    // });
-  }
+  });
+}
 
   buyShip(bateau: Bateau) {
     if (
-      this.partie.tresor &&
-      bateau.prix &&
-      this.partie.tresor >= bateau.prix
+      this.partie.tresor! >= bateau.prix!
     ) {
-      this.partie.tresor -= bateau.prix;
+      this.partie.tresor! -= bateau.prix!;
       let newNavire: Navire = new Navire();
       newNavire.bateau = bateau;
       newNavire.robustesse = bateau.robustesse;
@@ -245,6 +225,8 @@ export class IleComponent {
           this.partieService.savePartieInStorage(this.partie);
         });
       });
+    } else {
+      alert("Vous n'avez pas assez d'or");
     }
   }
   repair() {
@@ -321,38 +303,38 @@ export class IleComponent {
     this.actionService.findNRandomActions(N, partieId).subscribe(actionsResp => {
       this.partie.actions = actionsResp;
       this.partieService.update(this.partie).subscribe(() => {
-        this.router.navigate(['/trajet']);
+        this.partieService.redirect(this.partie);
       })
     });
   }
 
-  setAction() {
-    for (let i = 1; i <= this.partie.joursRestants!; i++) {
-      this.actionTrajet = new Action();
-      var idEvent: number = Math.floor(Math.random() * 14) + 1;
-      this.eventService.findById(idEvent).subscribe((resp) => {
-        this.actionTrajet.event = resp;
+  // setAction() {
+  //   for (let i = 1; i <= this.partie.joursRestants!; i++) {
+  //     this.actionTrajet = new Action();
+  //     var idEvent: number = Math.floor(Math.random() * 14) + 1;
+  //     this.eventService.findById(idEvent).subscribe((resp) => {
+  //       this.actionTrajet.event = resp;
 
-        this.actionTrajet.degatMembre =
-          resp.degatMembre! * (this.partie.ile?.dangerosite as number);
-        this.actionTrajet.degatNavire =
-          resp.degatNavire! * (this.partie.ile?.dangerosite as number);
-        this.actionTrajet.tresor =
-          resp.tresor! * (this.partie.ile?.dangerosite as number);
+  //       this.actionTrajet.degatMembre =
+  //         resp.degatMembre! * (this.partie.ile?.dangerosite as number);
+  //       this.actionTrajet.degatNavire =
+  //         resp.degatNavire! * (this.partie.ile?.dangerosite as number);
+  //       this.actionTrajet.tresor =
+  //         resp.tresor! * (this.partie.ile?.dangerosite as number);
 
-        this.actionTrajet.partie = this.partie;
-        this.actionTrajet.termine = false;
+  //       this.actionTrajet.partie = this.partie;
+  //       this.actionTrajet.termine = false;
 
-        this.actionService.create(this.actionTrajet).subscribe((resp2) => {
-          this.partie.actions.push(resp2);
-          console.log(i);
-          console.log(this.actionTrajet);
-          this.partieService.update(this.partie).subscribe(() => {
-            this.partieService.savePartieInStorage(this.partie);
-            this.router.navigate(['/trajet']);
-          });
-        });
-      });
-    }
-  }
+  //       this.actionService.create(this.actionTrajet).subscribe((resp2) => {
+  //         this.partie.actions.push(resp2);
+  //         console.log(i);
+  //         console.log(this.actionTrajet);
+  //         this.partieService.update(this.partie).subscribe(() => {
+  //           this.partieService.savePartieInStorage(this.partie);
+  //           this.router.navigate(['/trajet']);
+  //         });
+  //       });
+  //     });
+  //   }
+  // }
 }

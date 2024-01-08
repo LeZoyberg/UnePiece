@@ -15,5 +15,7 @@ TODO : faire une fonction redirect qui redirige vers la bonne url en fonction de
 - si pas d'actions non terminées, redirige vers ile
 ## cette fonction serait appelée quand on a besoin de rediriger (ex quand on fait partir en mer) + quand on arrive sur un component (pour empecher d'y accéder en tapant l'url par exemple)
 
-augmenter prix bateaux rang 2
+TODO augmenter prix bateaux rang 2
+
+TODO methode checkShip dans bateauService pour check si capacite > membres, retire membres sinon
 

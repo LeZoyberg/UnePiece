@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import UnePiece.dao.IDAOAction;
 import UnePiece.dao.IDAOPartie;
 import UnePiece.dto.ActionResponse;
 import UnePiece.dto.MembreResponse;
@@ -32,6 +33,8 @@ public class PartieRestController {
 
 	@Autowired
 	private IDAOPartie daoPartie;
+	@Autowired
+	private IDAOAction daoAction;
 
 	@GetMapping("/{id}")
 	public PartieResponse findById(@PathVariable Integer id) {
@@ -77,19 +80,20 @@ public class PartieRestController {
 
 	@GetMapping("/joueur/{idJoueur}/membres/actions")
 	public PartieResponse findByIdJoueurWithMembresAndActions(@PathVariable Integer idJoueur) {
-		Optional<Partie> opt = daoPartie.findByIdJoueurWithMembresAndActions(idJoueur);
+		
+		Optional<Partie> opt = daoPartie.findByIdJoueur(idJoueur);
 		if (opt.isEmpty()) {
 			return null;
 		}
 		Partie partie = opt.get();
 		PartieResponse partieDTO = new PartieResponse();
 		BeanUtils.copyProperties(partie, partieDTO);
-		for (Membre m : partie.getMembres()) {
-			MembreResponse membreDTO = new MembreResponse();
-			BeanUtils.copyProperties(m, membreDTO);
-			partieDTO.getMembres().add(membreDTO);
-		}
-		for (Action a : partie.getActions()) {
+
+		List<MembreResponse> membresDTO = this.findByIdJoueurWithMembres(idJoueur).getMembres();
+		partieDTO.setMembres(membresDTO);
+
+		List<Action> actions = daoAction.findAllByPartie(partie.getId());
+		for (Action a : actions) {
 			ActionResponse actionDTO = new ActionResponse();
 			BeanUtils.copyProperties(a, actionDTO);
 			partieDTO.getActions().add(actionDTO);
