@@ -18,23 +18,24 @@ export class PartieService {
       console.log('return this.partie');
       console.log('this.partie :>> ', this.partie);
       return this.partie;
-    } else {
-      const partieStorage = localStorage.getItem('partie');
-      if (partieStorage) {
-        console.log('return this.partie from localStorage');
-        this.partie = JSON.parse(partieStorage);
-        console.log('this.partie :>> ', this.partie);
+    } 
+    // else {
+    //   const partieStorage = localStorage.getItem('partie');
+    //   if (partieStorage) {
+    //     console.log('return this.partie from localStorage');
+    //     this.partie = JSON.parse(partieStorage);
+    //     console.log('this.partie :>> ', this.partie);
 
-        return this.partie;
-      }
-    }
+    //     return this.partie;
+    //   }
+    // }
     console.log('return undefined');
 
     return undefined;
   }
 
   savePartieInStorage(partie: Partie) {
-    localStorage.setItem('partie', JSON.stringify(partie));
+   // localStorage.setItem('partie', JSON.stringify(partie));
   }
 
   setPartie(partie: Partie) {
@@ -82,6 +83,7 @@ export class PartieService {
   }
 
   findByIdJoueurWithMembres(id?: number): Observable<Partie> {
+    console.log("findByIdJoueurWithMembres");
     return this.http.get<Partie>(
       environment.apiUrl + '/partie/joueur/' + id + '/membres'
     );
@@ -114,17 +116,24 @@ export class PartieService {
     }
   }
 
-  checkPvMembre(membre: Membre, index: number) {
+  checkHpOrDeathMembre(membre: Membre, index: number) {
     if(membre.pv! <= 0) {
       if(!membre.pirate!.capitaine){
         this.membreService.delete(membre.id).subscribe();
         this.partie.membres.splice(index,1);
       }
-      this.update(this.partie).subscribe(() => {
-        this.savePartieInStorage(this.partie);
-      });  
-      alert(membre.pirate?.nom + " est crevé");
-    }
+      alert(membre.pirate?.nom + " est mort !");
+    } else if(membre.pv! > membre?.pirate?.pv!) {
+      membre.pv = membre.pirate?.pv;
+    } 
+    // else {
+    //   this.membreService.update(membre).subscribe(() => {
+    //     console.log('updating membre in db :>> ', membre);
+    //   });
+    // }
+    this.update(this.partie).subscribe(() => {
+      this.savePartieInStorage(this.partie);
+    });  
   }
 
 }

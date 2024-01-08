@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import UnePiece.dao.IDAOIle;
 import UnePiece.dao.IDAOPirate;
+import UnePiece.model.Ile;
 import UnePiece.model.Pirate;
 
 @RestController
@@ -27,6 +29,8 @@ public class PirateRestController {
 
 	@Autowired
 	private IDAOPirate daoPirate;
+	@Autowired
+	private IDAOIle daoIle;
 
 	@GetMapping("/{id}")
 	public Pirate findById(@PathVariable Integer id) {
@@ -38,20 +42,34 @@ public class PirateRestController {
 	}
 
 	@GetMapping("/random")
-	public List<Pirate> getRandomRecruits() {
-		List<Pirate> pirates = this.findAll();
+	public List<Pirate> getRandomRecruits(/*@PathVariable Integer idIle*/) {
+		List<Pirate> pirates = daoPirate.findAllNotCapitaine();
 
 		// retire les capitaines
 		int totalPirates = pirates.size();
-		for (int i = 0; i < totalPirates; i++) {
-			if(i < pirates.size()) {
-				Pirate p = pirates.get(i);
-				if (p.isCapitaine()) {
-					pirates.remove(i);
-					i--;
-				}
-			}
-		}
+	
+
+		// TODO WIP \/
+		// // trie selon la mer et le tier des pirates
+		// Optional<Ile> opt = daoIle.findById(idIle);
+		// if (opt.isEmpty()) {
+		// 	System.out.println("Aucune île trouvée avec cet Id (getRandomPirates PirateRestController)");
+		// 	return null;
+		// }
+		// Ile destination = opt.get();
+		// String seaName = destination.getMer().name();
+		// for (int i = 0; i < totalPirates; i++) {
+		// 	if (seaName == "EastBlue") {
+		// 		pirates = daoPirate.findAllByTier(1);
+		// 	} else if (seaName == "WestBlue" || seaName == "NorthBlue") {
+
+		// 		pirates = daoPirate.findAllByTierOrTier(1, 2);
+		// 	} else if (seaName == "SouthBlue") {
+		// 		pirates = daoPirate.findAllByTierOrTier(2, 3);
+		// 	} else if (seaName == "GrandLine" || seaName == "NewWorld") {
+		// 		pirates = daoPirate.findAllByTierOrTier(3, 4);
+		// 	}
+		// }
 
 		List<Pirate> shuffledPirates = new ArrayList<Pirate>();
 		int max = 5;

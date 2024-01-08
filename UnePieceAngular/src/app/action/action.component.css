@@ -1,0 +1,323 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* -------[ ^ The above style harmonizes style no matter which browser is used]------- */
+
+p {
+  font-family: Impact;
+  font-size: 20px;
+  text-align: center;
+}
+
+h1,
+div {
+  font-family: Impact;
+}
+
+#icon_pv {
+  background-image: url(../../assets/icons/heart.png);
+  background-size: 70%;
+  background-repeat: no-repeat;
+}
+
+#icon_power {
+  background-image: url(../../assets/icons/attack.png);
+  background-size: 70%;
+  background-repeat: no-repeat;
+}
+
+#icon_fruit {
+  background-image: url(../../assets/icons/fruit.png);
+  background-size: 70%;
+  background-repeat: no-repeat;
+}
+
+#icon_prime {
+  background-image: url(../../assets/icons/coin.png);
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+
+.card-container {
+  background: rgb(17, 17, 17);
+  border: 1px solid black;
+  width: 250px;
+  height: 350px;
+  margin: auto;
+  margin-left: 15px;
+  margin-top: 0px;
+  border-radius: 2%;
+  box-sizing: border-box;
+  box-shadow: -8px 9px 16px -3px gray;
+}
+
+.card-background {
+  position: relative;
+  background: whitesmoke;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 97%;
+  width: 96%;
+  border-radius: 2%;
+  z-index: 0;
+}
+
+.card {
+  margin-right: 100px;
+}
+
+.card-frame {
+  cursor: pointer;
+  border-radius: 2%;
+  z-index: 2;
+  position: relative;
+  background: whitesmoke;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: url(../../assets/backgrounds/background_tile.jpg);
+}
+
+.card-frame h1 {
+    text-align: center;
+}
+
+.card-frame p {
+    margin-top:20px;
+    font-size:15px;
+}
+
+.frame-textbox,
+.frame-art,
+.frame-footer {
+  position: relative;
+  border: 2px solid blue;
+  border-radius: 8px;
+  width: 98%;
+  height: 3%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.frame-art img {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width:100%;
+  
+  border-radius: 8px;
+}
+
+.frame-art {
+  top: 25.5%;
+  height: 50%;
+  background: url(../../assets/backgrounds/background_wave.png);
+  background-repeat: no-repeat;
+}
+.frame-header {
+  top: 5.5%;
+  background: white;
+  border: 5px solid blue;
+  border-radius: 8px;
+  font-size: xx-large;
+  position: absolute;
+  text-align: center;
+  width: 95%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.frame-textbox {
+  position: absolute;
+  top: 72.5%;
+  height: 42%;
+  background: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame-prime {
+  position: absolute;
+  top: 93%;
+  width: 100%;
+  text-align: center;
+}
+
+.card {
+  width: 50%;
+}
+
+table {
+  height: 90%;
+  width: 90%;
+  font-size: xx-large;
+}
+
+th,
+tr,
+td {
+  vertical-align: middle;
+}
+
+#td-message {
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container td {
+  width: 20%;
+}
+
+.card-cell {
+  margin-right: 10%;
+}
+
+.boutons-choix {
+    position:absolute;
+    left:10%;
+    top:85%;
+}
+
+
+.boutons-choix button {
+    display:inline;
+    margin-right:10px;
+}

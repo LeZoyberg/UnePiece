@@ -1,11 +1,11 @@
 <p>Partie terminée</p>
 
-<p *ngIf="partie!.membres[0].pv! <= 0 ">Capitaine mort, partie perdue</p>
-<p *ngIf="this.partie!.navire!.robustesse! <= 0">Le bateau il est cassé, partie perdue</p>
+<p *ngIf="partie!.membres[0].pv! <= 0 ">Votre capitaine pirate est mort ! Partie perdue</p>
+<p *ngIf="this.partie!.navire!.robustesse! <= 0">Votre bateau a coulé ! Partie perdue</p>
 
 <div *ngIf="partie!.membres[0].pv! > 0 && this.partie!.navire!.robustesse! > 0">
     <img  src="assets/VisuelFinVictoire.png" alt="imageVictoire" />
-    <p>Bravo, partie gagnée</p>
+    <p>Bravo ! Vous avez atteint la dernière île et gagné la partie !</p>
 </div>
 
 <button (click)="retourAccueil()"> Retourner à l'accueil </button>

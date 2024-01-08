@@ -16,9 +16,20 @@ public class Pirate {
 	private boolean fruit;
 	private boolean capitaine;
 	private String nom;
+	private int tier;
 	
 	public Pirate() {}
 	
+		public Pirate(int power, int pv, int prime, boolean fruit, boolean capitaine, String nom, int tier) {
+		this.power = power;
+		this.pv = pv;
+		this.prime = prime;
+		this.fruit = fruit;
+		this.capitaine = capitaine;
+		this.nom = nom;
+		this.tier = tier;
+	}
+
 	public Pirate(int power, int pv, int prime, boolean fruit, boolean capitaine, String nom) {
 		this.power = power;
 		this.pv = pv;
@@ -26,6 +37,7 @@ public class Pirate {
 		this.fruit = fruit;
 		this.capitaine = capitaine;
 		this.nom = nom;
+		this.tier = 1;
 	}
 
 	public String getNom() {
@@ -83,4 +95,13 @@ public class Pirate {
 	public void setCapitaine(boolean capitaine) {
 		this.capitaine = capitaine;
 	}
+
+	public int getTier() {
+		return tier;
+	}
+
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
+	
 }
