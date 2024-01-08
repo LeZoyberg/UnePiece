@@ -29,7 +29,6 @@ export class StartComponent {
     this.listCapitaines();
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie(this.joueur) as Partie;
-    console.log('this.partie CONTROLLER :>> ', this.partie);
   }
 
   listCapitaines() {

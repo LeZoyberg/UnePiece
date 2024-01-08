@@ -28,7 +28,7 @@ export class AccueilComponent {
     private navireService: NavireService
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
-    this.partie = this.partieService.getPartie();
+    this.partie = this.partieService.getPartie(this.joueur);
     if (this.partie == undefined) {
       // this.partieService
       //   .findByIdJoueurWithMembresAndActions(this.joueur.id)

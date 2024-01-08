@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { Joueur } from '../model';
 
 @Component({
   selector: 'nav-bar',
@@ -8,8 +9,10 @@ import { AuthService } from '../auth.service';
 })
 export class NavBarComponent {
 
-
-  constructor(private authService: AuthService) { }
+  player!: Joueur;
+  constructor(private authService: AuthService) { 
+    this.player = authService.getUtilisateur() as Joueur;
+  }
 
   logout() {    
     if(confirm("Souhaitez-vous vraiment vous déconnecter ?")){

@@ -24,8 +24,6 @@ export class EndingComponent {
   ) {
     this.joueur = this.authService.getUtilisateur() as Joueur;
     this.partie = this.partieService.getPartie(this.joueur);
-    console.log('this.partie :>> ', this.partie);
-    
   }
 
   retourAccueil() {
