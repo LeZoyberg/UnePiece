@@ -114,7 +114,7 @@ export class PartieService {
     }
   }
 
-  checkDeathMembre(membre: Membre, index: number) {
+  checkHpOrDeathMembre(membre: Membre, index: number) {
     if(membre.pv! <= 0) {
       if(!membre.pirate!.capitaine){
         this.membreService.delete(membre.id).subscribe();
@@ -124,6 +124,8 @@ export class PartieService {
         this.savePartieInStorage(this.partie);
       });  
       alert(membre.pirate?.nom + " est mort !");
+    } else if(membre.pv! > membre?.pirate?.pv!) {
+      membre.pv = membre.pirate?.pv;
     }
   }
 

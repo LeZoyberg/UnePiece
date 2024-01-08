@@ -87,7 +87,7 @@ export class ActionComponent {
     if (this.action.choix == undefined) {
       this.partie.membres.forEach((membre, index) => {
         membre.pv! -= this.action.degatMembre!;
-        this.partieService.checkDeathMembre(membre, index);
+        this.partieService.checkHpOrDeathMembre(membre, index);
       });
       this.partie.navire!.robustesse! -= this.action.degatNavire!;
       this.choixPossible = true;
@@ -112,7 +112,7 @@ export class ActionComponent {
       } else {
         this.partie.membres.forEach((membre, index) => {
           membre.pv! -= this.action.degatMembre!;
-          this.partieService.checkDeathMembre(membre, index);
+          this.partieService.checkHpOrDeathMembre(membre, index);
         });
         this.partie.navire!.robustesse! -= this.action.degatNavire!;
         this.partie.tresor! += this.action.tresor!;
@@ -172,7 +172,7 @@ export class ActionComponent {
           } else {
             this.partie.membres.forEach((membre, index) => {
               membre.pv! -= degat;
-              this.partieService.checkDeathMembre(membre, index);
+              this.partieService.checkHpOrDeathMembre(membre, index);
             });
             alert('Vos membres subissent ' + degat + ' dégâts');
           }
