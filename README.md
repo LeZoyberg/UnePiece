@@ -1,5 +1,3 @@
-TODO check pv > pv max membres events
-
 TODO : virer ancienne partie du localStorage quand on fait newGame
 
 TODO pas changer bateaux chaque jour : pas RP

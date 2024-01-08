@@ -1,12 +1,33 @@
-<h1>{{ action.event?.odyssee }}</h1>
+<div class="card-container">
+  <div class="card-background">
+    <div class="card-frame">
+        <h1>{{ action.event?.odyssee }}</h1>
+      <div class="frame-art">
+        <img src="assets/events/{{action.event?.odyssee}}.png" alt="eventImage">
+      </div>
 
-<p>{{text}}</p>
+      <p>{{ text }}</p>
 
-<div *ngIf = "choixPossible">    
-    <button (click)="bouton1()" type="button" class="btn btn-success">{{title1}}</button>
-    <button (click)="bouton2()" type="button" class="btn btn-danger">{{title2}}</button>
-</div>
+      <div class="boutons-choix">
+        <div *ngIf="choixPossible">
+          <button (click)="bouton1()" type="button" class="btn btn-success">
+            {{ title1 }}
+          </button>
+          <button (click)="bouton2()" type="button" class="btn btn-danger">
+            {{ title2 }}
+          </button>
+        </div>
 
-<div *ngIf = "!choixPossible">
-    <button (click)="boutonTempete()" type="button" class="btn btn-primary">{{title}}</button>
+        <div *ngIf="!choixPossible">
+          <button
+            (click)="boutonTempete()"
+            type="button"
+            class="btn btn-primary"
+          >
+            {{ title }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

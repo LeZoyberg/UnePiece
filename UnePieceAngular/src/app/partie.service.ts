@@ -18,16 +18,17 @@ export class PartieService {
       console.log('return this.partie');
       console.log('this.partie :>> ', this.partie);
       return this.partie;
-    } else {
-      const partieStorage = localStorage.getItem('partie');
-      if (partieStorage) {
-        console.log('return this.partie from localStorage');
-        this.partie = JSON.parse(partieStorage);
-        console.log('this.partie :>> ', this.partie);
+    } 
+    // else {
+    //   const partieStorage = localStorage.getItem('partie');
+    //   if (partieStorage) {
+    //     console.log('return this.partie from localStorage');
+    //     this.partie = JSON.parse(partieStorage);
+    //     console.log('this.partie :>> ', this.partie);
 
-        return this.partie;
-      }
-    }
+    //     return this.partie;
+    //   }
+    // }
     console.log('return undefined');
 
     return undefined;

@@ -5,7 +5,7 @@
 
   <div id="accueil-center" class="mt-5">
     <div id="accueil-center-left" class="m-3" *ngIf="historique?.length != 0">
-      <div class="box-green" align="center">Mon historique</div>
+      <div class="box-green" align="center">Mon historique <i class="bi bi-clock-history"></i></div>
       <div class="box-brown" id="box-historique">
         <table width="100%">
           <tr align="center">
@@ -28,16 +28,16 @@
       </div>
       <div id="partieEnCours" *ngIf="partie && partie.id != undefined">
         <button class="btn-olive btn btn-success" (click)="continueGame()">
-          Reprendre partie en cours <i class="bi bi-plus-circle"></i>
+          Reprendre partie en cours <i class="bi bi-arrow-right-circle"></i>
         </button>
         <div class="box-opacity">
           <div id="accueil-resume" class="mt-3 mb-3">
             <span
-              ><i>Jour : </i><b>{{ partie.duree }}</b> -&nbsp;
+              ><i>Jour : </i><b>{{ partie.duree }}</b> &nbsp;
             </span>
             <span *ngIf="partie.membres[0]">
               <i>Capitaine : </i
-              ><b>{{ partie.membres[0].pirate?.nom }}</b> -&nbsp;
+              ><b>{{ partie.membres[0].pirate?.nom }}</b> &nbsp;
             </span>
             <span *ngIf="partie.ile?.mer"
               ><i>Ile : </i
@@ -54,14 +54,14 @@
     </div>
 
     <div id="accueil-center-right" class="m-3">
-      <div class="box-green" align="center">Leaderboard</div>
+      <div class="box-green" align="center">Leaderboard <i class="bi bi-award"></i></div>
       <div class="box-brown">
         <table width="100%">
           <tr align="center">
             <th>Joueur</th>
             <th>Score</th>
             <th>Date</th>
-            <th>Terminé ?</th>
+            <th>Statut</th>
           </tr>
           <tr align="center" *ngFor="let p of leaderboard">
             <td>{{ p.joueur!.login }}</td>
