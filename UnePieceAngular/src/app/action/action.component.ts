@@ -36,6 +36,7 @@ export class ActionComponent {
     } else {
       this.partieService.getPartieFromDb(this.joueur).subscribe((resp) => {
         this.partie = resp;
+        this.partieService.setPartie(this.partie);
         this.load();
       });
     }
@@ -91,7 +92,7 @@ export class ActionComponent {
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
       console.log('button1, saving in db :>> ', this.action);
-      this.resolveAction();
+      this.resolveAction(this.partie);
     });
   }
 
@@ -101,7 +102,7 @@ export class ActionComponent {
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
       console.log('button2, saving in db :>> ', this.action);
-      this.resolveAction();
+      this.resolveAction(this.partie);
     });
   }
 
@@ -111,22 +112,22 @@ export class ActionComponent {
     this.action.partie = this.partie;
     this.actionService.update(this.action).subscribe(() => {
       console.log('button3, saving in db :>> ', this.action);
-      this.resolveAction();
+      this.resolveAction(this.partie);
     });
   }
 
-  resolveAction() {
+  resolveAction(partie:Partie) {
     console.log('this.action before resolve :>> ', this.action);
     // this.action.termine = true;
 
     // pas de choix possible (i.e. tempête)
     console.log('this.partie resolveAction :>> ', this.partie);
     if (this.action.choix == undefined) {
-      this.partie.membres.forEach((membre, index) => {
+      partie.membres.forEach((membre, index) => {
         membre.pv! -= this.action.degatMembre!;
         this.partieService.checkHpOrDeathMembre(membre, index);
       });
-      this.partie.navire!.robustesse! -= this.action.degatNavire!;
+      partie.navire!.robustesse! -= this.action.degatNavire!;
       this.choixPossible = true;
       alert(
         'Dégâts membres : ' +

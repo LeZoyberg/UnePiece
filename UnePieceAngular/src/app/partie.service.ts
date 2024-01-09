@@ -119,6 +119,7 @@ export class PartieService {
     for (let m of this.partie.membres) {
       (this.partie.forceTotale as number) += m.power as number;
     }
+    console.log('this.partie.forceTotale :>> ', this.partie.forceTotale);
   }
 
   checkEndOfGame(partie: Partie) {
@@ -151,7 +152,7 @@ export class PartieService {
       if (membre.pv! > membre?.pirate?.pv!) {
         membre.pv = membre.pirate?.pv;
       }
-      // this.membreService.update(membre).subscribe();
+      this.membreService.update(membre).subscribe();
     }
   }
 }

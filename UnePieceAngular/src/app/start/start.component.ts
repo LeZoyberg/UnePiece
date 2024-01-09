@@ -33,6 +33,7 @@ export class StartComponent {
     } else {
       this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
         this.partie = resp;
+        this.partieService.setPartie(this.partie);
         this.load();
       })
     }

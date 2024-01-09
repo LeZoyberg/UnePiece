@@ -35,6 +35,7 @@ export class AccueilComponent {
     } else {
       this.partieService.getPartieFromDb(this.joueur).subscribe(resp => {
         this.partie = resp;
+        this.partieService.setPartie(this.partie);
         this.load();
       })
     }
@@ -67,36 +68,6 @@ export class AccueilComponent {
           this.partieService.redirect(this.partie);
         }
       }
-        
-    // //console.log(this.joueur?.id);
-    // this.partieService
-    //   .findByIdJoueurWithMembresAndActions(this.joueur?.id)
-    //   ?.subscribe((resp) => {
-    //     console.log(resp);
-    //     if (resp && resp.termine == false) {
-    //       console.log(
-    //         '[continueGame() in accueil.component.ts] Une partie en cours a été trouvée pour ce joueur'
-    //       );
-    //       this.partie = resp;
-    //       this.partie.forceTotale = 0;
-
-    //       this.partie.joueur = this.joueur;
-    //       this.partieService.savePartieInStorage(this.partie);
-    //       console.log(
-    //         '[continueGame() in accueil.component.ts] Partie en cours = this.partie :>> ',
-    //         this.partie
-    //       );
-
-    //       // check où redirect:
-    //       if (this.partie.actions.length > 0) {
-    //         console.log('actions trouvées, redirect vers trajet');
-    //         this.router.navigate(['/trajet']);
-    //       } else {
-    //         console.log("pas d'actions trouvées, redirect vers ile");
-    //         this.router.navigate(['/ile']);
-    //       }
-    //     } else this.newGame();
-    //     });
   }
 
   newGame() {
